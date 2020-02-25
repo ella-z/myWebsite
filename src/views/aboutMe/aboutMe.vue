@@ -1,24 +1,33 @@
 <template>
     <div class="aboutMe">
-        <div class="me-header">
-            <div class="me-logo">
-                <i class="iconfont icon">&#xe68b;</i>
-            </div>
-            <div class="me-title">About Me</div>
-        </div>
+        <areaHeader :headerTitle='headerTitle' :headerLogo='headerLogo'></areaHeader>
         <div class="me-content">
-            <div class="self-intro"></div>
+            <article class="self-intro">
+                    我是一名学生
+            </article>
             <div class="self-photo-border">
                 <div class="self-photo"></div>
             </div>
-            <div class="skill-data"></div>
+            <div class="skill-data">
+                <span>我的技能</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import areaHeader from '../../components/areaHeader'
+
 export default {
-    
+    components:{
+        areaHeader
+    },
+    data(){
+        return{
+            headerTitle:'About Me',
+            headerLogo:'&#xe68b;'
+        }
+    }
 }
 </script>
 
@@ -28,37 +37,28 @@ export default {
     height: 100vh;
     background-color: #fff; 
     padding: 3% 0;
-    .me-header{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 10%;
-        .me-logo{
-            width: 5vw;
-            height: 5vw;
-            border: 1px  solid #000;
-            border-radius: 50%;
-            margin-bottom: 1%;
-
-        }
-        .me-title{
-            font-size: 3vw;
-        }
-    }   
-    
     .me-content{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+        align-items: center;
         width: 100%;
-        .self-intro,.self-photo,.skill-data{
-            background-color: pink;
-            width: 20vw;
-            height: 20vw;
+        .skill-data{
+            width: 30vw;
+            height: 30vw;        
+        }
+        .self-intro{
+            width: 30vw;
+            height: 30vw;
+            border:2px solid;
+            border-image: linear-gradient(to bottom,#454E93,#FF7B4D) 50 50; 
         }
         .self-photo{
+            width: 15vw;
+            height: 15vw;
             border-radius: 50%;
+            background: url('../../assets/zzq.jpg');
+            background-size: 100% 100%;
         }
         .self-photo-border{
          

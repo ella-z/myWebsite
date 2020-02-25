@@ -13,16 +13,16 @@ export default {
 <style lang="scss">
 @font-face {
   font-family: 'iconfont';  /* project id 1652974 */
-  src: url('//at.alicdn.com/t/font_1652974_jt9wnkari88.eot');
-  src: url('//at.alicdn.com/t/font_1652974_jt9wnkari88.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1652974_jt9wnkari88.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1652974_jt9wnkari88.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1652974_jt9wnkari88.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1652974_jt9wnkari88.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.eot');
+  src: url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1652974_afzi6oh9dti.svg#iconfont') format('svg');
 }
 .iconfont{
     font-family:"iconfont" !important;
-    font-size:16px;font-style:normal;
+    font-style:normal;
     -webkit-font-smoothing: antialiased;
     font-size: 4vw;
     color: #000;

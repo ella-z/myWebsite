@@ -22,7 +22,7 @@ export default {
                     title:'Project Case'
                 },
                 {
-                    title:'Article'
+                    title:'Note'
                 },
                 {
                     title:'Message Board'
