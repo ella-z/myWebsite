@@ -19,24 +19,24 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 2%;
+        margin-bottom: 5%;
         .me-logo{
-            width: 5vw;
-            height: 5vw;
-            border: 2px  solid #000;
+            width: 4vw;
+            height: 4vw;
+            border: 1.5px  solid #000;
             border-radius: 50%;
             margin-bottom: 1%; 
             text-align: center;
-            line-height: 4.5vw;
+            line-height: 3.5vw;
             .icon{
-                font-size: 3.5vw;
+                font-size: 2.5vw;
                 background-image: linear-gradient(to bottom,#454E93,#FF7B4D); 
                 background-clip: text;
                 color: transparent;
             }   
         }
         .me-title{
-            font-size: 3vw;
+            font-size: 2.8vw;
         }
         }   
 </style>

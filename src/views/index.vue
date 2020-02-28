@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navBar class="navBar"></navBar>
+        <navBar ></navBar>
         <Home></Home>
         <aboutMe></aboutMe>
         <projectCase></projectCase>
@@ -25,9 +25,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-    .navBar{
-        position: absolute;
-        z-index: 2;
-    }
-</style>

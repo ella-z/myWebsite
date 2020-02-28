@@ -1,8 +1,8 @@
 <template>
     <div class="caseCard">
         <div class="narrate">
-                <span class="caseTiltle">title</span>
-                <div>describe</div>
+                <span class="case-tiltle">title</span>
+                <p class="case-describe">describebbbbbbbsssssssssssssssssssssssssssssss</p>
                 <button>case</button>
                 <button>github</button>
         </div>
@@ -34,11 +34,12 @@ export default {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    .caseTiltle{
+    .case-tiltle{
         font-size: 3.5vw;
     }
-    .caseIntro{
-        font-size: 2vw;
+    .case-describe{
+        font-size: 1.5vw;
+        width: 20vw;
     }
     button{
         cursor: pointer;
