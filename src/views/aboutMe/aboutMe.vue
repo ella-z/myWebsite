@@ -3,15 +3,21 @@
         <areaHeader :headerTitle='headerTitle' :headerLogo='headerLogo'></areaHeader>
         <div class="me-content">
            <div class="self-intro">
-               <ul>
+                <ul>
                     <li v-for="(item,index) in selfIntro" :key="index"> 
                         <span>{{item.title}}</span>
                         <p>{{item.article}}</p>
                     </li>
-               </ul>
-               <div>
-                   <i class="iconfont self-icon" v-for='(item,index) in selfIcon' :key="index" v-html="item.icon">{{item.icon}}</i>
+                </ul>
+                <div class="self-icon">
+                    <div class="self-icon-outer" v-for='(item,index) in selfIcon' :key="index">
+                        <i class="iconfont self-icon-img"  v-html="item.icon" @mouseenter="mouseEnter(item)" @mouseleave="mouseLeave(item)">{{item.icon}}</i>
+                        <span class="self-icon-content"   :class="{'show':item.actived}">
+                            {{item.content}}
+                        </span>
+                    </div>
                 </div>
+
             </div>
             <div class="self-photo">
                 <div class="self-photo-outer"></div>
@@ -37,6 +43,7 @@ export default {
         return{
             headerTitle:'About Me',
             headerLogo:'&#xe68b;',
+            enterIndex:0,
             selfIntro:[
                 {
                     title:'学生',
@@ -58,24 +65,40 @@ export default {
             selfIcon:[
                 {
                     icon:`&#xe695;`,
-                    img:''
+                    content:'WeChat:enhei_0',
+                    actived:false
                 },
                 {
-                    icon:`&#xe627;`
+                    icon:`&#xe627;`,
+                    content:'QQ:2151633944',
+                    actived:false
                 },
                 {
-                    icon:`&#xe600;`
+                    icon:`&#xe600;`,
+                    content:'GitHub:ella-z',
+                    actived:false
                 },
                 {
-                    icon:`&#xeac3;`
+                    icon:`&#xeac3;`,
+                    content:'Steam:柠檬奶盖',
+                    actived:false
                 },
             ]
+        }
+    },
+    methods:{
+        mouseEnter(item){
+            item.actived = true;
+        },
+        mouseLeave(item){
+            item.actived = false;
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .aboutMe{
     width: 100%;
     height: 100vh;
@@ -105,11 +128,13 @@ export default {
                     display: block;
                     width: 6vw;
                     text-align: center;
+                    transition: 0.6s;
                     color: #fff;
                     background-image: linear-gradient(to right,#454E93,#FF7B4D);
                     font-family: 'STKaiti';
                     font-size: 1.5vw;
                     border-radius: 10px; 
+                    overflow: hidden;
                 }
                 p{
                     margin-top: 2%;
@@ -120,17 +145,46 @@ export default {
                 }
             }
             .self-icon{
-                display: inline-block;
-                width: 2.5vw;
-                height: 2.5vw;
-                text-align: center;
-                line-height: 2.5vw;
-                font-size: 2vw;
-                border-radius: 50%;
-                margin:5% 10% 0 0;
-                color: #fff;
-                background-image: linear-gradient(to right,#454E93,#FF7B4D);
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                .self-icon-outer{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .self-icon-img{
+                        display: inline-block;
+                        position: absolute;
+                        z-index:3;
+                        width: 2.5vw;
+                        height: 2.5vw;
+                        text-align: center;
+                        line-height: 2.5vw;
+                        cursor:pointer;
+                        font-size: 2vw;
+                        border-radius: 50%;
+                        color: #fff;
+                        background-image: linear-gradient(to bottom,#454E93,#FF7B4D);
+                    }
+                    .self-icon-content{
+                        position: absolute;
+                        text-align: center;
+                        z-index: 2;
+                        opacity: 0;
+                        height: 2vw;
+                        width: 10vw;
+                        border: 2px solid;
+                        border-Image: linear-gradient(to right,#454E93,#FF7B4D) 10;
+                    }
+                    .show{
+                        opacity: 1;
+                        transform: translateY(3.5vw);
+                        transition: transform 1s, opacity 2.5s;
+                    }
+                }
+
             }
+
         }
         .self-photo{
             display: flex;
