@@ -4,15 +4,15 @@
         <div class="me-content">
            <div class="self-intro">
                 <ul>
-                    <li v-for="(item,index) in selfIntro" :key="index"> 
-                        <span>{{item.title}}</span>
-                        <p>{{item.article}}</p>
+                    <li v-for="(item,index) in selfIntroData" :key="index"> 
+                        <span :class="{'span-show':item.isShow}" @click="selfIntroClick(item,index)">{{item.title}}</span>
+                        <p :class="{'p-show':item.isShow}">{{item.article}}</p>
                     </li>
                 </ul>
                 <div class="self-icon">
-                    <div class="self-icon-outer" v-for='(item,index) in selfIcon' :key="index">
+                    <div class="self-icon-outer" v-for='(item,index) in selfIconData' :key="index">
                         <i class="iconfont self-icon-img"  v-html="item.icon" @mouseenter="mouseEnter(item)" @mouseleave="mouseLeave(item)">{{item.icon}}</i>
-                        <span class="self-icon-content"   :class="{'show':item.actived}">
+                        <span class="self-icon-content"   :class="{'show':item.isShow}">
                             {{item.content}}
                         </span>
                     </div>
@@ -27,6 +27,16 @@
             </div>
             <div class="skill-data">
                 <span>我的技能</span>
+                <div class="skill-data-bar">
+                    <ul>
+                        <li class="js">JS</li>
+                        <li 
+                        v-for="(item,index) in skillBar" 
+                        :key='index' 
+                        
+                        >{{item.title}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -44,183 +54,111 @@ export default {
             headerTitle:'About Me',
             headerLogo:'&#xe68b;',
             enterIndex:0,
-            selfIntro:[
+            selfIntroData:[
                 {
                     title:'学生',
-                    article:'我是一名计算机专业的的学生我是一名计算机专业的学生我是一名计算机专业的学生我是一名计算机专业的学生',
+                    article:`我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生
+                             我是一名计算机专业的学生我是一名计算机专业的学生`,
+                    isShow:true
                 },
                 {
                     title:'前端',
-                    article:'前端'
+                    article:'前端',
+                    isShow:false
+                },
+                {
+                    title:'后台',
+                    article:'后台后台后台后台后台后台后台后台后台后台后台后台后台后台后台后台后台',
+                    isShow:false
                 },
                 {
                     title:'剪辑',
-                    article:'剪辑jjjjjjjjjjjjjjjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj'
+                    article:'剪辑jjjjjjjjjjjjjjjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj剪辑jjjjjj',
+                    isShow:false 
                 },
                 {
                     title:'游戏',
-                    article:'游戏lllllllllllllllllllllllllllllllll'
+                    article:'游戏lllllllllllllllllllllllllllllllll',
+                    isShow:false
                 }
             ],
-            selfIcon:[
+            selfIconData:[
                 {
                     icon:`&#xe695;`,
                     content:'WeChat:enhei_0',
-                    actived:false
+                    isShow:false
                 },
                 {
                     icon:`&#xe627;`,
                     content:'QQ:2151633944',
-                    actived:false
+                    isShow:false
                 },
                 {
                     icon:`&#xe600;`,
                     content:'GitHub:ella-z',
-                    actived:false
+                    isShow:false
                 },
                 {
                     icon:`&#xeac3;`,
                     content:'Steam:柠檬奶盖',
-                    actived:false
+                    isShow:false
                 },
+            ],
+            skillBar:[
+                {
+                    title:'VUE'
+                },
+                {
+                    title:'HTML'
+                },
+                {
+                    title:'CSS'
+                }
             ]
         }
     },
     methods:{
         mouseEnter(item){
-            item.actived = true;
+            item.isShow = true;
+        },                          //鼠标移入移出self-icon时，改变item的状态
+        mouseLeave(item){              
+            item.isShow = false;
         },
-        mouseLeave(item){
-            item.actived = false;
+        selfIntroClick(item,index){
+            this.selfIntroData[index].isShow = !this.selfIntroData[index].isShow;
+            this.selfIntroData.forEach(element => {
+                if(this.selfIntroData[index].title !== element.title){
+                    element.isShow = false;
+                }
+            });
+        },
+        changeKeyframe(){
+            this.skillBar.forEach(element =>{
+                const keyframe = `@keyframes ${element.title}{
+                    from{
+                        width:0%;
+                    }
+                    to{
+                        width:50%
+                    }
+                }`;
+                console.log(keyframe);
+            });
         }
+    },
+    mounted(){
+        this.changeKeyframe();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.aboutMe{
-    width: 100%;
-    height: 100vh;
-    background-color: #fff; 
-    padding: 3% 0;
-    .me-content{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-       .skill-data{
-            width: 30vw;
-            height: 30vw;  
-            span{
-                 font-family: 'STKaiti';
-                 font-size: 1.5vw;     
-            }
-        }
-        .self-intro{
-            width: 30vw;
-            height: 30vw;
-            li{
-                list-style: none;
-                margin-bottom: 6%;
-                span{
-                    display: block;
-                    width: 6vw;
-                    text-align: center;
-                    transition: 0.6s;
-                    color: #fff;
-                    background-image: linear-gradient(to right,#454E93,#FF7B4D);
-                    font-family: 'STKaiti';
-                    font-size: 1.5vw;
-                    border-radius: 10px; 
-                    overflow: hidden;
-                }
-                p{
-                    margin-top: 2%;
-                    width: 30vw;
-                    font-size: 1vw;
-                    word-wrap:break-word;
-                    text-indent:2vw;//开头空两格
-                }
-            }
-            .self-icon{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                .self-icon-outer{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    .self-icon-img{
-                        display: inline-block;
-                        position: absolute;
-                        z-index:3;
-                        width: 2.5vw;
-                        height: 2.5vw;
-                        text-align: center;
-                        line-height: 2.5vw;
-                        cursor:pointer;
-                        font-size: 2vw;
-                        border-radius: 50%;
-                        color: #fff;
-                        background-image: linear-gradient(to bottom,#454E93,#FF7B4D);
-                    }
-                    .self-icon-content{
-                        position: absolute;
-                        text-align: center;
-                        z-index: 2;
-                        opacity: 0;
-                        height: 2vw;
-                        width: 10vw;
-                        border: 2px solid;
-                        border-Image: linear-gradient(to right,#454E93,#FF7B4D) 10;
-                    }
-                    .show{
-                        opacity: 1;
-                        transform: translateY(3.5vw);
-                        transition: transform 1s, opacity 2.5s;
-                    }
-                }
-
-            }
-
-        }
-        .self-photo{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            width: 20vw;
-         .self-photo-outer{
-            width: 20vw;
-            height: 20vw;
-            background-image: linear-gradient(90deg,#454E93,#CC62AB,#E8E5E0,#FF7B4D,#454E93);
-            border-radius: 50%;
-            animation: rotate 3s linear infinite;
-        }
-        @keyframes rotate {
-            to{
-                transform: rotate(360deg)
-            }
-        }
-        .self-photo-inner{
-            position:absolute;
-            width: 19.3vw;
-            height: 19.3vw;
-            border-radius: 50%;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            img{
-                width: 18vw;
-                height: 18vw;
-                border-radius: 50%;
-                
-            }
-        }           
-        }
-    }
-}
+@import 'styles/aboutMe.scss';
 </style>
