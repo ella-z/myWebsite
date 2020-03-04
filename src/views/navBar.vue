@@ -2,7 +2,11 @@
     <nav >
         <div class="logo">LOGO</div>
         <ul class="navList">
-            <li :key='index' v-for='(item,index) in areaNav'>{{item.title}}</li>
+            <li 
+            :key='index' 
+            v-for='(item,index) in areaNav'
+            @click="navClick(item.title)"
+            >{{item.title}}</li>
         </ul>
     </nav>
 </template>
@@ -35,6 +39,14 @@ export default {
                 }
             ]
         }
+    },
+    methods:{
+        navClick(title){
+            if(title === 'Login'){
+               this.$store.commit('changeLoginState',true);
+            }
+        }
+
     },
     mounted(){
         //监控window是否向Y轴正向滑动。若向Y轴正向滑动，改变nav的样式。

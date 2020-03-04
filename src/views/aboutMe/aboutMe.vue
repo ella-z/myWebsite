@@ -116,18 +116,22 @@ export default {
       skillBar: [
         {
           title: "VUE",
+          begin:0,
           count: 30
         },
         {
             title:"JS",
+            begin:0,
             count:60
         },
         {
           title: "HTML",
+          begin:0,
           count: 70
         },
         {
           title: "CSS",
+          begin:0,
           count: 50
         }
       ]

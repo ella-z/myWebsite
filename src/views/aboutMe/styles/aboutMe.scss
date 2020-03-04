@@ -24,17 +24,6 @@
 
             }
             .skill-data-bar::-webkit-scrollbar {display:none}
-            .js::after{
-                animation-name:Js; 
-            }
-            @keyframes Js {
-                from{
-                    width: 0%;
-                }
-                to{
-                    width: 50%;
-                }
-            }
         }
         
         .self-intro{

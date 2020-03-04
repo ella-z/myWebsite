@@ -4,8 +4,14 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isLoginShow:false
+  },
+  mutations: {
+    changeLoginState(state,res){
+      state.isLoginShow = res;
+    }
+  },
   actions: {},
   modules: {}
 });

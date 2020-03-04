@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(item,index) in skillBar" :key="index" :class="item.title">
         {{item.title}}
-        <span>{{item.count}}%</span>
+        <span>{{item.begin}}%</span>
       </li>
     </ul>
   </div>
@@ -38,16 +38,20 @@ export default {
       document.body.appendChild(style);
     },  
     addCount(){
-      for(let i=0;i<2;i++){
-        setInterval(()=>{
-          //console.log(1);
-        },1000)
-      }
+      this.skillBar.forEach(element=>{
+        let timer=setInterval(()=>{
+          if(element.begin<element.count){
+             element.begin++;
+          }else{
+            clearInterval(timer);
+          }
+        },1200/element.count);
+      });
     }
   },
   mounted() { 
-    this.addCount();
     this.addKeyframe();
+    this.addCount();
   }
 };
 </script>
@@ -87,7 +91,7 @@ export default {
     filter: blur(0.2vw);                                   //way1：使用高斯模糊做阴影
     background: linear-gradient(90deg,#454E93,#FF7B4D);
     opacity: 0.8;
-
+    
     box-shadow: 0 0 1vw #454E93;  //way2：直接使用box-shadow
 }*/
   li::after {
