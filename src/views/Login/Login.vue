@@ -33,6 +33,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation-name: loginIn;
+    animation-duration:0.6s;
     h1{
         color: #fff;
         font-size: 3vw;
@@ -86,5 +88,15 @@ export default {
     .icon:hover{
         transform: rotate(360deg);
     }
+}    
+@keyframes loginIn {
+        0%{
+            opacity: 0;
+            transform: translateY(-10%);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0%);
+        }
 }
 </style>

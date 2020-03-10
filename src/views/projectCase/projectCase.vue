@@ -1,7 +1,19 @@
 <template>
     <div class="projectCase">
         <areaHeader :headerTitle='headerTitle' :headerLogo='headerLogo'></areaHeader>
-        <caseCard></caseCard>
+        <div class="projectCase-content">
+            <nav>
+                <ul>
+                    <li>全部</li>
+                </ul>
+            </nav>
+            <div class="projectCase-content-card">
+                <caseCard></caseCard>
+                <caseCard></caseCard>
+                <caseCard></caseCard>
+                <caseCard></caseCard>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,7 +31,7 @@ export default {
             headerTitle:'Project Case',
             headerLogo:'&#xe691;'
         }
-    }
+    } 
 }
 </script>
 
@@ -30,7 +42,28 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3% 0;
-    
+    .projectCase-content{
+      width: 80%;
+      height: 80%;
+      overflow: hidden;
+      nav{
+          width: 100%;
+          height: 8%;
+          margin-bottom: 3%;
+          li{
+              width: 6vw;
+              height: 2vw;
+              list-style: none;
+              text-align: center;
+              border: 1px solid black;
+          }
+      }
+      .projectCase-content-card{
+          display: grid;
+          grid-template-columns: repeat(4,1fr);
+          justify-items: center;
+          align-items: center;
+      }
+    }
  }
 </style>

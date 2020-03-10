@@ -1,10 +1,14 @@
 <template>
     <div class="caseCard">
-        <div class="narrate">
-                <span class="case-tiltle">高仿麦当劳</span>
+        <div class="caseCard-shade">
+            <div class="caseCard-title">
+                <span class="case-tiltle">高仿M记app</span>
                 <p class="case-describe">describebbbbbbbsssssssssssssssssssssssssssssss</p>
-                <button>case</button>
+            </div>
+            <div class="caseCard-button">
+                <button>demo</button>
                 <button>github</button>
+            </div>
         </div>
     </div>
 </template>
@@ -17,41 +21,60 @@ export default {
 
 <style lang="scss" scoped>
 .caseCard{
-    width: 20vw;
-    height: 25vw;
-    border-radius: 5px;
+    width: 15vw;
+    height: 20vw;
+    border-radius: 10px;
     overflow: hidden;
     background-image: url('D:/myWebsite/qwebsite/src/views/projectCase/components/McDonald.jpg');
     background-repeat:no-repeat;
-    background-size: 100% 100%;
+    background-position: center;
+    background-size: 50% 40%;
+    .caseCard-shade{
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        .caseCard-title{
+            color:#fff;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .case-tiltle{
+                font-size: 2vw;
+                margin-bottom: 5%;
+            }
+            .case-describe{
+                font-size: 1.5vw;
+                width: 80%;
+                word-wrap:break-word;
+            }
+        }
+        .caseCard-button{
+            width: 100%;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            button{
+                cursor: pointer;
+                width: 60%;
+                height: 40%;
+                color:#fff;
+                border: none;
+                outline: none;     
+                border-radius: 20px;
+                margin-bottom: 5%;
+                background-image: linear-gradient(90deg,#454E93,#FF7B4D);
+            }
+        }
+    }
 }
-.narrate{
-    width: 100%;
-    height: 100%;
-    color:#fff;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    .case-tiltle{
-        font-size: 3vw;
-    }
-    .case-describe{
-        font-size: 1.5vw;
-        width: 18vw;
-        text-align: center;
-        word-wrap:break-word;
-    }
-    button{
-        cursor: pointer;
-        width: 40%;
-        height: 10%;
-        color:#fff;
-        border: none;
-        border-radius: 7px;
-        outline: none;
-        background-color: #8891D0;
-    }
+.caseCard:hover{
+    box-shadow: 0px 0px 12px  rgb(61, 61, 61);
 }
 </style>
