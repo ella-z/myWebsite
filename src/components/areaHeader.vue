@@ -29,7 +29,7 @@ export default {
             text-align: center;
             line-height: 3.5vw;
             .icon{
-                font-size: 2.5vw;
+                font-size: 2.2vw;
                 background-image: linear-gradient(to bottom,#454E93,#FF7B4D); 
                 background-clip: text;
                 color: transparent;

@@ -2,7 +2,7 @@
     <div class="caseCard">
         <div class="caseCard-shade">
             <div class="caseCard-title">
-                <span class="case-tiltle">高仿M记app</span>
+                <span class="case-tiltle">M记app</span>
                 <p class="case-describe">describebbbbbbbsssssssssssssssssssssssssssssss</p>
             </div>
             <div class="caseCard-button">
@@ -44,11 +44,11 @@ export default {
             flex-direction: column;
             align-items: center;
             .case-tiltle{
-                font-size: 2vw;
+                font-size: 1.8vw;
                 margin-bottom: 5%;
             }
             .case-describe{
-                font-size: 1.5vw;
+                font-size: 1.2vw;
                 width: 80%;
                 word-wrap:break-word;
             }
