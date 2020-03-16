@@ -2,26 +2,29 @@
     <div>
         <header>
             <div class="logo">LOGO</div>
-            <nav v-show="!isNavBarsShow">
+            <nav v-show="!isBurgerMenuShow">
                 <ul class="navList">
                     <li 
                     :key='index' 
                     v-for='(item,index) in areaNav'
-                    @click="navClick(item.title)"
+                    @click="navClick(item.value)"
                     >{{item.title}}</li>
                 </ul>
             </nav>
-            <div v-show="isNavBarsShow">
-                <div class="navBars" @click="navBarsClick()">
-                    <i class="iconfont icon" v-html="listIcon">{{listIcon}}</i>
+            <div v-show="isBurgerMenuShow">
+                <div class="burgerMenu" @click="burgerMenuClick()">
+                  <i class="iconfont icon"  v-show="isListShow">&#xe66b;</i>
+                  <i class="iconfont icon"  v-show="!isListShow">&#xe62b;</i>
                 </div>
-                <ul class="barsList" v-show="isListShow">
-                    <li  
-                    :key='index' 
-                    v-for='(item,index) in areaNav'
-                     @click="navClick(item.title)"
-                    >{{item.title}}</li>
-                </ul>
+                <transition name="list">
+                    <ul class="menuList" v-show="isListShow">
+                        <li  
+                        :key='index' 
+                        v-for='(item,index) in areaNav'
+                        @click="navClick(item.value)"
+                        >{{item.title}}</li>
+                    </ul>
+                </transition>
             </div>
         </header>
     </div>
@@ -33,42 +36,53 @@ export default {
         return{
             areaNav:[
                 {
-                    title:'Home'
+                    title:'Home',
+                    value:'Home'
                 },
                 {
-                    title:'About Me'
+                    title:'About Me',
+                    value:'aboutMe'
                 },
                 {
-                    title:'Project Case'
+                    title:'Project Case',
+                    value:'projectCase'
                 },
                 {
-                    title:'Note'
+                    title:'Note',
+                    value:'Note'
                 },
                 {
-                    title:'Message Board'
+                    title:'Message Board',
+                    value:'messageBoard'
                 },
                 {
-                    title:'Login'
+                    title:'Login',
+                    value:'Login'
                 },
                 {
-                    title:'Sign In'
+                    title:'Sign In',
+                    value:'signIn'
                 }
             ],
             clientHeight:document.documentElement.clientHeight,
             clientWidth:document.documentElement.clientWidth,   
             isListShow:false,
-            listIcon:`&#xe62b;`
         }
     },
     methods:{
         navClick(title){
             if(title === 'Login'){
                this.$store.commit('changeLoginState',true);
+            }else if(title === 'signIn'){
+                console.log(1);
+            }else{
+                 this.$store.commit('changeNavId',title);
             }
-        },
-        navBarsClick(){
             this.isListShow = !this.isListShow;
-            this.listIcon = `&#xe66b;`;
+           
+        },
+        burgerMenuClick(){
+            this.isListShow = !this.isListShow;
         }
     },
     mounted(){
@@ -84,8 +98,9 @@ export default {
         }
     },
     computed:{
-        isNavBarsShow(){
+        isBurgerMenuShow(){
             if(this.clientWidth>this.clientHeight){
+                //判断屏幕的宽高，若高大于宽，则采取burger导航栏
                 return false;
             }else{
                 return true;
@@ -132,7 +147,7 @@ export default {
         }
     }
  }
- .navBars{
+ .burgerMenu{
     color:#454E93;
     cursor: pointer;
      .icon{
@@ -142,14 +157,14 @@ export default {
         background-image: linear-gradient(90deg,#454E93,#FF7B4D);
      }
  }
- .barsList{
+ .menuList{
      position: absolute;
      left: 0;
-     top: 3vw;
+     top: 3.2vw;
      width: 100vw;
      height: 100vh;
      z-index:99999;
-     transition: .6s;
+     background-color: #fff;
      li{
          cursor: pointer;
          width: 100%;
@@ -158,15 +173,22 @@ export default {
          line-height: 8vw;
          background-color: #fff;
          color:black;
-         border-bottom: 0.5px solid #000;
          font-size: 2vw;
-     }
-     li:last-child{
-         border: none;
+        
      }
      li:hover{
-          color:#FF7B4D;
+          color:#FF7B4D; 
+          box-shadow: inset 0px -2px 2px 0px #FF7B4D;
      }
+     transform: scaleY(1);
+     transition: transform .3s;
+     transform-origin:50% 0;
+ }
+ .list-enter-active{
+     transform: scaleY(0);
+ }
+.list-leave-active{
+     transform: scaleY(0);
  }
  .sticky{
      //window滑动后显示的样式。

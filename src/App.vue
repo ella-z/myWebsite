@@ -36,5 +36,6 @@ export default {
   box-sizing:border-box;
   font-family:"Times New Roman",Georgia,Serif;
   list-style: none;
+  user-select:none; //取消双击选中文字
 }
 </style>

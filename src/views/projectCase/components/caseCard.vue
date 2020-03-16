@@ -21,14 +21,15 @@ export default {
 
 <style lang="scss" scoped>
 .caseCard{
-    width: 15vw;
-    height: 20vw;
+    width: 150px;
+    height: 200px;
     border-radius: 10px;
     overflow: hidden;
     background-image: url('D:/myWebsite/qwebsite/src/views/projectCase/components/McDonald.jpg');
     background-repeat:no-repeat;
     background-position: center;
     background-size: 50% 40%;
+    transition: .3s;
     .caseCard-shade{
         width: 100%;
         height: 100%;
@@ -75,6 +76,8 @@ export default {
     }
 }
 .caseCard:hover{
-    box-shadow: 0px 0px 12px  rgb(61, 61, 61);
+    box-shadow: 25px 25px 30px -17px rgba(0,0,0,0.64);
+    position: relative;
+    top:-10px;   
 }
 </style>

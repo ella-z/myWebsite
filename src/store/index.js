@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLoginShow:false
+    isLoginShow:false,
+    navId:'Home'
   },
   mutations: {
     changeLoginState(state,res){
       state.isLoginShow = res;
+    },
+    changeNavId(state,res){
+      state.navId = res;
     }
   },
   actions: {},

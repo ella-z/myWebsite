@@ -1,13 +1,17 @@
 <template>
     <div class="home">
         <img src="../assets/ZHANGZIQING.png" alt="">
-        <button class="start-button">Start</button>
+        <button class="start-button" @click="toAboutMe()">Start</button>
     </div>
 </template>
 
 <script>
 export default {
-    
+    methods:{
+        toAboutMe(){
+            this.$store.commit('changeNavId','aboutMe');
+        }
+    }
 }
 </script>
 
@@ -25,6 +29,7 @@ export default {
         margin-top: 5%;
     }
     .start-button{
+        cursor: pointer;
         width: 15vw;
         height: 3vw;
         outline:none;

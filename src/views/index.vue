@@ -1,12 +1,12 @@
 <template>
     <div>
-        <navBar ></navBar>
+        <navBar></navBar>
         <login></login>
-        <Home></Home>
-        <aboutMe></aboutMe>
-        <projectCase></projectCase>
-        <note></note>
-        <messageBoard></messageBoard>
+        <Home id="Home"></Home>
+        <aboutMe id="aboutMe"></aboutMe>
+        <projectCase id="projectCase"></projectCase>
+        <note id="Note"></note>
+        <messageBoard id="messageBoard"></messageBoard>
         <footer></footer>
     </div>
 </template>
@@ -29,6 +29,27 @@ export default {
         login,
         messageBoard
     },
+    data(){
+        return{
+          //  navId:this.$store.state.navId
+        }
+    },
+    computed:{
+        navId(){
+            return this.$store.state.navId;
+        }
+    },
+    watch:{
+        navId(n){
+            let pageId = document.querySelector('#' + n);
+            window.scrollTo({
+                //滑动到指定位置
+                'top': pageId.offsetTop - 35,
+                'behavior': 'smooth'
+            })
+        }
+    },
+    
 }
 </script>
 

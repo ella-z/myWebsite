@@ -1,11 +1,13 @@
 <template>
-    <div class="Login" v-show="$store.state.isLoginShow">
-        <h1>LOGIN</h1>
-        <input type="text" placeholder="userName">
-        <input type="password" name="" placeholder="password">
-        <button>Login</button>
-        <i class="iconfont icon" @click="close()">&#xe641;</i>
-    </div>
+    <transition name="loginTransition">
+        <div class="Login" v-show="$store.state.isLoginShow">
+            <h1>LOGIN</h1>
+            <input type="text" placeholder="userName">
+            <input type="password" name="" placeholder="password">
+            <button>Login</button>
+            <i class="iconfont icon" @click="close()">&#xe641;</i>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -33,8 +35,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation-name: loginIn;
-    animation-duration:0.6s;
     h1{
         color: #fff;
         font-size: 3vw;
@@ -88,7 +88,13 @@ export default {
     .icon:hover{
         transform: rotate(360deg);
     }
-}    
+} 
+.loginTransition-enter-active {
+  animation: loginIn .5s;
+}   
+.loginTransition-leave-active {
+  animation: loginIn .5s reverse;
+}  
 @keyframes loginIn {
         0%{
             opacity: 0;

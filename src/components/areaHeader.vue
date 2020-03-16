@@ -19,7 +19,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 5%;
+        margin-bottom: 3%;
         .me-logo{
             width: 4vw;
             height: 4vw;
