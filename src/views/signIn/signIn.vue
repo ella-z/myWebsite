@@ -1,10 +1,10 @@
 <template>
-    <transition name="loginTransition">
-        <div class="Login" v-show="$store.state.isLoginShow">
-            <h1>LOGIN</h1>
-            <input type="text" placeholder="userName">
-            <input type="password" name="" placeholder="password">
-            <button>Login</button>
+    <transition name="signInTransition">
+        <div class="signIn" v-show="$store.state.isSignInShow">
+            <h1>Sign In</h1>
+            <input type="text" placeholder="Username">
+            <input type="password" name="" placeholder="Password">
+            <button>Sign In</button>
             <i class="iconfont icon" @click="close()">&#xe641;</i>
         </div>
     </transition>
@@ -17,14 +17,15 @@ export default {
     },
     methods:{
         close(){
-            this.$store.commit('changeLoginState',false);
+            this.$store.commit('changeSignInState',false);
+            //this.$store.commit('changeNavId',this.$store.state.navId);
         }
     }
 }
 </script>
 
 <style lang="scss">
-.Login{
+.signIn{
     position: fixed;
     top:calc(50vh - 12.5vw);
     left: calc(50vw - 17.5vw);
@@ -66,7 +67,7 @@ export default {
         height: 3vw;
         margin-top: 8%;
         background: none;
-        color: #fff;
+        color: #FF7B4D;
         border-radius: 20px;
         border:1px solid #FF7B4D;
         transition: 0.5s;
@@ -74,6 +75,7 @@ export default {
     }
     button:hover{
         background-color: #FF7B4D;
+        color: #fff;
     }
     .icon{
         position: absolute;
@@ -89,13 +91,13 @@ export default {
         transform: rotate(360deg);
     }
 } 
-.loginTransition-enter-active {
-  animation: loginIn .5s;
+.signInTransition-enter-active {
+  animation: signIn .5s;
 }   
-.loginTransition-leave-active {
-  animation: loginIn .5s reverse;
+.signInTransition-leave-active {
+  animation: signIn .5s reverse;
 }  
-@keyframes loginIn {
+@keyframes signIn {
         0%{
             opacity: 0;
             transform: translateY(-10%);

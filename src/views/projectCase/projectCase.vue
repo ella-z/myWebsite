@@ -92,7 +92,7 @@ export default {
                 color:#fff;
                 font-weight: 700;
                 border-radius: 20px;
-                margin-right: 2%;
+                margin: 0 2% 1% 0;
                 background-color: #454E93;
                 cursor: pointer;
                 transition: .3s;

@@ -1,12 +1,13 @@
 <template>
     <div>
         <navBar></navBar>
-        <login></login>
-        <Home id="Home"></Home>
-        <aboutMe id="aboutMe"></aboutMe>
-        <projectCase id="projectCase"></projectCase>
-        <note id="Note"></note>
-        <messageBoard id="messageBoard"></messageBoard>
+        <signIn id="signIn"></signIn>
+        <signUp id="signUp"></signUp>
+        <Home id="Home" class="navContent"></Home>
+        <aboutMe id="aboutMe" class="navContent"></aboutMe>
+        <projectCase id="projectCase" class="navContent"></projectCase>
+        <note id="Note" class="navContent"></note>
+        <messageBoard id="messageBoard" class="navContent"></messageBoard>
         <footer></footer>
     </div>
 </template>
@@ -16,8 +17,9 @@ import Home from '../views/Home';
 import projectCase from '../views/projectCase/projectCase';
 import aboutMe from '../views/aboutMe/aboutMe';
 import note from '../views/note/note';
-import login from '../views/Login/Login';
-import messageBoard from '../views/messageBoard'
+import signIn from '../views/signIn/signIn';
+import messageBoard from '../views/messageBoard';
+import signUp from '../views/signUp';
 
 export default {
     components:{
@@ -26,12 +28,26 @@ export default {
         projectCase,
         aboutMe,
         note,
-        login,
+        signIn,
+        signUp,
         messageBoard
     },
     data(){
         return{
-          //  navId:this.$store.state.navId
+          
+        }
+    },
+    mounted(){
+        //获取所有的锚点元素
+        const navContent = document.querySelectorAll('.navContent');
+        this.$store.commit('changeNavContent',navContent);
+
+        //页面刷新，显示区域回到顶部
+        window.onload = ()=>{
+            window.scrollTo({
+                'top': 0,
+                'behavior': 'smooth'
+            });
         }
     },
     computed:{
