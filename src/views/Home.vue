@@ -9,7 +9,12 @@
 export default {
     methods:{
         toAboutMe(){
-            this.$store.commit('changeNavId','aboutMe');
+            let pageId = document.querySelector('#aboutMe');
+                window.scrollTo({
+                    //滑动到指定位置
+                    'top': pageId.offsetTop - 35,
+                    'behavior': 'smooth'
+                });
         }
     }
 }
@@ -17,8 +22,8 @@ export default {
 
 <style lang="scss" scoped>
 .home{
-    height: 100vh;
     width: 100%;
+    height: 100vh;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -30,8 +35,8 @@ export default {
     }
     .start-button{
         cursor: pointer;
-        width: 15vw;
-        height: 3vw;
+        width: 150px;
+        height: 30px;
         outline:none;
         border:none;
         border-radius: 15px;

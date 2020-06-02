@@ -24,7 +24,7 @@ export default {
     font-family:"iconfont" !important;
     font-style:normal;
     -webkit-font-smoothing: antialiased;
-    font-size: 4vw;
+    font-size: 16px;
     color: #000;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
@@ -32,10 +32,14 @@ export default {
 *{
   padding:0;
   margin:0;
-  font-size: 1.2vw;
+  font-size: 12px;
   box-sizing:border-box;
   font-family:"Times New Roman",Georgia,Serif;
   list-style: none;
   user-select:none; //取消双击选中文字
+}
+.app{
+  min-width: 350px;
+  min-height: 100vh;
 }
 </style>

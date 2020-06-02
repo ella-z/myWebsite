@@ -38,6 +38,7 @@ export default {
       document.body.appendChild(style);
     },  
     addCount(){
+      //实现进度条动画加载的效果
       this.skillBar.forEach(element=>{
         let timer=setInterval(()=>{
           if(element.begin<element.count){
@@ -62,10 +63,10 @@ export default {
     list-style: none;
     position: relative;
     z-index: 1;
-    font-size: 1.3vw;
-    margin-bottom: 11%;
+    font-size: 15px;
+    margin-bottom: 13%;
     span{
-        font-size: 1.3vw; 
+        font-size: 15px; 
         font-weight: 700;
         background: linear-gradient(135deg, #454e93, #ff7b4d);
         background-clip: text;
@@ -78,11 +79,11 @@ export default {
     display: block;
     position: absolute;
     width: 100%;
-    height: 1.5vw;
+    height: 15px;
     border-radius: 10px;
     background: linear-gradient(90deg, #454e93, #ff7b4d);
     opacity: 0.5;
-    bottom: -1.9vw;
+    bottom: -20px;
   }
   /* li::before{
     height: 1.7vw;

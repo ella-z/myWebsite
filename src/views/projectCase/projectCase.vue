@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import caseCard from '../projectCase/components/caseCard';
+import caseCard from './components/caseCard';
 import areaHeader from '../../components/areaHeader'
 
 export default {
@@ -71,12 +71,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     nav{
           width: 100%;
-          height: 8%;
           margin-bottom: 2%;
           ul{
-            height: 100%;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -96,6 +95,9 @@ export default {
                 background-color: #454E93;
                 cursor: pointer;
                 transition: .3s;
+            }
+            li:hover{
+                background-color: #FF7B4D;
             }
             .liActive{
                 background-color: #FF7B4D;

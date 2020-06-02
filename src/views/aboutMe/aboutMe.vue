@@ -29,13 +29,13 @@
         <div class="self-photo-inner">
           <img src="../../assets/m.jpg" alt />
         </div>
-      </div>
+      </div> 
       <div class="skill-data">
         <span>我的技能</span>
         <div class="skill-data-bar">
           <progressBar :skillBar='skillBar'></progressBar>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 </template>
@@ -107,11 +107,6 @@ export default {
           content: "GitHub:ella-z",
           isShow: false
         },
-        {
-          icon: `&#xeac3;`,
-          content: "Steam:柠檬奶盖",
-          isShow: false
-        }
       ],
       skillBar: [
         {
@@ -130,6 +125,16 @@ export default {
           count: 70
         },
         {
+          title: "CSS",
+          begin:0,
+          count: 50
+        },
+          {
+          title: "CSS",
+          begin:0,
+          count: 50
+        },
+          {
           title: "CSS",
           begin:0,
           count: 50

@@ -69,19 +69,27 @@ export default {
             clientHeight:document.documentElement.clientHeight,
             clientWidth:document.documentElement.clientWidth,   
             isListShow:false,
+            oldScrollTop: 0, //记录上一次滚动结束后的滚动距离
+            scrollTop:0,// 记录当前的滚动距离
         }
     },
     methods:{
         navClick(title,index){
             if(title === 'signIn'){
                this.$store.commit('changeSignInState',true);
-                this.$store.commit('changeSignState',false);
+               this.$store.commit('changeSignState',false);
             }else if(title === 'signUp'){
                this.$store.commit('changeSignState',true);
                this.$store.commit('changeSignInState',false);
             }else{
                 this.$store.commit('changeNavId',title);
                 this.$store.commit('changeSignState',false);
+                let pageId = document.querySelector('#' + title);
+                window.scrollTo({
+                    //滑动到指定位置
+                    'top': pageId.offsetTop - 35,
+                    'behavior': 'smooth'
+                });
             }
             this.$store.commit('changeNavIndex',index);
             this.isListShow = !this.isListShow;
@@ -95,12 +103,15 @@ export default {
             const header = document.querySelector('header');
             header.classList.toggle('sticky',window.scrollY > 0);
 
+            this.scrollTop = window.scrollY;
+
             //监控屏幕是否滑动到锚点元素
             //获取所有的锚点元素
             const navContent = this.$store.state.navContent;
 
             //将所有锚点元素的offsetTop存储在数组中
             const offsetTopArr = [];
+
             navContent.forEach(element => {
                 offsetTopArr.push(element.offsetTop);
             });
@@ -111,7 +122,7 @@ export default {
             for(let i = 0 ;i<offsetTopArr.length;i++){
                 // 如果 scrollTop 大于等于第 i 个元素的 offsetTop 则说明 i-1 的内容已经完全不可见
                 // 那么此时导航索引就应该是 i 了
-                if((scrollTop+100) >= offsetTopArr[i]){
+                if((scrollTop+100) >= offsetTopArr[i] ){
                     this.$store.commit('changeNavIndex',i);
                 }
             }
@@ -160,17 +171,17 @@ export default {
     height: 0;
     transition: 0.5s;
     display:flex;
-    height: 4vw;
-    width: 100%;
+    height: 40px;
+    width: 100vw;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background:rgba(0,0,0,0);
-    padding: 0 5vw;
+    padding: 0 30px;
     .logo{
         cursor: pointer;
         transition: 0.6s;
-        font-size: 2vw;
+        font-size: 20px;
     }
     nav{
         .navList{
@@ -178,10 +189,10 @@ export default {
             display: flex;
             flex-direction: row;
             li{
-                margin-left: 4vw;
+                margin-left: 40px;
                 cursor: pointer;
                 transition: 0.6s;
-                font-size: 1.2vw;
+                font-size: 12px;
             }
             li:hover{
                 color: #FF7B4D;
@@ -193,7 +204,7 @@ export default {
     color:#454E93;
     cursor: pointer;
      .icon{
-        font-size: 2.5vw;
+        font-size: 28px;
         background-clip: text;
         color:transparent;
         background-image: linear-gradient(90deg,#454E93,#FF7B4D);
@@ -202,21 +213,20 @@ export default {
  .menuList{
      position: absolute;
      left: 0;
-     top: 3.2vw;
-     width: 100vw;
+     top: 35px;
+     width: 100%;
      height: 100vh;
      z-index:99999;
      background-color: #fff;
      li{
          cursor: pointer;
          width: 100%;
-         height: 8vw;
+         height: 50px;
          text-align: center;
-         line-height: 8vw;
+         line-height: 50px;
          background-color: #fff;
          color:black;
-         font-size: 2vw;
-        
+         font-size: 15px;
      }
      li:hover{
           color:#FF7B4D; 
@@ -234,8 +244,8 @@ export default {
  }
  .sticky{
      //window滑动后显示的样式。
-        padding: 1vw 2vw;
-        height: 3.2vw;
+        padding: 10px 18px;
+        height: 35px;
         background-color: #000;
         color: #fff;
 } 

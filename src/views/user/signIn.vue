@@ -3,18 +3,18 @@
         <div class="sign" v-show="isSignShow">
             <i class="iconfont icon" @click="closeSign()">&#xe602;</i>
             <div class="signForm">
-                <h1>Sign Up</h1>
+                <h1>Sign In</h1>
                 <div>
                     <div class="signForm-col1"> 
-                        <input type="text" name="userName" id="userName" required="required" autocomplete="off">
+                        <input type="text"  required="required" autocomplete="off">
                         <span class="text">Username</span>
                     </div>
                     <div class="signForm-col2"> 
-                        <input type="password" name="" id="password" required="required" autocomplete="off">
+                        <input type="password" required="required" autocomplete="off">
                         <span class="text">Password</span>
                     </div>
                 </div>
-                <button>Sign Up</button>
+                <button>Sign In</button>
             </div>
         </div>
     </transition>
@@ -28,12 +28,22 @@ export default {
     },
     computed:{
         isSignShow(){
-            return this.$store.state.isSignShow;
+            return this.$store.state.isSignInShow;
         }
     },
     methods:{
         closeSign(){
-            this.$store.commit('changeSignState',false);
+            this.$store.commit('changeSignInState',false);
+
+            //关闭signIn的时候改变navIndex为当前显示的区域的下标
+            const navId = this.$store.state.navId;
+            const navContent = this.$store.state.navContent;
+            for(let i = 0 ; i < navContent.length;i++)
+            {
+                if(navContent[i].id === navId){
+                    this.$store.commit('changeNavIndex',i);
+                }
+            }
         }
     }
 }
@@ -43,8 +53,8 @@ export default {
 .sign{
     position: fixed;
     width: 100vw;
-    height: calc(100vh - 3.2vw);
-    top: 3.2vw;
+    height: calc(100vh - 35px);
+    top: 35px;
     left: 0;
     z-index: 11;
     transform: translateX(0);
@@ -55,7 +65,7 @@ export default {
         font-size: 12px;
         font-weight: 700;
         position: absolute;
-        right: 5%;
+        left: 5%;
         top: 3%;
         cursor: pointer;
     }
@@ -66,7 +76,7 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        color:#FF7B4D;        
+        color:#454E93;        
         h1{
             font-size: 35px;
             font-family: "Microsoft Yahei";
@@ -80,7 +90,7 @@ export default {
             z-index: 12;
             width: 100%;
             font-size: 15px;
-             border-bottom: 1px solid #FF7B4D;
+             border-bottom: 1px solid #454E93;
         }
         .text{
             position: absolute;
@@ -104,24 +114,24 @@ export default {
         button{
             outline: none;
             cursor: pointer;
-            border: 1px solid #FF7B4D;
+            border: 1px solid #454E93;
             background-color: #fff;
-            color:#FF7B4D;
+            color:#454E93;
             padding: 8px 25px;
             border-radius: 15px;
             transition: .3s;
         }
         button:hover{
-            background-color: #FF7B4D;
+            background-color: #454E93;
             color: #fff;
         }
     }
 }
 .signTransition-enter-active{
-     transform: translateX(-100%);;
+     transform: translateX(100%);;
  }
 .signTransition-leave-active{
-     transform: translateX(-100%);;
+     transform: translateX(100%);;
  }
 
 </style>

@@ -18,7 +18,16 @@ export default {
     methods:{
         close(){
             this.$store.commit('changeSignInState',false);
-            //this.$store.commit('changeNavId',this.$store.state.navId);
+            
+            //关闭signIn的时候改变navIndex为当前显示的区域的下标
+            const navId = this.$store.state.navId;
+            const navContent = this.$store.state.navContent;
+            for(let i = 0 ; i < navContent.length;i++)
+            {
+                if(navContent[i].id === navId){
+                    this.$store.commit('changeNavIndex',i);
+                }
+            }
         }
     }
 }

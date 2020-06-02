@@ -12,14 +12,14 @@
     </div>
 </template>
 <script>
-import navBar from '../views/navBar';
-import Home from '../views/Home';
-import projectCase from '../views/projectCase/projectCase';
-import aboutMe from '../views/aboutMe/aboutMe';
-import note from '../views/note/note';
-import signIn from '../views/signIn/signIn';
-import messageBoard from '../views/messageBoard';
-import signUp from '../views/signUp';
+import navBar from './navBar';
+import Home from './Home';
+import projectCase from './projectCase/projectCase';
+import aboutMe from './aboutMe/aboutMe';
+import note from './note/note';
+import signIn from './user/signIn';
+import messageBoard from './messageBoard/messageBoard';
+import signUp from './user/signUp';
 
 export default {
     components:{
@@ -50,26 +50,14 @@ export default {
             });
         }
     },
-    computed:{
-        navId(){
-            return this.$store.state.navId;
-        }
-    },
-    watch:{
-        navId(n){
-            let pageId = document.querySelector('#' + n);
-            window.scrollTo({
-                //滑动到指定位置
-                'top': pageId.offsetTop - 35,
-                'behavior': 'smooth'
-            })
-        }
-    },
     
 }
 </script>
 
 <style lang="scss" scoped>
+#projectCase #Note{
+    margin-bottom: 50px;
+}
 footer{
     width: 100%;
     height: 100px;
