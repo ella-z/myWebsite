@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     isSignInShow:false,
     isSignShow:false,
+    isAddKeyframe:false, //是否给progressBar添加了Keyframe
     navId:'Home', //导航栏的标题
     navIndex:0, //导航栏的下标
     navContent:'',
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     changeNavContent(state,res){
       state.navContent = res;
+    },
+    changeKeyframeState(state){
+      state.isAddKeyframe = true;
     }
   },
   actions: {},

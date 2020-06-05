@@ -1,28 +1,42 @@
 <template>
-    <div class="messageBoard">
-        <areaHeader :headerTitle='messageBoard' :headerLogo='headerLogo'></areaHeader>
-    </div>
+  <div class="messageBoard">
+    <areaHeader :headerTitle="messageBoard" :headerLogo="headerLogo"></areaHeader>
+      <comments class="comments" commentsArray='10'></comments>
+      <board></board>
+  </div>
 </template>
 
 <script>
-import areaHeader from '../../components/areaHeader';
+import areaHeader from "../../components/areaHeader";
+import comments from "../../components/comments";
+import board from "../../components/board";
 
 export default {
-    components:{
-        areaHeader
-    },
-    data(){
-        return{
-            messageBoard:'Message Board',
-            headerLogo:'&#xe65e;'
-        }
-    }
-}
+  components: {
+    areaHeader,
+    comments,
+    board
+  },
+  data() {
+    return {
+      messageBoard: "Message Board",
+      headerLogo: "&#xe65e;"
+    };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.messageBoard{
-    width: 100%;
-    min-height: 100vh;
+.messageBoard {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .comments {
+    width: 60%;
+    height: 400px;
+  }
 }
 </style>

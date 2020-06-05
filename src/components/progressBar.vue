@@ -36,6 +36,7 @@ export default {
         style.appendChild(text); // 把伪类样式添加样式表
       });
       document.body.appendChild(style);
+      this.$store.commit('changeKeyframeState',true);
     },  
     addCount(){
       //实现进度条动画加载的效果
@@ -51,8 +52,10 @@ export default {
     }
   },
   mounted() { 
-    this.addKeyframe();
     this.addCount();
+    if(this.$store.state.isAddKeyframe===false){
+       this.addKeyframe();
+    }
   }
 };
 </script>

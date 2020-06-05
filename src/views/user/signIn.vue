@@ -79,11 +79,8 @@ export default {
         color:#454E93;        
         h1{
             font-size: 35px;
-            font-family: "Microsoft Yahei";
         }
         input{
-            border: none;
-            outline: none;
             background-color: transparent;
             padding: 5px;
             position: absolute;
@@ -112,7 +109,6 @@ export default {
             left: -10px;
         }
         button{
-            outline: none;
             cursor: pointer;
             border: 1px solid #454E93;
             background-color: #fff;

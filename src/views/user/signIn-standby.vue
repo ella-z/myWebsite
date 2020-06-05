@@ -51,10 +51,6 @@ export default {
         font-weight: 500;
         margin:5% 0;
     }
-    input,button{
-        border:none;
-        outline: none;
-    }
     input{        
         width: 16vw;
         height: 3vw;

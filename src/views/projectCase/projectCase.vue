@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss" scoped>
  .projectCase{
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -83,8 +83,9 @@ export default {
             justify-content: center;
             flex-wrap: wrap;
             li{
-                width: 75px;
+                width: 95px;
                 height: 25px;
+                padding: 0 5px; 
                 line-height: 25px;
                 list-style: none;
                 text-align: center;
@@ -106,7 +107,7 @@ export default {
       }
     .projectCase-content{
       width: 80%;
-      height: 60%;
+      height: 400px;
       overflow: scroll;
       scrollbar-width: none;    
       .projectCase-content-card{

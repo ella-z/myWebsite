@@ -37,8 +37,6 @@ export default {
         cursor: pointer;
         width: 150px;
         height: 30px;
-        outline:none;
-        border:none;
         border-radius: 15px;
         background-image: linear-gradient(90deg,#454E93,#CC62AB,#FF7B4D,#454E93);
         //background-image: linear-gradient(90deg,#454E93,#FF7B4D,#454E93);
