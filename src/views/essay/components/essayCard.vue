@@ -1,12 +1,17 @@
 <template>
   <div class="essayCard">
     <div class="essayCard-content">
-      <h1 class="essayCard-title">title</h1>
+      <div class="essayCard-title">
+        <h1>title</h1>
+        <tag class="tag"></tag>
+      </div>
+
       <div class="essayCard-intro">
         12eqwewdwadawda往dasgdukwahdkwabdkuawbdukawdwabkdbwakdbkwadkawdbjawbdkwabdkadbjwadbjawk
         dwaudukwadukwahdkhwakudhawkudwdwadawdawdwadwadawdadawwddw就问你aqeqweqwewq3
       </div>
       <div class="essayCard-button">
+        <like></like>
         <button @click="toEssayDetail">
           more
           <span></span>
@@ -17,10 +22,17 @@
 </template>
 
 <script>
+import tag from "../../../components/tag";
+import like from "../../../components/like";
+
 export default {
-  methods:{
-    toEssayDetail(){
-      this.$router.push('/essayDetail')
+  components: {
+    tag,
+    like
+  },
+  methods: {
+    toEssayDetail() {
+      this.$router.push("/essayDetail");
     }
   }
 };
@@ -47,8 +59,16 @@ export default {
     transition: 0.5s;
     transition-delay: 0.1s;
     .essayCard-title {
-      width: 90%;
-      font-size: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding: 0 10px;
+      h1 {
+        font-size: 30px;
+        margin: 0;
+        margin-right: 10px;
+      }
     }
     .essayCard-intro {
       width: 95%;
@@ -59,11 +79,14 @@ export default {
     }
     .essayCard-button {
       width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       button {
         width: 70px;
         height: 25px;
         background: transparent;
-        float: right;
         cursor: pointer;
         position: relative;
         overflow: hidden;

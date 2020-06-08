@@ -1,7 +1,7 @@
 <template>
-  <div class="article">
+  <div class="essay ">
     <areaHeader :headerTitle="headerTitle" :headerLogo="headerLogo"></areaHeader>
-    <nav>
+    <nav class="bottom-reveal">
       <div
         v-for="(item,index) in navData"
         :key="index"
@@ -16,7 +16,7 @@
         </ul>
       </div>
     </nav>
-    <div class="article-content">
+    <div class="essay-content bottom-reveal">
       <essayCard></essayCard>
       <essayCard></essayCard>
       <essayCard></essayCard>

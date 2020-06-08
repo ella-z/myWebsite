@@ -2,7 +2,7 @@
   <div class="aboutMe">
     <areaHeader :headerTitle="headerTitle" :headerLogo="headerLogo"></areaHeader>
     <div class="me-content">
-      <div class="self-intro">
+      <div class="self-intro bottom-reveal">
         <ul>
           <li v-for="(item,index) in selfIntroData" :key="index">
             <span
@@ -12,7 +12,7 @@
             <p :class="{'p-show':item.isShow}">{{item.article}}</p>
           </li>
         </ul>
-        <div class="self-icon">
+        <div class="self-icon ">
           <div class="self-icon-outer" v-for="(item,index) in selfIconData" :key="index">
             <i
               class="iconfont self-icon-img"
@@ -24,13 +24,13 @@
           </div>
         </div>
       </div>
-      <div class="self-photo">
+      <div class="self-photo bottom-reveal delay-reveal">
         <div class="self-photo-outer"></div>
         <div class="self-photo-inner">
           <img src="../../assets/m.jpg" alt />
         </div>
       </div> 
-      <div class="skill-data">
+      <div class="skill-data bottom-reveal delay-reveal-ones">
         <span>我的技能</span>
         <div class="skill-data-bar">
           <progressBar :skillBar='skillBar'></progressBar>

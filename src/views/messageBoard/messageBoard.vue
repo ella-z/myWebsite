@@ -1,8 +1,8 @@
 <template>
-  <div class="messageBoard">
-    <areaHeader :headerTitle="messageBoard" :headerLogo="headerLogo"></areaHeader>
-      <comments class="comments" commentsArray='10'></comments>
-      <board></board>
+  <div class="messageBoard ">
+    <areaHeader :headerTitle="messageBoard" :headerLogo="headerLogo" ></areaHeader>
+      <comments class="comments bottom-reveal" commentsArray='10'></comments>
+      <board class="bottom-reveal"></board>
   </div>
 </template>
 

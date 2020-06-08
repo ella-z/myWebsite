@@ -1,7 +1,7 @@
 <template>
     <div class="home">
-        <img src="../assets/ZHANGZIQING.png" alt="">
-        <button class="start-button" @click="toAboutMe()">Start</button>
+        <img src="../assets/ZHANGZIQING.png" alt="" class="bottom-reveal">
+        <button class="start-button bottom-reveal delay-reveal" @click="toAboutMe()">Start</button>
     </div>
 </template>
 

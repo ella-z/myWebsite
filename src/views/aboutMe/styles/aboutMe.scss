@@ -1,49 +1,60 @@
-.aboutMe{
+.aboutMe {
     width: 100%;
     min-height: 100vh;
-    background-color: #fff; 
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    .me-content{
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+    .me-content {
         width: 90%;
         display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         justify-items: center;
         align-items: center;
-        .skill-data{     
+        .skill-data {
             width: 100%;
             height: 300px;
             padding-right: 20px;
-            span{
-                 font-size: 20px; 
-                 display: block;
-                 margin-bottom: 3%;  
+            span {
+                font-size: 20px;
+                display: block;
+                margin-bottom: 3%;
             }
-            .skill-data-bar{
+            .skill-data-bar {
                 height: 210px;
                 overflow: scroll;
-                scrollbar-width: none;  
-            } 
-            .skill-data-bar::-webkit-scrollbar {display:none}
+                scrollbar-width: none;
+            }
+            .skill-data-bar::-webkit-scrollbar {
+                display: none;
+            }
         }
-       
-        .self-intro{
+
+        .self-intro {
             width: 100%;
             height: 250px;
             padding-left: 20px;
             position: relative;
-            ul::-webkit-scrollbar {display:none} //隐藏滚动条(只支持chrome浏览器) 
-            ul{
+
+            padding: 0;
+            ul::-webkit-scrollbar {
+                display: none;
+            } //隐藏滚动条(只支持chrome浏览器)
+            ul {
                 width: 100%;
                 height: 200px;
                 overflow: scroll;
+
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                li{
+                li {
                     list-style: none;
                     margin-bottom: 6%;
-                    span{
+                    span {
                         display: block;
                         width: 50px;
                         height: 20px;
@@ -51,56 +62,56 @@
                         text-align: center;
                         cursor: pointer;
                         color: #000;
-                        border:1px solid black;
+                        border: 1px solid black;
                         font-size: 15px;
-                        border-radius: 10px; 
+                        border-radius: 10px;
                         overflow: hidden;
                         transition: 0.3s;
                     }
-                    p{
+                    p {
                         margin-top: 2%;
                         width: 100%;
-                        font-size: 10px;                      
-                        word-break:break-all;
-                        text-indent:20px;
+                        font-size: 10px;
+                        word-break: break-all;
+                        text-indent: 20px;
                         display: none;
-                        line-height: 15px;
+                        line-height: 20px;
                     }
-                    .span-show{
-                        border:none;
-                        color:#fff;
-                        background-image: linear-gradient(to right,#454E93,#FF7B4D);
+                    .span-show {
+                        border: none;
+                        color: #fff;
+                        background-image: linear-gradient(to right, #454e93, #ff7b4d);
                     }
-                    .p-show{
+                    .p-show {
                         display: block;
                     }
                 }
             }
-            .self-icon{
+            .self-icon {
                 position: absolute;
-                bottom: 8px;                
+                bottom: 8px;
                 display: flex;
                 flex-direction: row;
-                .self-icon-outer{
+                .self-icon-outer {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    margin:0 15%;
-                    .self-icon-img{
+                    margin: 0 15%;
+                    .self-icon-img {
                         display: inline-block;
                         position: relative;
-                        z-index:1;
+                        z-index: 1;
                         width: 25px;
                         height: 25px;
                         text-align: center;
                         line-height: 25px;
-                        cursor:pointer;
+                        cursor: pointer;
                         font-size: 20px;
                         border-radius: 50%;
                         color: #fff;
-                        background-image: linear-gradient(to bottom,#454E93,#FF7B4D);
+                        background-image: linear-gradient(to bottom, #454e93, #ff7b4d);
                     }
-                    .self-icon-content{
+                    .self-icon-content {
                         position: absolute;
                         text-align: center;
                         opacity: 0;
@@ -108,7 +119,7 @@
                         width: 100px;
                         background-color: #fff;
                     }
-                    .show{
+                    .show {
                         opacity: 1;
                         transform: translateY(30px);
                         transition: transform 1s, opacity 2.5s;
@@ -128,45 +139,42 @@
                         border-image: linear-gradient(to right,#454E93,#FF7B4D) 1;
                     }*/
                 }
-
             }
-
         }
-        .self-photo{
+        .self-photo {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
             width: 180px;
             height: 180px;
-         .self-photo-outer{
-            width: 90%;
-            height: 90%;
-            background-image: linear-gradient(90deg,#454E93,#CC62AB,#E8E5E0,#FF7B4D,#454E93);
-            border-radius: 50%;
-            animation: rotate 3s linear infinite;
-        }
-        @keyframes rotate {
-            to{
-                transform: rotate(360deg)
-            }
-        }
-        .self-photo-inner{
-            position:absolute;
-            width: 156px;
-            height: 156px;
-            border-radius: 50%;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            img{
-                width: 150px;
-                height: 150px;
+            .self-photo-outer {
+                width: 90%;
+                height: 90%;
+                background-image: linear-gradient(90deg, #454e93, #cc62ab, #e8e5e0, #ff7b4d, #454e93);
                 border-radius: 50%;
-                
+                animation: rotate 3s linear infinite;
             }
-        }           
+            @keyframes rotate {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .self-photo-inner {
+                position: absolute;
+                width: 156px;
+                height: 156px;
+                border-radius: 50%;
+                background-color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                }
+            }
         }
     }
 }

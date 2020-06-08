@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 .comments {
   width: 60%;
-  height: 400px;
+  height: 300px;
   margin-bottom: 20px;
   overflow: scroll;
   scrollbar-width: none;
@@ -31,7 +31,7 @@ export default {
     grid-template-columns: 2fr 8fr;
     justify-items: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #e1e1e2;
     img {
       width: 50px;

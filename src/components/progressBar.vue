@@ -14,7 +14,7 @@ export default {
   props: ["skillBar"],
   data() {
     return {
-      count:0
+      count: 0
     };
   },
   methods: {
@@ -36,25 +36,25 @@ export default {
         style.appendChild(text); // 把伪类样式添加样式表
       });
       document.body.appendChild(style);
-      this.$store.commit('changeKeyframeState',true);
-    },  
-    addCount(){
+      this.$store.commit("changeKeyframeState", true);
+    },
+    addCount() {
       //实现进度条动画加载的效果
-      this.skillBar.forEach(element=>{
-        let timer=setInterval(()=>{
-          if(element.begin<element.count){
-             element.begin++;
-          }else{
+      this.skillBar.forEach(element => {
+        let timer = setInterval(() => {
+          if (element.begin < element.count) {
+            element.begin++;
+          } else {
             clearInterval(timer);
           }
-        },1200/element.count);
+        }, 1200 / element.count);
       });
     }
   },
-  mounted() { 
+  mounted() {
     this.addCount();
-    if(this.$store.state.isAddKeyframe===false){
-       this.addKeyframe();
+    if (this.$store.state.isAddKeyframe === false) {
+      this.addKeyframe();
     }
   }
 };
@@ -62,18 +62,22 @@ export default {
 
 <style lang="scss" scoped>
 #progressBar {
-  li {
-    list-style: none;
-    position: relative;
-    z-index: 1;
-    font-size: 15px;
-    margin-bottom: 13%;
-    span{
-        font-size: 15px; 
+  ul {
+    margin:0;
+    padding: 0;
+    li {
+      list-style: none;
+      position: relative;
+      z-index: 1;
+      font-size: 15px;
+      margin-bottom: 13%;
+      span {
+        font-size: 15px;
         font-weight: 700;
         background: linear-gradient(135deg, #454e93, #ff7b4d);
         background-clip: text;
         color: transparent;
+      }
     }
   }
   li::before,

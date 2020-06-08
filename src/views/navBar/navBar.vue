@@ -1,7 +1,9 @@
 <template>
   <div>
     <header :class="scrollTop > 0?'sticky':''">
-      <div class="logo">LOGO</div>
+      <div class="logo">
+        <logo></logo>
+      </div>
       <nav v-show="!isBurgerMenuShow">
         <ul class="navList">
           <li
@@ -33,7 +35,11 @@
 </template>
 
 <script>
+import logo from './components/logo'
 export default {
+  components:{
+    logo
+  },
   data() {
     return {
       areaNav: [
@@ -100,7 +106,7 @@ export default {
       this.isListShow = !this.isListShow;
     },
     onscroll() {
-        this.scrollTop = window.scrollY;
+      this.scrollTop = window.scrollY;
 
       //监控屏幕是否滑动到锚点元素
       //获取所有的锚点元素
@@ -216,7 +222,10 @@ header {
   height: 100vh;
   z-index: 99999;
   background-color: #fff;
+  margin: 0;
+  padding: 0;
   li {
+    list-style: none;
     cursor: pointer;
     width: 100%;
     height: 50px;

@@ -1,5 +1,5 @@
 <template>
-    <div class="projectCase">
+    <div class="projectCase bottom-reveal">
         <areaHeader :headerTitle='headerTitle' :headerLogo='headerLogo'></areaHeader>
             <nav>
                 <ul>
@@ -10,7 +10,7 @@
                     :class="active==index?'liActive':''">{{item.title}}</li>
                 </ul>
             </nav>
-        <div class="projectCase-content">
+        <div class="projectCase-content bottom-reveal">
             <div class="projectCase-content-card">
                 <caseCard></caseCard>
                 <caseCard></caseCard>
@@ -47,7 +47,7 @@ export default {
                     title:"动画"
                 },
                 {
-                    title:"Canvas动画"
+                    title:"组件"
                 },
                 {
                     title:"小程序"
@@ -77,6 +77,8 @@ export default {
           margin-bottom: 2%;
           ul{
             width: 100%;
+            margin:0;
+            padding: 0;
             display: flex;
             flex-direction: row;
             align-items: center;

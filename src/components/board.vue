@@ -43,6 +43,7 @@ export default {};
   }
   .board-button:hover {
     color: #fff;
+    font-weight: 300;
   }
   .board-button::before {
     content: "";
@@ -52,13 +53,12 @@ export default {};
     z-index: -1;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
-    transform: translateX(-100%);
+    transform: translateY(100%);
     transition: 0.3s all;
     background-image: linear-gradient(90deg, #454e93, #ff7b4d);
   }
   .board-button:hover::before {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 </style>

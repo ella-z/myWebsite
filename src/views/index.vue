@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index">
     <navBar></navBar>
     <signIn id="signIn"></signIn>
     <signUp id="signUp"></signUp>
@@ -8,11 +8,12 @@
     <projectCase id="projectCase" class="navContent"></projectCase>
     <essay id="Essay" class="navContent"></essay>
     <messageBoard id="messageBoard" class="navContent"></messageBoard>
+    <backTop :visable="visable"></backTop>
     <footer></footer>
   </div>
 </template>
 <script>
-import navBar from "./navBar";
+import navBar from "./navBar/navBar";
 import Home from "./Home";
 import projectCase from "./projectCase/projectCase";
 import aboutMe from "./aboutMe/aboutMe";
@@ -20,6 +21,8 @@ import essay from "./essay/essay";
 import signIn from "./user/signIn";
 import messageBoard from "./messageBoard/messageBoard";
 import signUp from "./user/signUp";
+import backTop from "../components/backTop";
+import scrollReveal from "scrollreveal";
 
 export default {
   components: {
@@ -30,10 +33,37 @@ export default {
     essay,
     signIn,
     signUp,
+    backTop,
     messageBoard
   },
   data() {
-    return {};
+    return {
+      visable: false, //监控backTop是否可见
+      scrollReveal: scrollReveal()
+    };
+  },
+  methods: {
+    addScrollReveal() {
+      this.scrollReveal.reveal(".bottom-reveal", {
+        distance: "100px",
+        origin: "bottom",
+        duration: 1000,
+        easing: "ease-out"
+      });
+      this.scrollReveal.reveal(".delay-reveal", {
+        delay: 500
+      });
+      this.scrollReveal.reveal(".delay-reveal-ones", {
+        delay: 1000
+      });
+    },
+    onscroll() {
+      if (window.scrollY > 0) {
+        this.visable = true;
+      } else {
+        this.visable = false;
+      }
+    }
   },
   mounted() {
     //获取所有的锚点元素
@@ -47,9 +77,18 @@ export default {
         behavior: "smooth"
       });
     };
+
+    //监控屏幕是否滚动
+    window.addEventListener("scroll", this.onscroll);
+
+    //根据滑动，来显示组件
+    this.addScrollReveal();
   }
 };
 </script>
+
+<style lang="scss">
+</style>
 
 <style lang="scss" scoped>
 .navContent {
