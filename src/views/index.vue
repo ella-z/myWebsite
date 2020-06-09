@@ -1,8 +1,6 @@
 <template>
   <div class="index">
     <navBar></navBar>
-    <signIn id="signIn"></signIn>
-    <signUp id="signUp"></signUp>
     <Home id="Home" class="navContent"></Home>
     <aboutMe id="aboutMe" class="navContent"></aboutMe>
     <projectCase id="projectCase" class="navContent"></projectCase>
@@ -18,9 +16,7 @@ import Home from "./Home";
 import projectCase from "./projectCase/projectCase";
 import aboutMe from "./aboutMe/aboutMe";
 import essay from "./essay/essay";
-import signIn from "./user/signIn";
 import messageBoard from "./messageBoard/messageBoard";
-import signUp from "./user/signUp";
 import backTop from "../components/backTop";
 import scrollReveal from "scrollreveal";
 
@@ -31,8 +27,6 @@ export default {
     projectCase,
     aboutMe,
     essay,
-    signIn,
-    signUp,
     backTop,
     messageBoard
   },
@@ -44,6 +38,7 @@ export default {
   },
   methods: {
     addScrollReveal() {
+      //配置组件动态显示
       this.scrollReveal.reveal(".bottom-reveal", {
         distance: "100px",
         origin: "bottom",

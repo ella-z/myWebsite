@@ -1,6 +1,5 @@
 <template>
-    <transition name="signTransition">
-        <div class="sign" v-show="isSignShow">
+        <div class="sign">
             <i class="iconfont icon" @click="closeSign()">&#xe602;</i>
             <div class="signForm">
                 <h1>Sign In</h1>
@@ -17,24 +16,11 @@
                 <button>Sign In</button>
             </div>
         </div>
-    </transition>
 </template>
 <script>
 export default {
-    data(){
-        return{
-           
-        }
-    },
-    computed:{
-        isSignShow(){
-            return this.$store.state.isSignInShow;
-        }
-    },
     methods:{
         closeSign(){
-            this.$store.commit('changeSignInState',false);
-
             //关闭signIn的时候改变navIndex为当前显示的区域的下标
             const navId = this.$store.state.navId;
             const navContent = this.$store.state.navContent;
@@ -44,6 +30,7 @@ export default {
                     this.$store.commit('changeNavIndex',i);
                 }
             }
+            this.$router.go(-1);
         }
     }
 }
@@ -51,22 +38,19 @@ export default {
 
 <style lang="scss" scoped>
 .sign{
-    position: fixed;
-    width: 100vw;
-    height: calc(100vh - 35px);
+    width: 100%;
+    height: 100vh;
     top: 35px;
     left: 0;
     z-index: 11;
-    transform: translateX(0);
-    transition: transform .3s;
      background-color: #fff;
     .icon{
         color: #000;
         font-size: 12px;
         font-weight: 700;
         position: absolute;
-        left: 5%;
-        top: 3%;
+        right: 50px;
+        top: 30px;
         cursor: pointer;
     }
     .signForm{        
@@ -78,6 +62,7 @@ export default {
         align-items: center;
         color:#454E93;        
         h1{
+            margin:0;
             font-size: 35px;
         }
         input{
@@ -123,11 +108,5 @@ export default {
         }
     }
 }
-.signTransition-enter-active{
-     transform: translateX(100%);;
- }
-.signTransition-leave-active{
-     transform: translateX(100%);;
- }
 
 </style>

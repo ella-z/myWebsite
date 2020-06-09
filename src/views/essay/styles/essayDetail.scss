@@ -1,48 +1,97 @@
 .essayDetail {
     width: 100%;
     min-height: 100vh;
-    .back-button {
-        width: 65px;
-        height: 30px;
-        border-radius: 15px;
-        cursor: pointer;
-        text-align: center;
-        line-height: 30px;
-        position: absolute;
-        z-index: 1;
-        top: 20px;
-        left: 10px;
-        background-color: transparent;
-        overflow: hidden;
-        .icon {
-            display: inline-block;
-            font-size: 30px;
-            transform: translateX(20%);
-            transition: 0.3s ease-in-out;
-        }
-    }
-    .back-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
+    nav {
         width: 100%;
-        height: 100%;
-        background-image: linear-gradient(90deg, #454e93, #cc62ab, #ff7b4d, #454e93);
-        background-size: 400%;
-        animation: animate 2s linear infinite;
-        transform: translateX(-100%);
-        transition: 0.3s all;
-    }
-    .back-button:hover {
-        .icon {
+        height: 40px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 9999;
+        transition: 0.5s;
+        background-color: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        .back-button {
+            width: 65px;
+            height: 28px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 28px;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            overflow: hidden;
+            .icon {
+                color: #000;
+                display: inline-block;
+                font-size: 27px;
+                transform: translateX(20%);
+                transition: 0.3s ease-in-out;
+            }
+        }
+        .back-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(90deg, #454e93, #cc62ab, #ff7b4d, #454e93);
+            background-size: 400%;
+            animation: animate 2s linear infinite;
+            transform: translateX(-100%);
+            transition: 0.3s all;
+        }
+        .back-button:hover {
+            .icon {
+                transform: translateX(0);
+                color: #fff;
+            }
+        }
+        .back-button:hover::before {
             transform: translateX(0);
-            color: #fff;
+        }
+        .navList {
+            margin: 0;
+            padding: 0;
+            li {
+                cursor: pointer;
+                display: inline-block;
+                color: #000;
+                list-style: none;
+                margin-right: 50px;
+                font-size: 12px;
+            }
+            li:last-child {
+                margin-right: 10px;
+            }
+            li:hover{
+                color:#ff7b4d;
+            }
         }
     }
-    .back-button:hover::before {
-        transform: translateX(0);
+    .sticky {
+        //window滑动后显示的样式。
+        padding: 10px 9px;
+        width: 100%;
+        height: 35px;
+        background-color: #000;
+        .back-button {
+            .icon{
+                 color: #fff;
+            }
+        }
+        .navList{
+            li{
+                color:#fff;
+            }
+        }
     }
     .backTop-button {
         width: 35px;

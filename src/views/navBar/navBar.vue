@@ -83,12 +83,10 @@ export default {
   methods: {
     navClick(title, index) {
       if (title === "signIn") {
-        this.$store.commit("changeSignInState", true);
-        this.$store.commit("changeSignState", false);
+        this.$router.push({name:'signIn'});
       } else if (title === "signUp") {
-        this.$store.commit("changeSignState", true);
-        this.$store.commit("changeSignInState", false);
-      } else {
+        this.$router.push({name:'signUp'});
+      } else { 
         this.$store.commit("changeNavId", title);
         this.$store.commit("changeSignState", false);
         let pageId = document.querySelector("#" + title);

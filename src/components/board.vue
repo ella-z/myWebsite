@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <textarea class="board-textarea"></textarea>
+    <textarea class="board-textarea" placeholder="请留言"></textarea>
     <button class="board-button">submit</button>
   </div>
 </template>

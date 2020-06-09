@@ -1,8 +1,14 @@
 <template>
   <div class="essayDetail">
-    <div class="back-button" @click="goback()">
-      <i class="icon iconfont">&#xe632;</i>
-    </div>
+    <nav :class="scrollTop >0 ?'sticky':''">
+      <div class="back-button" @click="goback()">
+        <i class="icon iconfont">&#xe632;</i>
+      </div>
+      <ul class="navList">
+        <li @click="toSignIn()">Sign In</li>
+        <li @click="toSignUp()">Sign Up</li>
+      </ul>
+    </nav>
     <div class="backTop-button" @click="backTop()" v-show="scrollTop">
       <i class="icon iconfont">&#xe630;</i>
     </div>
@@ -52,6 +58,12 @@ export default {
         behavior: "smooth"
       });
     },
+    toSignIn(){
+      this.$router.push({name:'signIn'});
+    },
+    toSignUp(){
+      this.$router.push({name:'signUp'});
+    },
     onscroll() {
       this.scrollTop = window.scrollY;
     },
@@ -65,11 +77,11 @@ export default {
       let data = {
         subfield: false, //单双栏模式
         defaultOpen: "preview", //edit： 默认展示编辑区域 ， preview： 默认展示预览区域
-        editable: false,   //是否可编辑
+        editable: false, //是否可编辑
         toolbarsFlag: false, //工具栏
         scrollStyle: true
       };
-      return data; 
+      return data;
     }
   },
   created() {
