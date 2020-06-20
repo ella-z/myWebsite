@@ -9,7 +9,7 @@
 <script>
 import areaHeader from "../../components/areaHeader";
 import comments from "../../components/comments";
-import board from "../../components/board";
+import board from "./components/board";
 
 export default {
   components: {

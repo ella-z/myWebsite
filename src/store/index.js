@@ -5,12 +5,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isSignInShow:false,
-    isSignShow:false,
     isAddKeyframe:false, //是否给progressBar添加了Keyframe
     navId:'Home', //导航栏的标题
     navIndex:0, //导航栏的下标
     navContent:'',
+    isLogin:false, // 是否有登录
+    errorText:'', // 提示的信息
+    iserror:false //是否显示提示
   },
   mutations: {
     changeSignState(state,res){
@@ -30,6 +31,15 @@ export default new Vuex.Store({
     },
     changeKeyframeState(state){
       state.isAddKeyframe = true;
+    },
+    changeloginState(state,res){
+      state.isLogin = res;
+    },
+    changeerrorText(state,res){
+      state.errorText = res;
+    },
+    changeerrorState(state,res){
+      state.iserror = res;
     }
   },
   actions: {},

@@ -22,7 +22,7 @@ export default {
 .comments {
   width: 60%;
   height: 300px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   overflow: scroll;
   scrollbar-width: none;
   .comment {

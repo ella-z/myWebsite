@@ -7,7 +7,17 @@
     <essay id="Essay" class="navContent"></essay>
     <messageBoard id="messageBoard" class="navContent"></messageBoard>
     <backTop :visable="visable"></backTop>
-    <footer></footer>
+    <footer>
+      <div class="footer-content">
+        <span class="content-what">W</span>
+        <span class="content-why">W</span>
+        <span class="content-how">H</span>
+      </div>
+      <div class="footer-info">
+        <span>粤 ICP 备 19162536 号</span>
+        <span>designed and developed by Ella Zhang</span>
+      </div>
+    </footer>
   </div>
 </template>
 <script>
@@ -53,6 +63,7 @@ export default {
       });
     },
     onscroll() {
+      //监控页面是否向下滑动
       if (window.scrollY > 0) {
         this.visable = true;
       } else {
@@ -78,20 +89,75 @@ export default {
 
     //根据滑动，来显示组件
     this.addScrollReveal();
+
+    //判断用户是否登录
+    if (this.$cookies.isKey("userInfo")) {
+      this.$store.commit("changeloginState", true);
+    }
   }
 };
 </script>
 
-<style lang="scss">
-</style>
 
 <style lang="scss" scoped>
-.navContent {
-  padding: 3% 0;
-}
-footer {
+.index {
   width: 100%;
-  height: 100px;
-  background-color: #000;
+  min-height: 100vh;
+
+  .navContent {
+    padding: 3% 0;
+  }
+  footer {
+    width: 100%;
+    height: 200px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #fff;
+    position: relative;
+    display: grid;
+    grid-template-rows: 8fr 2fr;
+    .footer-content {
+      cursor: pointer;
+      justify-self: center;
+      align-self: center;
+      span {
+        display: inline-block;
+        font-size: 5vw;
+        transition: 0.5s all;
+      }
+    }
+    .footer-content:hover {
+      .content-what {
+        transform: translateX(-100px);
+      }
+      .content-how {
+        transform: translateX(100px);
+      }
+      .content-why::after {
+        content: "HY";
+      }
+      .content-what::after {
+        content: "HAT";
+      }
+      .content-how::after {
+        content: "OW";
+      }
+    }
+    .footer-info {
+      span {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+      }
+    }
+  }
+  footer::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+    background-image: linear-gradient(90deg, #454e93, #ff7b4d);
+  }
 }
 </style>

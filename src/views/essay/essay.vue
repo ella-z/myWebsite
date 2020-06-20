@@ -22,7 +22,7 @@
       <essayCard></essayCard>
       <essayCard></essayCard>
       <essayCard></essayCard>
-      <essayCard></essayCard>
+      <essayCard></essayCard> 
       <essayCard></essayCard>
       <essayCard></essayCard>
     </div>

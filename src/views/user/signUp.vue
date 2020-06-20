@@ -27,7 +27,11 @@
           </div>
           <div class="signForm-col2">
             <input type="password" id="password" required="required" autocomplete="off" />
-            <span class="text">密码</span>
+            <span class="text">请输入密码</span>
+          </div>
+          <div class="signForm-col3">
+            <input type="password" id="passwordAgain" required="required" autocomplete="off" />
+            <span class="text">再次输入密码</span>
           </div>
           <div class="signForm-button">
             <button @click="toNext()">下一页</button>
@@ -43,7 +47,11 @@
               <input type="password" required="required" autocomplete="off" />
               <span class="text">验证码</span>
             </div>
-            <button @click="getVerificationCode()" ref="vCode" :class="canClick?'':'button-click'">获取验证码</button>
+            <button
+              @click="getVerificationCode()"
+              ref="vCode"
+              :class="canClick?'':'button-click'"
+            >获取验证码</button>
           </div>
           <div class="signForm-button">
             <button @click="toPrevious()">上一页</button>
@@ -59,7 +67,7 @@ export default {
   data() {
     return {
       canClick: true, //判断是否可以获取验证码
-      timer:null //计时器
+      timer: null //计时器
     };
   },
   computed: {
@@ -69,15 +77,8 @@ export default {
   },
   methods: {
     closeSign() {
-      //关闭signUp的时候改变navIndex为当前显示的区域的下标
-      const navId = this.$store.state.navId;
-      const navContent = this.$store.state.navContent;
-      for (let i = 0; i < navContent.length; i++) {
-        if (navContent[i].id === navId) {
-          this.$store.commit("changeNavIndex", i);
-        }
-      }
       clearInterval(this.timer);
+      this.$store.commit("changeNavIndex", 0);
       this.$router.go(-1);
     },
     getVerificationCode() {

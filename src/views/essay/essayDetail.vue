@@ -5,8 +5,9 @@
         <i class="icon iconfont">&#xe632;</i>
       </div>
       <ul class="navList">
-        <li @click="toSignIn()">Sign In</li>
-        <li @click="toSignUp()">Sign Up</li>
+        <li v-if="!islogin" @click="toSignIn()">Sign In</li>
+        <li v-if="!islogin" @click="toSignUp()">Sign Up</li>
+        <li v-if="islogin" @click="toUserPage">{{username}}</li>
       </ul>
     </nav>
     <div class="backTop-button" @click="backTop()" v-show="scrollTop">
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-import board from "../../components/board";
+import board from "../messageBoard/components/board";
 import comments from "../../components/comments";
 import { getData } from "../../api/essayDetail";
 
@@ -44,12 +45,13 @@ export default {
   data() {
     return {
       mdContent: "",
-      scrollTop: 0 //距离顶部的距离
+      scrollTop: 0, //距离顶部的距离
+      username: "" //已登录用户的用户名
     };
   },
   methods: {
     goback() {
-      this.$router.go(-1);
+      this.$router.back();
     },
     backTop() {
       window.scrollTo({
@@ -58,18 +60,26 @@ export default {
         behavior: "smooth"
       });
     },
-    toSignIn(){
-      this.$router.push({name:'signIn'});
+    toSignIn() {
+      this.$router.push({ name: "signIn" });
     },
-    toSignUp(){
-      this.$router.push({name:'signUp'});
+    toSignUp() {
+      this.$router.push({ name: "signUp" });
     },
     onscroll() {
       this.scrollTop = window.scrollY;
     },
     async getEssayData() {
       let data = await getData();
-      this.mdContent = data.body;
+      console.log(data);
+      // this.mdContent = data.body;
+    },
+    toUserPage() {
+      this.$router.push({ name: "userPage" });
+    },
+    getUserData() {
+      //获取已登录用户信息
+      this.username = this.$cookies.get("userInfo").nickname;
     }
   },
   computed: {
@@ -82,6 +92,16 @@ export default {
         scrollStyle: true
       };
       return data;
+    },
+    islogin() {
+      // 判断是否有登录
+      if (this.$cookies.isKey('userInfo')) {
+        this.getUserData();
+        return true;
+      }
+      else{
+        return false;
+      }
     }
   },
   created() {

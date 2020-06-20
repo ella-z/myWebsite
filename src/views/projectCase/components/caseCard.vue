@@ -1,13 +1,14 @@
 <template>
   <div class="caseCard">
+    <img src="./McDonald.jpg" alt />
     <div class="caseCard-shade">
       <div class="caseCard-title">
-        <span class="case-tiltle">M记app</span>
-        <p class="case-describe">describebbbbbbbsssssssssssssssssssssssssssssss</p>
+        <span class="case-tiltle">{{data.name}}</span>
+        <p class="case-describe">{{data.intro}}</p>
       </div>
       <div class="caseCard-button">
-        <button @click="toEssayDetail()">intro</button>
-        <button class="github-button">github</button>
+        <button @click="toEssayDetail()">简介</button>
+        <button class="github-button" @click="toGitHub()">GitHub</button>
       </div>
     </div>
   </div>
@@ -15,9 +16,13 @@
 
 <script>
 export default {
-  methods:{
-    toEssayDetail(){
-      this.$router.push('/essayDetail');
+  props: ["data"],
+  methods: {
+    toEssayDetail() {
+      this.$router.push("/essayDetail");
+    },
+    toGitHub() {
+      window.location.href = this.data.github;
     }
   }
 };
@@ -28,12 +33,16 @@ export default {
   width: 150px;
   height: 200px;
   border-radius: 10px;
-  overflow: hidden;
-  background-image: url("D:/myWebsite/qwebsite/src/views/projectCase/components/McDonald.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 50% 40%;
   transition: 0.2s;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+  }
   .caseCard-shade {
     width: 100%;
     height: 100%;
@@ -43,19 +52,27 @@ export default {
     align-items: center;
     justify-content: space-around;
     .caseCard-title {
-      color: #fff;
       width: 100%;
+      height: 50%;
+      color: #fff;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       .case-tiltle {
         font-size: 20px;
-        margin-bottom: 5%;
+        margin: 5%;
       }
       .case-describe {
         font-size: 14px;
         width: 80%;
-        word-wrap: break-word;
+        height: 50%;
+        overflow: hidden;
+        word-break: break-word;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
     .caseCard-button {
@@ -70,8 +87,8 @@ export default {
         width: 80px;
         height: 25px;
         border-radius: 20px;
-        color:#fff;
-         background-image: linear-gradient(90deg,#454e93, #ff7b4d);
+        color: #fff;
+        background-image: linear-gradient(90deg, #454e93, #ff7b4d);
       }
     }
   }

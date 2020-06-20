@@ -5,14 +5,18 @@
         <logo></logo>
       </div>
       <nav v-show="!isBurgerMenuShow">
-        <ul class="navList">
-          <li
+        <div class="navList">
+          <div
             :key="index"
             v-for="(item,index) in areaNav"
             @click="navClick(item.value,index)"
+            class="nav-title"
             :class="{NavActive:isNavActive===index}"
-          >{{item.title}}</li>
-        </ul>
+          >{{item.title}}</div>
+          <div class="nav-title" @click="toSignIn" v-show="!islogin">Sign In</div>
+          <div class="nav-title" @click="toSignUp" v-show="!islogin">Sign Up</div>
+          <div class="nav-nickname" v-if="islogin" @click="toUserPage">{{username}}</div>
+        </div>
       </nav>
       <div v-show="isBurgerMenuShow">
         <div class="burgerMenu" @click="burgerMenuClick()">
@@ -20,24 +24,28 @@
           <i class="iconfont icon" v-show="!isListShow">&#xe62b;</i>
         </div>
         <transition name="list">
-          <ul class="menuList" v-show="isListShow">
-            <li
+          <div class="menuList" v-show="isListShow">
+            <div
               :key="index"
               v-for="(item,index) in areaNav"
               @click="navClick(item.value)"
+              class="menu-title"
               :class="{NavActive:isNavActive===index}"
-            >{{item.title}}</li>
-          </ul>
+            >{{item.title}}</div>
+            <div class="menu-title" @click="toSignIn" v-show="!islogin">Sign In</div>
+            <div class="menu-title" @click="toSignUp" v-show="!islogin">Sign Up</div>
+            <div class="menu-nickname" v-if="islogin" @click="toUserPage">{{username}}</div>
+          </div>
         </transition>
       </div>
     </header>
   </div>
-</template>
+</template> 
 
 <script>
-import logo from './components/logo'
+import logo from "./components/logo";
 export default {
-  components:{
+  components: {
     logo
   },
   data() {
@@ -62,14 +70,6 @@ export default {
         {
           title: "Message Board",
           value: "messageBoard"
-        },
-        {
-          title: "Sign In",
-          value: "signIn"
-        },
-        {
-          title: "Sign Up",
-          value: "signUp"
         }
       ],
       clientHeight: document.documentElement.clientHeight,
@@ -77,28 +77,33 @@ export default {
       isListShow: false,
       isScroll: 0, //屏幕滚动的距离
       oldScrollTop: 0, //记录上一次滚动结束后的滚动距离
-      scrollTop: 0 // 记录当前的滚动距离
+      scrollTop: 0, // 记录当前的滚动距离
+      username: "" //已登录用户的用户名
     };
   },
   methods: {
     navClick(title, index) {
-      if (title === "signIn") {
-        this.$router.push({name:'signIn'});
-      } else if (title === "signUp") {
-        this.$router.push({name:'signUp'});
-      } else { 
-        this.$store.commit("changeNavId", title);
-        this.$store.commit("changeSignState", false);
-        let pageId = document.querySelector("#" + title);
-        window.scrollTo({
-          //滑动到指定位置
-          top: pageId.offsetTop - 35,
-          behavior: "smooth"
-        });
-      }
+      //导航栏相关的操作
+      this.$store.commit("changeNavId", title);
+      this.$store.commit("changeSignState", false);
+      let pageId = document.querySelector("#" + title);
+      window.scrollTo({
+        //滑动到指定位置
+        top: pageId.offsetTop - 35,
+        behavior: "smooth"
+      });
       this.$store.commit("changeNavIndex", index);
       this.isListShow = !this.isListShow;
       this.isNavActive = index;
+    },
+    toSignIn() {
+      this.$router.push({ name: "signIn" });
+    },
+    toSignUp() {
+      this.$router.push({ name: "signUp" });
+    },
+    toUserPage() {
+      this.$router.push({ name: "userPage" });
     },
     burgerMenuClick() {
       this.isListShow = !this.isListShow;
@@ -128,6 +133,10 @@ export default {
           this.$store.commit("changeNavIndex", i);
         }
       }
+    },
+    getUserData() {
+      //获取已登录用户信息
+      this.username = this.$cookies.get("userInfo").nickname;
     }
   },
   mounted() {
@@ -141,8 +150,8 @@ export default {
   },
   computed: {
     isBurgerMenuShow() {
+      //判断屏幕的宽高，若高大于宽，则采取burger导航栏
       if (this.clientWidth > this.clientHeight) {
-        //判断屏幕的宽高，若高大于宽，则采取burger导航栏
         return false;
       } else {
         return true;
@@ -154,6 +163,13 @@ export default {
         return this.$store.state.navIndex;
       },
       set() {}
+    },
+    islogin() {
+      // 判断是否有登录
+      if (this.$store.state.isLogin) {
+        this.getUserData();
+      }
+      return this.$store.state.isLogin;
     }
   },
   destroy() {
@@ -168,7 +184,7 @@ export default {
 }
 header {
   position: fixed;
-  z-index: 100;
+  z-index: 9999;
   left: 0;
   height: 0;
   transition: 0.5s;
@@ -190,14 +206,24 @@ header {
       list-style: none;
       display: flex;
       flex-direction: row;
-      li {
+      .nav-title {
         margin-left: 40px;
         cursor: pointer;
         transition: 0.6s;
         font-size: 12px;
       }
-      li:hover {
+      .nav-title:hover {
         color: #ff7b4d;
+      }
+      .nav-nickname {
+        cursor: pointer;
+        transition: 0.6s;
+        font-size: 12px;
+        margin: 0 20px 0 40px;
+        padding: 0 15px;
+        border-radius: 15px;
+        color: #fff;
+        background-color: #ff7b4d;
       }
     }
   }
@@ -218,11 +244,11 @@ header {
   top: 35px;
   width: 100%;
   height: 100vh;
-  z-index: 99999;
+  z-index: 999999;
   background-color: #fff;
   margin: 0;
   padding: 0;
-  li {
+  .menu-title {
     list-style: none;
     cursor: pointer;
     width: 100%;
@@ -233,9 +259,22 @@ header {
     color: black;
     font-size: 15px;
   }
-  li:hover {
+  .menu-title:hover {
     color: #ff7b4d;
     box-shadow: inset 0px -2px 2px 0px #ff7b4d;
+  }
+  .menu-nickname {
+    list-style: none;
+    cursor: pointer;
+    width: 35%;
+    height: 35px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 35px;
+    background-color: #ff7b4d;
+    font-size: 15px;
+    color: #fff;
+    border-radius: 20px;
   }
   transform: scaleY(1);
   transition: transform 0.3s;

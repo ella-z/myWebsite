@@ -47,7 +47,7 @@ export default {
           } else {
             clearInterval(timer);
           }
-        }, 1200 / element.count);
+        }, 4800 / element.count);
       });
     }
   },
@@ -105,7 +105,7 @@ export default {
   li::after {
     opacity: 1;
     background-image: linear-gradient(90deg, #454e93, #ff7b4d);
-    animation-duration: 1.2s;
+    animation-duration: 5s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
   }
