@@ -2,16 +2,12 @@
   <div class="essayCard">
     <div class="essayCard-content">
       <div class="essayCard-title">
-        <h1>title</h1>
-        <tag class="tag"></tag>
+        <h1>{{essayData.title}}</h1>
+        <tag class="tag" :tagText="essayData.tag"></tag>
       </div>
-
-      <div class="essayCard-intro">
-        12eqwewdwadawda往dasgdukwahdkwabdkuawbdukawdwabkdbwakdbkwadkawdbjawbdkwabdkadbjwadbjawk
-        dwaudukwadukwahdkhwakudhawkudwdwadawdawdwadwadawdadawwddw就问你aqeqweqwewq3
-      </div>
+      <div class="essayCard-intro">{{essayData.introdution}}</div>
       <div class="essayCard-button">
-        <like></like>
+        <like @click.native="tolike()"></like>
         <button @click="toEssayDetail">
           more
           <span></span>
@@ -26,13 +22,19 @@ import tag from "../../../components/tag";
 import like from "../../../components/like";
 
 export default {
+  props: ["essayData"],
   components: {
     tag,
     like
   },
   methods: {
     toEssayDetail() {
+      this.$store.commit('changeEssayId',this.essayData._id);
       this.$router.push("/essayDetail");
+    },
+    tolike(){
+      this.$cookies.get('userInfo').essayIDs.push(this.essayData._id);//无效
+      console.log(this.$cookies.get('userInfo'));
     }
   }
 };
@@ -65,9 +67,12 @@ export default {
       width: 100%;
       padding: 0 10px;
       h1 {
-        font-size: 30px;
+        font-size: 20px;
         margin: 0;
         margin-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     .essayCard-intro {

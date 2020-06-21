@@ -1,30 +1,29 @@
 <template>
-  <div class="essay ">
+  <div class="essay">
     <areaHeader :headerTitle="headerTitle" :headerLogo="headerLogo"></areaHeader>
     <nav class="bottom-reveal">
       <div
         v-for="(item,index) in navData"
         :key="index"
         :class="isactive===index?'active':''"
-        @click="changeActive(index)"
         class="nav-list"
+        @click="getTypeEssay(item.type,index)"
       >
-        <div class="nav-before">{{item.name}}</div>
-        <div class="nav-after">{{item.name}}</div>
+        <div class="nav-before">{{item.type}}</div>
+        <div class="nav-after">{{item.type}}</div>
         <ul class="extra-nav" v-show="item.tags">
-          <li :key="index" v-for="(item,index) in item.tags">{{item.name}}</li>
+          <li
+            :key="indexTag"
+            v-for="(itemTag,indexTag) in item.tags"
+            @click.stop="getTagEssay(item.type,itemTag.tag,index)"
+          >{{itemTag.tag}}</li>
         </ul>
       </div>
     </nav>
     <div class="essay-content bottom-reveal">
-      <essayCard></essayCard>
-      <essayCard></essayCard>
-      <essayCard></essayCard>
-      <essayCard></essayCard>
-      <essayCard></essayCard>
-      <essayCard></essayCard> 
-      <essayCard></essayCard>
-      <essayCard></essayCard>
+      <loading :loading="loading" class="loading"></loading>
+      <span v-show="essayData.length===0">暂无数据</span>
+      <essayCard :key="index" v-for="(item,index) in essayData" :essayData="item"></essayCard>
     </div>
   </div>
 </template>
@@ -32,51 +31,59 @@
 <script>
 import areaHeader from "../../components/areaHeader";
 import essayCard from "./components/essayCard";
+import loading from "../../components/loading";
+import { getNavData } from "../../api/getData";
+import { getTypeEssayData, getTagEssayData } from "../../api/essay";
 
 export default {
   components: {
     areaHeader,
-    essayCard
+    essayCard,
+    loading
   },
   data() {
     return {
       headerTitle: "Essay",
       headerLogo: "&#xe62e;",
       isactive: 0,
-      navData: [
-        {
-          name: "项目问题"
-        },
-        {
-          name: "小程序问题"
-        },
-        {
-          name: "小知识点"
-        },
-        {
-          name: "学习笔记",
-          tags: [
-            {
-              name: "JS"
-            },
-            {
-              name: "ES6"
-            },
-            {
-              name: "ES6"
-            },
-            {
-              name: "ES6"
-            }
-          ]
-        }
-      ]
+      loading: false,
+      navData: [], //导航栏数据
+      essayData: [] //文章的数据
     };
   },
   methods: {
-    changeActive(index) {
+    async getTypeEssay(type, index) {
       this.isactive = index;
+      this.loading = true;
+      try {
+        const typeEssayData = await getTypeEssayData(type);
+        this.essayData = typeEssayData.data;
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
+      }
+    },
+    async getTagEssay(type, tag, index) {
+      this.isactive = index;
+      this.loading = true;
+      try {
+        const tagEssayData = await getTagEssayData(type, tag);
+        this.essayData = tagEssayData.data;
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
+      }
+    },
+    async getNavData() {
+      const navData = await getNavData("essayNav");
+      this.navData = navData.types;
     }
+  },
+  mounted() {
+    this.getNavData();
+    this.getTypeEssay('项目问题',0);
   }
 };
 </script>

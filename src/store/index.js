@@ -11,7 +11,8 @@ export default new Vuex.Store({
     navContent:'',
     isLogin:false, // 是否有登录
     errorText:'', // 提示的信息
-    iserror:false //是否显示提示
+    iserror:false, //是否显示提示
+    essayId:0 //当前预览文章的id
   },
   mutations: {
     changeSignState(state,res){
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     changeerrorState(state,res){
       state.iserror = res;
+    },
+    changeEssayId(state,res){
+      state.essayId = res;
     }
   },
   actions: {},

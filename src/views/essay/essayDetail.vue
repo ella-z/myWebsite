@@ -16,7 +16,7 @@
     <div class="essayDetail-content">
       <mavon-editor
         class="article"
-        :value="mdContent"
+        :value="mdContent" 
         :subfield="mavon.subfield"
         :defaultOpen="mavon.defaultOpen"
         :toolbarsFlag="mavon.toolbarsFlag"
@@ -35,7 +35,7 @@
 <script>
 import board from "../messageBoard/components/board";
 import comments from "../../components/comments";
-import { getData } from "../../api/essayDetail";
+import { getEssayDetails } from "../../api/essay";
 
 export default {
   components: {
@@ -46,7 +46,7 @@ export default {
     return {
       mdContent: "",
       scrollTop: 0, //距离顶部的距离
-      username: "" //已登录用户的用户名
+      username: "", //已登录用户的用户名
     };
   },
   methods: {
@@ -69,10 +69,9 @@ export default {
     onscroll() {
       this.scrollTop = window.scrollY;
     },
-    async getEssayData() {
-      let data = await getData();
-      console.log(data);
-      // this.mdContent = data.body;
+    async getEssayData(id) {
+      let data = await getEssayDetails(id);
+       this.mdContent = data.content;
     },
     toUserPage() {
       this.$router.push({ name: "userPage" });
@@ -102,11 +101,15 @@ export default {
       else{
         return false;
       }
+    },
+    essayId(){
+      //获取当前文章的id
+      return this.$store.state.essayId;
     }
   },
-  created() {
+  mounted() {
     window.addEventListener("scroll", this.onscroll);
-    this.getEssayData();
+    this.getEssayData(this.essayId);
   },
   destroy() {
     window.removeEventListener("scroll", onscroll());

@@ -6,18 +6,16 @@
         <li
           :key="index"
           v-for="(item,index) in navItem"
-          @click="changeNavLi(item.title,index)"
+          @click="changeNavLi(item.type,index)"
           :class="active==index?'liActive':''"
-        >{{item.title}}</li>
+        >{{item.type}}</li>
       </ul>
     </nav>
     <div class="projectCase-content bottom-reveal">
       <loading :loading="loading" class="loading"></loading>
       <div class="projectCase-content-card">
-        <caseCard :key="index" v-for="(item,index) in projectData" :data="item"></caseCard>
-        <caseCard :key="index+'1'" v-for="(item,index) in projectData" :data="item"></caseCard>
-        <caseCard :key="index+'2'" v-for="(item,index) in projectData" :data="item"></caseCard>
-        <caseCard :key="index+'3'" v-for="(item,index) in projectData" :data="item"></caseCard>
+        <span v-show="projectData.length===0">暂无数据</span>
+        <caseCard :key="index" v-for="(item,index) in projectData" :projectData="item"></caseCard>
       </div>
     </div>
   </div>
@@ -27,7 +25,11 @@
 import caseCard from "./components/caseCard";
 import areaHeader from "../../components/areaHeader";
 import loading from "../../components/loading";
-import { getAllProjectData } from "../../api/getData";
+import {
+  getAllProjectData,
+  getNavData,
+  getProjectsData
+} from "../../api/getData";
 
 export default {
   components: {
@@ -39,25 +41,9 @@ export default {
     return {
       headerTitle: "Project Case",
       headerLogo: "&#xe691;",
-      navItem: [
-        {
-          title: "全部"
-        },
-        {
-          title: "综合项目"
-        },
-        {
-          title: "动画"
-        },
-        {
-          title: "组件"
-        },
-        {
-          title: "小程序"
-        }
-      ],
-      projectData: [],
-      active: 0,
+      navItem: [], //导航栏的内容
+      projectData: [], //project的数据
+      active: 0,    //当前被选中的导航下标
       loading: false
     };
   },
@@ -66,37 +52,24 @@ export default {
       this.active = index;
       this.getData(title);
     },
+    async getNavData() {
+      const navData = await getNavData("projectNav");
+      this.navItem = navData.types;
+    },
     async getData(name) {
       this.loading = true;
-      switch (name) {
-        case "全部": {
-          this.projectData = await getAllProjectData();
-          break;
-        }
-        case "综合项目": {
-          console.log("综合项目");
-          break;
-        }
-        case "动画": {
-          console.log("动画");
-          break;
-        }
-        case "组件": {
-          console.log("组件");
-          break;
-        }
-        case "小程序": {
-          console.log("小程序");
-          break;
-        }
-        default:
-          break;
+      if (name === "全部") {
+        const projectDataResult = await getAllProjectData();
+        this.projectData = projectDataResult;
+      } else {
+        const projectDataResult = await getProjectsData(name);
+        this.projectData = projectDataResult.data;
       }
-      console.log(this.projectData);
       this.loading = false;
     }
   },
   mounted() {
+    this.getNavData();
     this.getData("全部");
   }
 };
@@ -152,7 +125,7 @@ export default {
     scrollbar-width: none;
     position: relative;
     .projectCase-content-card {
-     display: grid;
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       justify-items: center;
       row-gap: 6%;

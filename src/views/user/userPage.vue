@@ -69,11 +69,12 @@ export default {
     align-items: center;
     .user-info {
       width: 250px;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 100px;
+      margin-bottom: 50px;
       img {
         width: 150px;
         height: 150px;
@@ -94,7 +95,7 @@ export default {
         width: 100px;
         height: 30px;
         border-radius: 15px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         color: #fff;
         background-image: linear-gradient(90deg, #454e93, #ff7b4d);
       }

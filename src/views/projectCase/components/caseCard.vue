@@ -1,10 +1,10 @@
 <template>
   <div class="caseCard">
-    <img src="./McDonald.jpg" alt />
+    <img src="./McDonald.jpg"  />
     <div class="caseCard-shade">
       <div class="caseCard-title">
-        <span class="case-tiltle">{{data.name}}</span>
-        <p class="case-describe">{{data.intro}}</p>
+        <span class="case-tiltle">{{projectData.name}}</span>
+        <p class="case-describe">{{projectData.intro}}</p>
       </div>
       <div class="caseCard-button">
         <button @click="toEssayDetail()">简介</button>
@@ -16,13 +16,13 @@
 
 <script>
 export default {
-  props: ["data"],
+  props: ["projectData"],
   methods: {
     toEssayDetail() {
       this.$router.push("/essayDetail");
     },
     toGitHub() {
-      window.location.href = this.data.github;
+      window.location.href = this.projectData.github;
     }
   }
 };

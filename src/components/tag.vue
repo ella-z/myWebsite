@@ -1,9 +1,11 @@
 <template>
-  <div class="tag">异步问题</div>
+  <div class="tag">{{tagText}}</div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:['tagText']
+};
 </script>
 
 <style lang="scss">
@@ -12,6 +14,9 @@ export default {};
   color: #fff;
   font-size: 12px;
   border-radius: 10px;
-  background-image: linear-gradient(90deg,#454e93,#e87656);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-image: linear-gradient(90deg, #454e93, #e87656);
 }
 </style>

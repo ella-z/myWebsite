@@ -61,7 +61,7 @@ export default {
           } else {
             this.iserror = true;
             this.errorText = "手机号或者密码错误";
-          }
+          } 
         }
         this.loading = false;
       } catch (err) {
