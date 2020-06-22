@@ -6,22 +6,20 @@
         <ul>
           <li v-for="(item,index) in selfIntroData" :key="index">
             <span
-              :class="{'span-show':item.isShow}"
-              @click="selfIntroClick(item,index)"
+              :class="IntroIndex===index?'span-show':''"
+              @click="selfIntroClick(index)"
             >{{item.title}}</span>
-            <p :class="{'p-show':item.isShow}">{{item.article}}</p>
+            <p v-show="IntroIndex===index">{{item.article}}</p>
           </li>
         </ul>
-        <div class="self-icon ">
-          <div class="self-icon-outer" v-for="(item,index) in selfIconData" :key="index">
-            <i
-              class="iconfont self-icon-img"
-              v-html="item.icon"
-              @mouseenter="mouseEnter(item)"
-              @mouseleave="mouseLeave(item)"
-            >{{item.icon}}</i>
-            <span class="self-icon-content" :class="{'show':item.isShow}">{{item.content}}</span>
-          </div>
+        <div class="self-icon">
+          <span
+            :key="index"
+            v-for="(item,index) in selfIconData"
+            class="iconfont self-icon-img"
+            v-html="item.icon"
+            :data-content="item.content"
+          >{{item.icon}}</span>
         </div>
       </div>
       <div class="self-photo bottom-reveal delay-reveal">
@@ -29,13 +27,13 @@
         <div class="self-photo-inner">
           <img src="../../assets/m.jpg" alt />
         </div>
-      </div> 
+      </div>
       <div class="skill-data bottom-reveal delay-reveal-ones">
         <span>我的技能</span>
         <div class="skill-data-bar">
-          <progressBar :skillBar='skillBar'></progressBar>
+          <progressBar :skillBar="skillBar"></progressBar>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +41,6 @@
 <script>
 import areaHeader from "../../components/areaHeader";
 import progressBar from "../../components/progressBar";
-
 export default {
   components: {
     areaHeader,
@@ -53,11 +50,12 @@ export default {
     return {
       headerTitle: "About Me",
       headerLogo: "&#xe68b;",
-      enterIndex: 0,
+      IntroIndex: 0,
       selfIntroData: [
         {
           title: "学生",
-          article: '我是一名计算机专业的学生我是一名计算机专业的学生我是一名计算机专业的学生我是一名计算机专业的学生 我是一名计',
+          article:
+            "我是一名计算机专业的学生我是一名计算机专业的学生我是一名计算机专业的学生我是一名计算机专业的学生 我是一名计",
           isShow: true
         },
         {
@@ -85,69 +83,55 @@ export default {
       ],
       selfIconData: [
         {
-          icon: `&#xe695;`,
-          content: "WeChat:enhei_0",
-          isShow: false
+          icon: '&#xe695;',
+          content: "WeChat:enhei_0"
         },
         {
-          icon: `&#xe627;`,
-          content: "QQ:2151633944",
-          isShow: false
+          icon: '&#xe627;',
+          content: "QQ:2151633944"
         },
         {
-          icon: `&#xe600;`,
-          content: "GitHub:ella-z",
-          isShow: false
-        },
+          icon: '&#xe600;',
+          content: "GitHub:ella-z"
+        }
       ],
       skillBar: [
         {
           title: "VUE",
-          begin:0,
+          begin: 0,
           count: 30
         },
         {
-            title:"JS",
-            begin:0,
-            count:60
+          title: "JS",
+          begin: 0,
+          count: 60
         },
         {
           title: "HTML",
-          begin:0,
+          begin: 0,
           count: 70
         },
         {
           title: "CSS",
-          begin:0,
+          begin: 0,
           count: 50
         },
-          {
+        {
           title: "CSS",
-          begin:0,
+          begin: 0,
           count: 50
         },
-          {
+        {
           title: "CSS",
-          begin:0,
+          begin: 0,
           count: 50
         }
       ]
     };
   },
   methods: {
-    mouseEnter(item) {
-      item.isShow = true;
-    }, //鼠标移入移出self-icon时，改变item的状态
-    mouseLeave(item) {
-      item.isShow = false;
-    },
-    selfIntroClick(item, index) {
-      this.selfIntroData[index].isShow = !this.selfIntroData[index].isShow;
-      this.selfIntroData.forEach(element => {
-        if (this.selfIntroData[index].title !== element.title) {
-          element.isShow = false;
-        }
-      });
+    selfIntroClick(index) {
+     this.IntroIndex = index;
     }
   }
 };

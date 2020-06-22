@@ -34,7 +34,7 @@ export function getNavData(name) {
     return new Promise((resolve, reject) => {
         axios({
             url, method: 'get', params: {
-                name
+                name:name
             }
         }).then(res => {
             resolve(res.data.data);

@@ -32,7 +32,7 @@
             color: #ff7b4d;
             display: flex;
             flex-direction: row;
-            transition: 0.5s all;
+            transition: 0.5s ;
             transform: translateX(0%);
             .signForm-content {
                 width: 400px;
@@ -78,7 +78,7 @@
                     border-radius: 15px;
                     transition: 0.3s;
                     margin-right: 20px;
-                    transition: .5s all;
+                    transition: .5s ;
                 }
                 button:last-child {
                     margin-right: 0;
@@ -117,7 +117,7 @@
             position: relative;
 
             p {
-                transition: 0.3s all;
+                transition: 0.3s ;
                 margin: 5px;
             }
             .bullet {
@@ -127,7 +127,7 @@
                 border-radius: 50%;
                 display: inline-block;
                 position: relative;
-                transition: 0.3s all;
+                transition: 0.3s ;
                 span {
                     display: block;
                     line-height: 25px;
@@ -149,7 +149,7 @@
                 left: 38%;
                 top: 68%;
                 font-size: 11px;
-                transition: 0.3s all;
+                transition: 0.3s ;
             }
         }
         .active {

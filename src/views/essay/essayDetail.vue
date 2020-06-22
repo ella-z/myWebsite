@@ -16,7 +16,7 @@
     <div class="essayDetail-content">
       <mavon-editor
         class="article"
-        :value="mdContent" 
+        :value="mdContent"
         :subfield="mavon.subfield"
         :defaultOpen="mavon.defaultOpen"
         :toolbarsFlag="mavon.toolbarsFlag"
@@ -25,7 +25,8 @@
       ></mavon-editor>
       <div class="message-board">
         <span class="title">Message Board</span>
-        <comments></comments>
+        <div class="comments">
+        </div>
         <board></board>
       </div>
     </div>
@@ -34,19 +35,19 @@
 
 <script>
 import board from "../messageBoard/components/board";
-import comments from "../../components/comments";
+//import comment from "";
 import { getEssayDetails } from "../../api/essay";
 
 export default {
   components: {
     board,
-    comments
+  //  comment
   },
   data() {
     return {
       mdContent: "",
       scrollTop: 0, //距离顶部的距离
-      username: "", //已登录用户的用户名
+      username: "" //已登录用户的用户名
     };
   },
   methods: {
@@ -71,7 +72,7 @@ export default {
     },
     async getEssayData(id) {
       let data = await getEssayDetails(id);
-       this.mdContent = data.content;
+      this.mdContent = data.content;
     },
     toUserPage() {
       this.$router.push({ name: "userPage" });
@@ -94,15 +95,14 @@ export default {
     },
     islogin() {
       // 判断是否有登录
-      if (this.$cookies.isKey('userInfo')) {
+      if (this.$cookies.isKey("userInfo")) {
         this.getUserData();
         return true;
-      }
-      else{
+      } else {
         return false;
       }
     },
-    essayId(){
+    essayId() {
       //获取当前文章的id
       return this.$store.state.essayId;
     }

@@ -224,6 +224,9 @@ header {
         border-radius: 15px;
         color: #fff;
         background-color: #ff7b4d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

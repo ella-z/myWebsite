@@ -32,7 +32,6 @@
 import areaHeader from "../../components/areaHeader";
 import essayCard from "./components/essayCard";
 import loading from "../../components/loading";
-import { getNavData } from "../../api/getData";
 import { getTypeEssayData, getTagEssayData } from "../../api/essay";
 
 export default {
@@ -47,7 +46,6 @@ export default {
       headerLogo: "&#xe62e;",
       isactive: 0,
       loading: false,
-      navData: [], //导航栏数据
       essayData: [] //文章的数据
     };
   },
@@ -75,15 +73,15 @@ export default {
         this.loading = false;
         console.log(error);
       }
-    },
-    async getNavData() {
-      const navData = await getNavData("essayNav");
-      this.navData = navData.types;
+    }
+  },
+  computed:{
+    navData(){
+      return this.$store.state.essayNavData;
     }
   },
   mounted() {
-    this.getNavData();
-    this.getTypeEssay('项目问题',0);
+    this.getTypeEssay("项目问题", 0);
   }
 };
 </script>

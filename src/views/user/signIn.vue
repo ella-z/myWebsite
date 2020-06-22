@@ -52,7 +52,6 @@ export default {
           this.errorText = "请输入正确的手机号";
         } else {
           const loginResult = await login(phone, pwd);
-          console.log(loginResult);
           if (loginResult.code === 1) {
             this.iserror = false;
             this.$store.commit("changeloginState",true);

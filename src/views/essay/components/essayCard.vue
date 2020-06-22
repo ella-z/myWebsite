@@ -29,12 +29,19 @@ export default {
   },
   methods: {
     toEssayDetail() {
-      this.$store.commit('changeEssayId',this.essayData._id);
+      this.$store.commit("changeEssayId", this.essayData._id);
       this.$router.push("/essayDetail");
     },
-    tolike(){
-      this.$cookies.get('userInfo').essayIDs.push(this.essayData._id);//无效
-      console.log(this.$cookies.get('userInfo'));
+    tolike() {
+      if (this.$cookies.isKey("userInfo")) {
+        let userInfo = this.$cookies.get("userInfo");
+        userInfo.essayIDs.push(this.essayData._id);
+        this.$cookies.remove("userInfo");
+        this.$cookies.set("userInfo", userInfo);
+        console.log(this.$cookies.get("userInfo"));
+      }else{
+        console.log('请先登录');
+      }
     }
   }
 };
@@ -46,7 +53,7 @@ export default {
   height: 150px;
   position: relative;
   overflow: hidden;
-  transition: 0.5s all;
+  transition: 0.5s ;
   padding: 10px 0;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
   .essayCard-content {
@@ -116,7 +123,7 @@ export default {
           background-color: #e87656;
           z-index: 3;
           transform: translate(-50%, -50%) rotate(-45deg);
-          transition: 0.3s all;
+          transition: 0.3s ;
         }
       }
       button:hover {

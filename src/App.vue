@@ -7,10 +7,36 @@
 </template>
 
 <script>
+import scrollReveal from "scrollreveal";
 
 export default {
   name: "App",
-
+  data() {
+    return {
+      scrollReveal: scrollReveal()
+    };
+  },
+  methods: {
+    addScrollReveal() {
+      //配置组件动态显示
+      this.scrollReveal.reveal(".bottom-reveal", {
+        distance: "100px",
+        origin: "bottom",
+        duration: 1000,
+        easing: "ease-out"
+      });
+      this.scrollReveal.reveal(".delay-reveal", {
+        delay: 500
+      });
+      this.scrollReveal.reveal(".delay-reveal-ones", {
+        delay: 1000
+      });
+    }
+  },
+  mounted() {
+    //根据滑动，来显示组件
+    this.addScrollReveal();
+  }
 };
 </script>
 
@@ -51,5 +77,4 @@ input {
   outline: none;
   border: none;
 }
-
 </style>

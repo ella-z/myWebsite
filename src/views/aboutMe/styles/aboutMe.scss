@@ -15,6 +15,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         justify-items: center;
         align-items: center;
+        row-gap: 20px;
         .skill-data {
             width: 100%;
             height: 300px;
@@ -74,70 +75,60 @@
                         font-size: 10px;
                         word-break: break-all;
                         text-indent: 20px;
-                        display: none;
+                        display: block;
                         line-height: 20px;
+                    }
+                    span:hover {
+                        border: none;
+                        color: #fff;
+                        background-image: linear-gradient(to right, #454e93, #ff7b4d);
                     }
                     .span-show {
                         border: none;
                         color: #fff;
                         background-image: linear-gradient(to right, #454e93, #ff7b4d);
                     }
-                    .p-show {
-                        display: block;
-                    }
                 }
             }
             .self-icon {
+                width: 100%;
                 position: absolute;
                 bottom: 8px;
                 display: flex;
                 flex-direction: row;
-                .self-icon-outer {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    margin: 0 15%;
-                    .self-icon-img {
-                        display: inline-block;
-                        position: relative;
-                        z-index: 1;
-                        width: 25px;
-                        height: 25px;
-                        text-align: center;
-                        line-height: 25px;
-                        cursor: pointer;
-                        font-size: 20px;
-                        border-radius: 50%;
-                        color: #fff;
-                        background-image: linear-gradient(to bottom, #454e93, #ff7b4d);
-                    }
-                    .self-icon-content {
-                        position: absolute;
-                        text-align: center;
-                        opacity: 0;
-                        height: 20px;
-                        width: 100px;
-                        background-color: #fff;
-                    }
-                    .show {
-                        opacity: 1;
-                        transform: translateY(30px);
-                        transition: transform 1s, opacity 2.5s;
-                    }
-                    /*.self-icon-content::after{   
-                        content:'';
-                        width: 5px;
-                        height: 5px;
-                        position: absolute;
-                        z-index:-1;
-                        top:-5px;
-                        left: 44px;
-                        transform: rotate(45deg) ;           
-                        background-color: #fff;
-                        border-left: 2px solid transparent;
-                        border-top: 2px solid transparent;
-                        border-image: linear-gradient(to right,#454E93,#FF7B4D) 1;
-                    }*/
+                justify-content: space-around;
+                .self-icon-img {
+                    cursor: pointer;
+                    display: inline-block;
+                    position: relative;
+                    z-index: 1;
+                    width: 25px;
+                    height: 25px;
+                    text-align: center;
+                    line-height: 25px;
+                    font-size: 20px;
+                    border-radius: 50%;
+                    color: #fff;
+                    background-image: linear-gradient(to bottom, #454e93, #ff7b4d);
+                }
+                .self-icon-img::before {
+                    content: attr(data-content);
+                    position: absolute;
+                    left: -30px;
+                    height: -100px;
+                    width: 100px;
+                    z-index: -10;
+                    color: #000;
+                    font-size: 12px;
+                    font-weight: 500;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: 0.5s ease-in-out;
+                }
+                .self-icon-img:hover::before {
+                    opacity: 1;
+                    visibility:visible;
+                    transform: translateY(130%);
                 }
             }
         }

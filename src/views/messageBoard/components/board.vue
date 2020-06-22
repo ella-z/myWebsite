@@ -1,13 +1,14 @@
 <template>
   <div class="board">
     <error class="error" :errorText="errorText" v-show="iserror"></error>
-    <textarea class="board-textarea" placeholder="请留言"></textarea>
+    <textarea class="board-textarea" placeholder="请留言" ref="textarea"></textarea>
     <button class="board-button" @click="submit">评论</button>
   </div>
 </template>
 
 <script>
 import error from "../../../components/error";
+import { addBoardComment } from "../../../api/comment";
 
 export default {
   components: {
@@ -27,18 +28,51 @@ export default {
     }
   },
   methods: {
-    submit() {
+    async submit() {
       if (!this.$cookies.isKey("userInfo")) {
         //判断用户是否登录了
         this.$store.commit("changeerrorText", "请先登录");
         this.$store.commit("changeerrorState", true);
-        this.timer = setInterval(()=>{
-           clearInterval(this.timer);
-           this.$store.commit("changeerrorState", false);
-        },3000)
       } else {
-         this.$store.commit("changeerrorState", false);
-        console.log("已登录");
+        let commentContent = this.$refs.textarea.value.replace(/(^\s*)|(\s*$)/g, "");
+        if (commentContent.length === 0) {
+          this.$store.commit("changeerrorText", "请输入内容");
+          this.$store.commit("changeerrorState", true);
+        } else {
+          let date = new Date();
+          let time =
+            date.getFullYear().toString() +
+            "-" +
+            (date.getMonth() + 1 < 10
+              ? "0" + date.getMonth()
+              : date.getMonth()
+            ).toString() +
+            "-" +
+            (date.getDate() < 10
+              ? "0" + date.getDate()
+              : date.getDate()
+            ).toString() +
+            "   " +
+            (date.getHours() < 10
+              ? "0" + date.getHours()
+              : date.getHours()
+            ).toString() +
+            ":" +
+            (date.getMinutes() < 10
+              ? "0" + date.getMinutes()
+              : date.getMinutes()
+            ).toString();
+          const userInfo = this.$cookies.get("userInfo");
+          let commentData = {
+            userInfo,
+            commentContent,
+            time
+          };
+          this.$store.commit("changeerrorState", false);
+          await addBoardComment(commentData);
+          this.$refs.textarea.value = "";
+          this.$store.commit('addboardCommentData',commentData);
+        }
       }
     }
   }
@@ -96,7 +130,7 @@ export default {
     width: 100%;
     height: 100%;
     transform: translateY(100%);
-    transition: 0.3s all;
+    transition: 0.3s ;
     background-image: linear-gradient(90deg, #454e93, #ff7b4d);
   }
   .board-button:hover::before {

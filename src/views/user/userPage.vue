@@ -10,25 +10,19 @@
       </div>
       <div class="user-like-essays">
         <span class="title">喜欢的文章</span>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
-        <essayCard></essayCard>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import essayCard from "../essay/components/essayCard";
+//import essayCard from "../essay/components/essayCard";
 
 export default {
-  components: {
+  /*components: {
     essayCard
-  },
+  },*/
   data() {
     return {
       userData: null
@@ -45,6 +39,7 @@ export default {
     signOut() {
       this.$cookies.remove("userInfo");
       this.$store.commit("changeloginState", false);
+      this.$store.commit('changeNavIndex',0)
       this.$router.push({ name: "index" });
     }
   },

@@ -5,7 +5,7 @@
       <ul>
         <li
           :key="index"
-          v-for="(item,index) in navItem"
+          v-for="(item,index) in navData"
           @click="changeNavLi(item.type,index)"
           :class="active==index?'liActive':''"
         >{{item.type}}</li>
@@ -25,11 +25,7 @@
 import caseCard from "./components/caseCard";
 import areaHeader from "../../components/areaHeader";
 import loading from "../../components/loading";
-import {
-  getAllProjectData,
-  getNavData,
-  getProjectsData
-} from "../../api/getData";
+import { getAllProjectData, getProjectsData } from "../../api/getData";
 
 export default {
   components: {
@@ -41,22 +37,17 @@ export default {
     return {
       headerTitle: "Project Case",
       headerLogo: "&#xe691;",
-      navItem: [], //导航栏的内容
       projectData: [], //project的数据
-      active: 0,    //当前被选中的导航下标
+      active: 0, //当前被选中的导航下标
       loading: false
     };
   },
   methods: {
     changeNavLi(title, index) {
       this.active = index;
-      this.getData(title);
+      this.geAllData(title);
     },
-    async getNavData() {
-      const navData = await getNavData("projectNav");
-      this.navItem = navData.types;
-    },
-    async getData(name) {
+    async geAllData(name) {
       this.loading = true;
       if (name === "全部") {
         const projectDataResult = await getAllProjectData();
@@ -68,9 +59,13 @@ export default {
       this.loading = false;
     }
   },
+  computed: {
+    navData() {
+      return this.$store.state.projectNavData;
+    }
+  },
   mounted() {
-    this.getNavData();
-    this.getData("全部");
+    this.geAllData("全部");
   }
 };
 </script>

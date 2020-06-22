@@ -46,7 +46,7 @@
             background-size: 400%;
             animation: animate 2s linear infinite;
             transform: translateX(-100%);
-            transition: 0.3s all;
+            transition: 0.3s ;
         }
         .back-button:hover {
             .icon {
@@ -125,7 +125,7 @@
         background-size: 400%;
         animation: animate 2s linear infinite;
         transform: translateY(-100%);
-        transition: 0.3s all;
+        transition: 0.3s ;
     }
     @keyframes animate {
         0% {
@@ -175,6 +175,15 @@
                 color: transparent;
                 background-clip: text;
                 background-image: linear-gradient(90deg, #454e93, #ff7b4d);
+            }
+            .comments {
+                width: 70%;
+                height: 400px;
+                overflow: scroll;
+                scrollbar-width: none;
+            }
+            .comments::-webkit-scrollbar {
+                display: none;
             }
         }
     }

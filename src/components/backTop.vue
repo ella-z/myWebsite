@@ -54,7 +54,7 @@ export default {
   background-size: 400%;
   animation: animate 2s linear infinite;
   transform: translateY(-100%);
-  transition: 0.3s all;
+  transition: 0.3s;
 }
 @keyframes animate {
   0% {

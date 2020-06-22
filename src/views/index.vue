@@ -28,7 +28,8 @@ import aboutMe from "./aboutMe/aboutMe";
 import essay from "./essay/essay";
 import messageBoard from "./messageBoard/messageBoard";
 import backTop from "../components/backTop";
-import scrollReveal from "scrollreveal";
+import { getNavData } from "../api/getData";
+import { getBoardComment } from "../api/comment";
 
 export default {
   components: {
@@ -42,32 +43,28 @@ export default {
   },
   data() {
     return {
-      visable: false, //监控backTop是否可见
-      scrollReveal: scrollReveal()
+      visable: false //监控backTop是否可见
     };
   },
   methods: {
-    addScrollReveal() {
-      //配置组件动态显示
-      this.scrollReveal.reveal(".bottom-reveal", {
-        distance: "100px",
-        origin: "bottom",
-        duration: 1000,
-        easing: "ease-out"
-      });
-      this.scrollReveal.reveal(".delay-reveal", {
-        delay: 500
-      });
-      this.scrollReveal.reveal(".delay-reveal-ones", {
-        delay: 1000
-      });
-    },
     onscroll() {
       //监控页面是否向下滑动
       if (window.scrollY > 0) {
         this.visable = true;
       } else {
         this.visable = false;
+      }
+    },
+    async getData() {
+      try {
+        let projectNavData = await getNavData("projectNav");
+        let essayNavData = await getNavData("essayNav");
+        let commentData = await getBoardComment();
+        this.$store.commit("changeboardCommentData", commentData);
+        this.$store.commit("projectNavData", projectNavData.types);
+        this.$store.commit("essayNavData", essayNavData.types);
+      } catch (error) {
+        console.log(error);
       }
     }
   },
@@ -87,13 +84,11 @@ export default {
     //监控屏幕是否滚动
     window.addEventListener("scroll", this.onscroll);
 
-    //根据滑动，来显示组件
-    this.addScrollReveal();
-
     //判断用户是否登录
     if (this.$cookies.isKey("userInfo")) {
       this.$store.commit("changeloginState", true);
     }
+    this.getData();
   }
 };
 </script>
@@ -122,7 +117,7 @@ export default {
       span {
         display: inline-block;
         font-size: 5vw;
-        transition: 0.5s all;
+        transition: 0.5s;
       }
     }
     .footer-content:hover {
