@@ -51,26 +51,31 @@ export default {
       });
     }
   },
-  mounted() {
-    this.addCount();
-    if (this.$store.state.isAddKeyframe === false) {
-      this.addKeyframe();
+  watch: {
+    skillBar(val) {
+      if (val.length !== 0) {
+        this.addCount();
+        if (this.$store.state.isAddKeyframe === false) {
+          this.addKeyframe();
+        }
+      }
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
 #progressBar {
   ul {
-    margin:0;
+    margin: 0;
     padding: 0;
     li {
       list-style: none;
       position: relative;
       z-index: 1;
       font-size: 15px;
-      margin-bottom: 13%;
+      margin-bottom: 18%;
       span {
         font-size: 15px;
         font-weight: 700;

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import error from "../../../components/error";
-import { addBoardComment } from "../../../api/comment";
+import error from "@/components/error";
+import { addBoardComment } from "@/api/comment";
 
 export default {
   components: {
@@ -29,50 +29,53 @@ export default {
   },
   methods: {
     async submit() {
+      let commentContent = this.$refs.textarea.value.replace(
+        /(^\s*)|(\s*$)/g,
+        ""
+      );
       if (!this.$cookies.isKey("userInfo")) {
         //判断用户是否登录了
         this.$store.commit("changeerrorText", "请先登录");
         this.$store.commit("changeerrorState", true);
+      } else if (commentContent.length === 0) {
+        this.$store.commit("changeerrorText", "请输入内容");
+        this.$store.commit("changeerrorState", true);
       } else {
-        let commentContent = this.$refs.textarea.value.replace(/(^\s*)|(\s*$)/g, "");
-        if (commentContent.length === 0) {
-          this.$store.commit("changeerrorText", "请输入内容");
-          this.$store.commit("changeerrorState", true);
-        } else {
-          let date = new Date();
-          let time =
-            date.getFullYear().toString() +
-            "-" +
-            (date.getMonth() + 1 < 10
-              ? "0" + date.getMonth()
-              : date.getMonth()
-            ).toString() +
-            "-" +
-            (date.getDate() < 10
-              ? "0" + date.getDate()
-              : date.getDate()
-            ).toString() +
-            "   " +
-            (date.getHours() < 10
-              ? "0" + date.getHours()
-              : date.getHours()
-            ).toString() +
-            ":" +
-            (date.getMinutes() < 10
-              ? "0" + date.getMinutes()
-              : date.getMinutes()
-            ).toString();
-          const userInfo = this.$cookies.get("userInfo");
-          let commentData = {
-            userInfo,
-            commentContent,
-            time
-          };
-          this.$store.commit("changeerrorState", false);
-          await addBoardComment(commentData);
-          this.$refs.textarea.value = "";
-          this.$store.commit('addboardCommentData',commentData);
-        }
+        let date = new Date();
+        let time =
+          date.getFullYear().toString() +
+          "-" +
+          (date.getMonth() + 1 < 10
+            ? "0" + date.getMonth()
+            : date.getMonth()
+          ).toString() +
+          "-" +
+          (date.getDate() < 10
+            ? "0" + date.getDate()
+            : date.getDate()
+          ).toString() +
+          "   " +
+          (date.getHours() < 10
+            ? "0" + date.getHours()
+            : date.getHours()
+          ).toString() +
+          ":" +
+          (date.getMinutes() < 10
+            ? "0" + date.getMinutes()
+            : date.getMinutes()
+          ).toString();
+        const userInfo = this.$cookies.get("userInfo");
+        let commentData = {
+          userInfo,
+          commentContent,
+          time
+        };
+        console.log(commentData);
+        await addBoardComment(commentData);
+        console.log(1);
+        this.$store.commit("changeerrorState", false);
+        this.$refs.textarea.value = "";
+        this.$store.commit("addBoardComment", commentData);
       }
     }
   }
@@ -130,7 +133,7 @@ export default {
     width: 100%;
     height: 100%;
     transform: translateY(100%);
-    transition: 0.3s ;
+    transition: 0.3s;
     background-image: linear-gradient(90deg, #454e93, #ff7b4d);
   }
   .board-button:hover::before {

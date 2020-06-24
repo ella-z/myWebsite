@@ -1,11 +1,17 @@
 <template>
   <div class="index">
     <navBar></navBar>
+    <loading :loading="loading" class="loading"></loading>
     <Home id="Home" class="navContent"></Home>
-    <aboutMe id="aboutMe" class="navContent"></aboutMe>
-    <projectCase id="projectCase" class="navContent"></projectCase>
-    <essay id="Essay" class="navContent"></essay>
-    <messageBoard id="messageBoard" class="navContent"></messageBoard>
+    <aboutMe id="aboutMe" class="navContent" :myInformation="indexData.myInformation"></aboutMe>
+    <project
+      id="project"
+      class="navContent"
+      ref="project"
+      :projectNavData="indexData.projectNavData.types"
+    ></project>
+    <essay id="Essay" class="navContent" ref="essay" :essayNavData="indexData.essayNavData.types"></essay>
+    <messageBoard id="messageBoard" class="navContent" :commentData="indexData.commentData"></messageBoard>
     <backTop :visable="visable"></backTop>
     <footer>
       <div class="footer-content">
@@ -23,27 +29,36 @@
 <script>
 import navBar from "./navBar/navBar";
 import Home from "./Home";
-import projectCase from "./projectCase/projectCase";
+import project from "./project/project";
 import aboutMe from "./aboutMe/aboutMe";
 import essay from "./essay/essay";
 import messageBoard from "./messageBoard/messageBoard";
-import backTop from "../components/backTop";
-import { getNavData } from "../api/getData";
-import { getBoardComment } from "../api/comment";
+import loading from "@/components/loading";
+import backTop from "@/components/backTop";
+import { getNavData, getMyInformation } from "@/api/getData";
+import { getBoardComment } from "@/api/comment";
 
 export default {
   components: {
     navBar,
     Home,
-    projectCase,
+    project,
     aboutMe,
     essay,
     backTop,
-    messageBoard
+    messageBoard,
+    loading
   },
   data() {
     return {
-      visable: false //监控backTop是否可见
+      visable: false, //监控backTop是否可见
+      loading: false,
+      indexData: {
+        myInformation: [],
+        projectNavData: [],
+        essayNavData: [],
+        commentData: []
+      }
     };
   },
   methods: {
@@ -56,14 +71,23 @@ export default {
       }
     },
     async getData() {
+      this.loading = true;
       try {
         let projectNavData = await getNavData("projectNav");
         let essayNavData = await getNavData("essayNav");
         let commentData = await getBoardComment();
-        this.$store.commit("changeboardCommentData", commentData);
-        this.$store.commit("projectNavData", projectNavData.types);
-        this.$store.commit("essayNavData", essayNavData.types);
+        let myInformation = await getMyInformation();
+        this.indexData = {
+          myInformation,
+          essayNavData,
+          projectNavData
+        };
+        this.$refs.project.geAllData("全部");
+        this.$refs.essay.getTypeEssay("项目问题", 0);
+        this.$store.commit('changeboardCommentData',commentData);
+        this.loading = false;
       } catch (error) {
+        this.loading = false;
         console.log(error);
       }
     }
@@ -98,7 +122,9 @@ export default {
 .index {
   width: 100%;
   min-height: 100vh;
-
+  .loading {
+    position: fixed;
+  }
   .navContent {
     padding: 3% 0;
   }

@@ -3,7 +3,7 @@
     <areaHeader :headerTitle="headerTitle" :headerLogo="headerLogo"></areaHeader>
     <nav class="bottom-reveal">
       <div
-        v-for="(item,index) in navData"
+        v-for="(item,index) in essayNavData"
         :key="index"
         :class="isactive===index?'active':''"
         class="nav-list"
@@ -29,12 +29,13 @@
 </template>
 
 <script>
-import areaHeader from "../../components/areaHeader";
+import areaHeader from "@/components/areaHeader";
 import essayCard from "./components/essayCard";
-import loading from "../../components/loading";
-import { getTypeEssayData, getTagEssayData } from "../../api/essay";
+import loading from "@/components/loading";
+import { getTypeEssayData, getTagEssayData } from "@/api/essay";
 
 export default {
+  props:['essayNavData'],
   components: {
     areaHeader,
     essayCard,
@@ -74,14 +75,6 @@ export default {
         console.log(error);
       }
     }
-  },
-  computed:{
-    navData(){
-      return this.$store.state.essayNavData;
-    }
-  },
-  mounted() {
-    this.getTypeEssay("项目问题", 0);
   }
 };
 </script>

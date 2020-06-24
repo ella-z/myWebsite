@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import tag from "../../../components/tag";
-import like from "../../../components/like";
+import tag from "@/components/tag";
+import like from "@/components/like";
 
 export default {
   props: ["essayData"],

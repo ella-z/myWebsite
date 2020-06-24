@@ -1,19 +1,19 @@
 <template>
-  <div class="projectCase bottom-reveal">
+  <div class="project bottom-reveal">
     <areaHeader :headerTitle="headerTitle" :headerLogo="headerLogo"></areaHeader>
     <nav>
       <ul>
         <li
           :key="index"
-          v-for="(item,index) in navData"
+          v-for="(item,index) in projectNavData"
           @click="changeNavLi(item.type,index)"
           :class="active==index?'liActive':''"
         >{{item.type}}</li>
       </ul>
     </nav>
-    <div class="projectCase-content bottom-reveal">
+    <div class="project-content bottom-reveal">
       <loading :loading="loading" class="loading"></loading>
-      <div class="projectCase-content-card">
+      <div class="project-content-card">
         <span v-show="projectData.length===0">暂无数据</span>
         <caseCard :key="index" v-for="(item,index) in projectData" :projectData="item"></caseCard>
       </div>
@@ -23,11 +23,12 @@
 
 <script>
 import caseCard from "./components/caseCard";
-import areaHeader from "../../components/areaHeader";
-import loading from "../../components/loading";
-import { getAllProjectData, getProjectsData } from "../../api/getData";
+import areaHeader from "@/components/areaHeader";
+import loading from "@/components/loading";
+import { getAllProjectData, getProjectsData } from "@/api/getData";
 
 export default {
+  props:['projectNavData'],
   components: {
     caseCard,
     areaHeader,
@@ -35,7 +36,7 @@ export default {
   },
   data() {
     return {
-      headerTitle: "Project Case",
+      headerTitle: "Project",
       headerLogo: "&#xe691;",
       projectData: [], //project的数据
       active: 0, //当前被选中的导航下标
@@ -58,20 +59,12 @@ export default {
       }
       this.loading = false;
     }
-  },
-  computed: {
-    navData() {
-      return this.$store.state.projectNavData;
-    }
-  },
-  mounted() {
-    this.geAllData("全部");
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.projectCase {
+.project {
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -113,13 +106,13 @@ export default {
       }
     }
   }
-  .projectCase-content {
+  .project-content {
     width: 80%;
     height: 400px;
     overflow: scroll;
     scrollbar-width: none;
     position: relative;
-    .projectCase-content-card {
+    .project-content-card {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       justify-items: center;
@@ -131,7 +124,7 @@ export default {
       height: 100%;
     }
   }
-  .projectCase-content::-webkit-scrollbar {
+  .project-content::-webkit-scrollbar {
     display: none;
   }
 }

@@ -13,9 +13,7 @@ export default new Vuex.Store({
     errorText:'', // 提示的信息
     iserror:false, //是否显示提示
     essayId:0, //当前预览文章的id
-    boardCommentData:[],
-    projectNavData:[],
-    essayNavData:[]
+    boardCommentData:[]
   },
   mutations: {
     changeSignState(state,res){
@@ -48,17 +46,14 @@ export default new Vuex.Store({
     changeEssayId(state,res){
       state.essayId = res;
     },
-    projectNavData(state,res){
-      state.projectNavData = res;
-    },
-    essayNavData(state,res){
-      state.essayNavData = res;
-    },
     changeboardCommentData(state,res){
       state.boardCommentData = res.reverse();
     },
-    addboardCommentData(state,res){
+    addBoardComment(state,res){
       state.boardCommentData.unshift(res);
+    },
+    deleteBoardComment(state,index){
+      state.boardCommentData.splice(index,1)
     }
   },
   actions: {

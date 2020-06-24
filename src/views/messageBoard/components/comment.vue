@@ -7,34 +7,41 @@
       <br />
       <div class="observer-bottom">
         <span class="comment-time">{{commentDetails.time}}</span>
-        <span class="delete" v-show="canDelete">删除</span>
+        <span class="delete" v-show="canDelete" @click="deleteComment()">删除</span>
       </div>
     </div>
   </div>
 </template> 
 
 <script>
+import { deleteBoardComment } from "@/api/comment";
+
 export default {
   props: ["commentDetails"],
-  data(){
-    return{
-      canDelete:false
+  methods: {
+    async deleteComment() {
+      //删除评论
+      let boardCommentData = this.$store.state.boardCommentData;
+      for (let i = 0; i < boardCommentData.length; i++) {
+        if (boardCommentData[i]._id === this.commentDetails._id) {
+          this.$store.commit("deleteBoardComment", i);
+        }
+      }
+      await deleteBoardComment(this.commentDetails._id);
     }
   },
-  methods:{
-    delete(){
-       if(this.$cookies.isKey('userInfo')){
-         let currentUserID = this.$cookies.get('userInfo').id;
-         if(currentUserID===this.commentDetails.userInfo.id){
-           this.canDelete = true;
-         }
-       }else{
-         this.canDelete = false;
-       }
+  computed: {
+    canDelete() {
+      let currentID = this.commentDetails.userInfo.id;
+      if (
+        this.$cookies.isKey("userInfo") &&
+        this.$cookies.get("userInfo").id === currentID
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
-  },
-  mounted(){
-    this.delete();
   }
 };
 </script>
@@ -76,7 +83,7 @@ export default {
         font-size: 12px;
         color: #999999;
       }
-      .delete{
+      .delete {
         cursor: pointer;
         font-size: 10px;
         color: #454e93;

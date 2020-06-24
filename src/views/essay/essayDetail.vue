@@ -36,7 +36,7 @@
 <script>
 import board from "../messageBoard/components/board";
 //import comment from "";
-import { getEssayDetails } from "../../api/essay";
+import { getEssayDetails } from "@/api/essay";
 
 export default {
   components: {

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import areaHeader from "../../components/areaHeader";
+import areaHeader from "@/components/areaHeader";
 import comment from "./components/comment";
 import board from "./components/board";
 

@@ -60,8 +60,8 @@ export default {
           value: "aboutMe"
         },
         {
-          title: "Project Case",
-          value: "projectCase"
+          title: "Project",
+          value: "project"
         },
         {
           title: "Essay",
