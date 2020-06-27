@@ -3,15 +3,10 @@
     <navBar></navBar>
     <loading :loading="loading" class="loading"></loading>
     <Home id="Home" class="navContent"></Home>
-    <aboutMe id="aboutMe" class="navContent" :myInformation="indexData.myInformation"></aboutMe>
-    <project
-      id="project"
-      class="navContent"
-      ref="project"
-      :projectNavData="indexData.projectNavData.types"
-    ></project>
-    <essay id="Essay" class="navContent" ref="essay" :essayNavData="indexData.essayNavData.types"></essay>
-    <messageBoard id="messageBoard" class="navContent" :commentData="indexData.commentData"></messageBoard>
+    <aboutMe id="aboutMe" class="navContent"></aboutMe>
+    <project id="project" class="navContent" ></project>
+    <essay id="Essay" class="navContent" ></essay>
+    <messageBoard id="messageBoard" class="navContent"></messageBoard>
     <backTop :visable="visable"></backTop>
     <footer>
       <div class="footer-content">
@@ -35,8 +30,6 @@ import essay from "./essay/essay";
 import messageBoard from "./messageBoard/messageBoard";
 import loading from "@/components/loading";
 import backTop from "@/components/backTop";
-import { getNavData, getMyInformation } from "@/api/getData";
-import { getBoardComment } from "@/api/comment";
 
 export default {
   components: {
@@ -53,12 +46,6 @@ export default {
     return {
       visable: false, //监控backTop是否可见
       loading: false,
-      indexData: {
-        myInformation: [],
-        projectNavData: [],
-        essayNavData: [],
-        commentData: []
-      }
     };
   },
   methods: {
@@ -68,27 +55,6 @@ export default {
         this.visable = true;
       } else {
         this.visable = false;
-      }
-    },
-    async getData() {
-      this.loading = true;
-      try {
-        let projectNavData = await getNavData("projectNav");
-        let essayNavData = await getNavData("essayNav");
-        let commentData = await getBoardComment();
-        let myInformation = await getMyInformation();
-        this.indexData = {
-          myInformation,
-          essayNavData,
-          projectNavData
-        };
-        this.$refs.project.geAllData("全部");
-        this.$refs.essay.getTypeEssay("项目问题", 0);
-        this.$store.commit('changeboardCommentData',commentData);
-        this.loading = false;
-      } catch (error) {
-        this.loading = false;
-        console.log(error);
       }
     }
   },
@@ -112,7 +78,6 @@ export default {
     if (this.$cookies.isKey("userInfo")) {
       this.$store.commit("changeloginState", true);
     }
-    this.getData();
   }
 };
 </script>

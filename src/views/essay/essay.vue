@@ -33,9 +33,9 @@ import areaHeader from "@/components/areaHeader";
 import essayCard from "./components/essayCard";
 import loading from "@/components/loading";
 import { getTypeEssayData, getTagEssayData } from "@/api/essay";
+import { getNavData } from "@/api/getData";
 
 export default {
-  props:['essayNavData'],
   components: {
     areaHeader,
     essayCard,
@@ -47,7 +47,8 @@ export default {
       headerLogo: "&#xe62e;",
       isactive: 0,
       loading: false,
-      essayData: [] //文章的数据
+      essayData: [], //文章的数据
+      essayNavData: []
     };
   },
   methods: {
@@ -74,7 +75,19 @@ export default {
         this.loading = false;
         console.log(error);
       }
+    },
+    async getData() {
+      try {
+        let essayNavData = await getNavData("essayNav");
+        this.essayNavData = essayNavData.types;
+        this.getTypeEssay("项目问题",0);
+      } catch (error) {
+        console.log(error);
+      }
     }
+  },
+  mounted(){
+    this.getData();
   }
 };
 </script>

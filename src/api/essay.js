@@ -2,16 +2,6 @@ import axios from 'axios';
 
 const baseUrl = 'http://zhangzqcloud.cn/api';
 
-export function getData() {
-    return new Promise((resolve, reject) => {
-        axios.get('http://47.106.70.95:3000/api/users').then(res => {
-            resolve(res.data);
-        }).catch(err => {
-            reject(err.data);
-        })
-    })
-}
-
 export function getTypeEssayData(type) {
     //根据文章的类型获取文件
     let url = `${baseUrl}/typeEssays`;
@@ -52,6 +42,69 @@ export function getEssayDetails(id) {
             url, method: 'get', params: {
                 id
             }
+        }).then(res => {
+            
+            resolve(res.data.data);
+        }).catch(err => {
+            reject(err.data);
+        })
+    })
+}
+
+export function getEssayComments(essayId) {
+    //根据文章的id获取文章的评论
+    let url = `${baseUrl}/essay/getEssayComment`;
+    return new Promise((resolve, reject) => {
+        axios({
+            url, method: 'get', params: {
+                essayId
+            }
+        }).then(res => {
+            resolve(res.data.result.data);
+        }).catch(err => {
+            reject(err.data);
+        })
+    })
+}
+
+export function addEssayComment(commentData) {
+    let params = {
+        userInfo: commentData.userInfo,
+        time: commentData.time,
+        commentContent: commentData.commentContent,
+        essayId:commentData.essayId
+    };
+    console.log(params);
+    let url = `${baseUrl}/essay/addEssayComment`;
+    return new Promise((resolve, reject) => {
+        axios({
+            url,
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(params)
+        }).then(res => {
+            resolve(res.data);
+        }).catch(err => {
+            reject(err.data);
+        })
+    })
+}
+
+export function deleteEssayComment(id) {
+    let params = {
+        id
+    };
+    let url = `${baseUrl}/essay/removeEssayComment`;
+    return new Promise((resolve, reject) => {
+        axios({
+            url,
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(params)
         }).then(res => {
             resolve(res.data);
         }).catch(err => {

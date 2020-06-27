@@ -1,32 +1,16 @@
 <template>
   <div class="board">
-    <error class="error" :errorText="errorText" v-show="iserror"></error>
     <textarea class="board-textarea" placeholder="请留言" ref="textarea"></textarea>
     <button class="board-button" @click="submit">评论</button>
   </div>
 </template>
 
 <script>
-import error from "@/components/error";
 import { addBoardComment } from "@/api/comment";
+import { addEssayComment } from "@/api/essay";
 
 export default {
-  components: {
-    error
-  },
-  data() {
-    return {
-      timer: null
-    };
-  },
-  computed: {
-    errorText() {
-      return this.$store.state.errorText;
-    },
-    iserror() {
-      return this.$store.state.iserror;
-    }
-  },
+  props: ["type"],
   methods: {
     async submit() {
       let commentContent = this.$refs.textarea.value.replace(
@@ -35,47 +19,67 @@ export default {
       );
       if (!this.$cookies.isKey("userInfo")) {
         //判断用户是否登录了
-        this.$store.commit("changeerrorText", "请先登录");
-        this.$store.commit("changeerrorState", true);
+        this.$message({
+          type: "error",
+          message: "请先登录",
+          center: true,
+          offset: 80
+        });
       } else if (commentContent.length === 0) {
-        this.$store.commit("changeerrorText", "请输入内容");
-        this.$store.commit("changeerrorState", true);
+        this.$message({
+          type: "error",
+          message: "请输入内容",
+          center: true,
+          offset: 80
+        });
       } else {
-        let date = new Date();
-        let time =
-          date.getFullYear().toString() +
-          "-" +
-          (date.getMonth() + 1 < 10
-            ? "0" + date.getMonth()
-            : date.getMonth()
-          ).toString() +
-          "-" +
-          (date.getDate() < 10
-            ? "0" + date.getDate()
-            : date.getDate()
-          ).toString() +
-          "   " +
-          (date.getHours() < 10
-            ? "0" + date.getHours()
-            : date.getHours()
-          ).toString() +
-          ":" +
-          (date.getMinutes() < 10
-            ? "0" + date.getMinutes()
-            : date.getMinutes()
-          ).toString();
-        const userInfo = this.$cookies.get("userInfo");
-        let commentData = {
-          userInfo,
-          commentContent,
-          time
-        };
-        console.log(commentData);
-        await addBoardComment(commentData);
-        console.log(1);
-        this.$store.commit("changeerrorState", false);
-        this.$refs.textarea.value = "";
-        this.$store.commit("addBoardComment", commentData);
+        try {
+          let date = new Date();
+          let time =
+            date.getFullYear().toString() +
+            "-" +
+            (date.getMonth() + 1 < 10
+              ? "0" + date.getMonth()
+              : date.getMonth()
+            ).toString() +
+            "-" +
+            (date.getDate() < 10
+              ? "0" + date.getDate()
+              : date.getDate()
+            ).toString() +
+            "   " +
+            (date.getHours() < 10
+              ? "0" + date.getHours()
+              : date.getHours()
+            ).toString() +
+            ":" +
+            (date.getMinutes() < 10
+              ? "0" + date.getMinutes()
+              : date.getMinutes()
+            ).toString();
+          const userInfo = this.$cookies.get("userInfo");
+          let commentData = {
+            userInfo,
+            commentContent,
+            time
+          };
+          this.$refs.textarea.value = "";
+          if (this.type === "messageBoard") {
+            await addBoardComment(commentData);
+            this.$store.commit("addBoardComment", commentData);
+          } else if (this.type === "essay") {
+            let essayCommentData = {
+              userInfo,
+              commentContent,
+              time,
+              essayId: window.localStorage.essayId
+            };
+            this.$store.commit("addEssayComment", essayCommentData);
+            await addEssayComment(essayCommentData);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

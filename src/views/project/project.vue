@@ -25,10 +25,10 @@
 import caseCard from "./components/caseCard";
 import areaHeader from "@/components/areaHeader";
 import loading from "@/components/loading";
-import { getAllProjectData, getProjectsData } from "@/api/getData";
+import { getAllProjectData, getProjectsData } from "@/api/project";
+import { getNavData } from "@/api/getData";
 
 export default {
-  props:['projectNavData'],
   components: {
     caseCard,
     areaHeader,
@@ -40,15 +40,16 @@ export default {
       headerLogo: "&#xe691;",
       projectData: [], //project的数据
       active: 0, //当前被选中的导航下标
-      loading: false
+      loading: false,
+      projectNavData: []
     };
   },
   methods: {
     changeNavLi(title, index) {
       this.active = index;
-      this.geAllData(title);
+      this.getProjectData(title);
     },
-    async geAllData(name) {
+    async getProjectData(name) {
       this.loading = true;
       if (name === "全部") {
         const projectDataResult = await getAllProjectData();
@@ -58,7 +59,19 @@ export default {
         this.projectData = projectDataResult.data;
       }
       this.loading = false;
+    },
+    async getData() {
+      try {
+        let projectNavData = await getNavData("projectNav");
+        this.projectNavData = projectNavData.types;
+        this.projectData = await getAllProjectData();
+      } catch (error) {
+        console.log(error);
+      }
     }
+  },
+  mounted() {
+    this.getData();
   }
 };
 </script>

@@ -13,7 +13,7 @@
           </li>
         </ul>
         <div class="self-icon">
-          <span 
+          <span
             :key="index"
             v-for="(item,index) in myInformation.iconData"
             class="iconfont self-icon-img"
@@ -41,8 +41,9 @@
 <script>
 import areaHeader from "@/components/areaHeader";
 import progressBar from "@/components/progressBar";
+import { getMyInformation } from "@/api/aboutMe";
+
 export default {
-  props:['myInformation'],
   components: {
     areaHeader,
     progressBar
@@ -52,12 +53,19 @@ export default {
       headerTitle: "About Me",
       headerLogo: "&#xe68b;",
       IntroIndex: 0,
+      myInformation:''
     };
   },
   methods: {
     selfIntroClick(index) {
-     this.IntroIndex = index;
+      this.IntroIndex = index;
+    },
+    async getData(){
+      this.myInformation = await getMyInformation();
     }
+  },
+  mounted(){
+    this.getData();
   }
 };
 </script>

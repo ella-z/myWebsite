@@ -44,7 +44,7 @@
           </div>
           <div class="signForm-col2 code-box">
             <div>
-              <input type="password" required="required" autocomplete="off" />
+              <input type="text" ref="code" required="required" autocomplete="off" />
               <span class="text">验证码</span>
             </div>
             <button
@@ -105,11 +105,23 @@ export default {
     toPrevious() {
       const step = document.querySelectorAll(".step");
       step[0].classList.remove("active");
+      step[1].classList.remove("active");
       this.$refs.signForm.style.transform = "translateX(0%)";
     },
     toSignUp() {
       const step = document.querySelectorAll(".step");
       step[1].classList.add("active");
+      let code = this.$refs.code.value;
+      if (/^\d{6}$/.test(code)) {
+       console.log(1);
+      }else{
+         this.$message({
+          type: "error",
+          message: "请输入正确的验证码",
+          center: true,
+          offset: 80
+        });
+      }
     }
   }
 };

@@ -1,10 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import index from "../views/index";
-import signIn from "../views/user/signIn";
-import signUp from "../views/user/signUp";
-import essayDetail from "../views/essay/essayDetail";
-import userPage from "../views/user/userPage";
+import index from "@/views/index";
+import signIn from "@/views/user/signIn";
+import signUp from "@/views/user/signUp";
+import essayDetail from "@/views/essay/essayDetail";
+import userPage from "@/views/user/userPage";
+import resetPassword from "@/views/user/resetPassword";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const routes = [
     name: "userPage",
     component: userPage
   },
+  {
+    path: "/resetPassword",
+    name: "resetPassword",
+    component: resetPassword
+  }
 ];
 
 

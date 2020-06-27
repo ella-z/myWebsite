@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-
-
 export function login(phone, pwd) {
     return new Promise((resolve, reject) => {
         const url = 'http://zhangzqcloud.cn/api/login';

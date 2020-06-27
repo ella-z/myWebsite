@@ -26,8 +26,10 @@
       <div class="message-board">
         <span class="title">Message Board</span>
         <div class="comments">
+          <span v-show="commentArray.length === 0">暂无留言</span>
+          <comment :key="index" v-for="(item,index) in commentArray" :commentDetails="item" type="essay"></comment>
         </div>
-        <board></board>
+        <board type="essay"></board>
       </div>
     </div>
   </div>
@@ -35,13 +37,13 @@
 
 <script>
 import board from "../messageBoard/components/board";
-//import comment from "";
-import { getEssayDetails } from "@/api/essay";
+import comment from "../messageBoard/components/comment";
+import { getEssayDetails, getEssayComments } from "@/api/essay";
 
 export default {
   components: {
     board,
-  //  comment
+    comment
   },
   data() {
     return {
@@ -72,6 +74,8 @@ export default {
     },
     async getEssayData(id) {
       let data = await getEssayDetails(id);
+      let commentsData = await getEssayComments(id);
+      this.$store.commit('changeEssayCommentData',commentsData)
       this.mdContent = data.content;
     },
     toUserPage() {
@@ -104,7 +108,15 @@ export default {
     },
     essayId() {
       //获取当前文章的id
+      if (!this.$store.state.essayId) {
+        let essayId = window.localStorage.getItem("essayId");
+        this.$store.commit("changeEssayId", essayId);
+        return essayId;
+      }
       return this.$store.state.essayId;
+    },
+    commentArray(){
+      return this.$store.state.essayCommentData;
     }
   },
   mounted() {

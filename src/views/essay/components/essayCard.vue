@@ -30,6 +30,13 @@ export default {
   methods: {
     toEssayDetail() {
       this.$store.commit("changeEssayId", this.essayData._id);
+      
+      let localStorage = window.localStorage; //为了解决刷新后，存储在store中的数据消失问题
+      if(!localStorage.getItem('essayId')){
+        localStorage.setItem('essayId',this.essayData._id);
+      }else{
+        localStorage.essayId = this.essayData._id;
+      }
       this.$router.push("/essayDetail");
     },
     tolike() {

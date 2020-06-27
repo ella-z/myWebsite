@@ -53,7 +53,6 @@ export default {
     justify-content: space-around;
     .caseCard-title {
       width: 100%;
-      height: 50%;
       color: #fff;
       overflow: hidden;
       display: flex;
@@ -61,12 +60,13 @@ export default {
       align-items: center;
       .case-tiltle {
         font-size: 20px;
-        margin: 5%;
+        margin: 10% 5%;
+        height: 25px;
       }
       .case-describe {
         font-size: 14px;
         width: 80%;
-        height: 50%;
+        height: 36px;
         overflow: hidden;
         word-break: break-word;
         text-overflow: ellipsis;

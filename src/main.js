@@ -5,7 +5,8 @@ import store from "./store";
 import VueCookies from "vue-cookies"
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-    
+import './plugins/element.js'
+
 Vue.use(mavonEditor);
 Vue.use(VueCookies);
 

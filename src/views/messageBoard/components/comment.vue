@@ -15,19 +15,34 @@
 
 <script>
 import { deleteBoardComment } from "@/api/comment";
+import { deleteEssayComment } from "@/api/essay";
 
 export default {
-  props: ["commentDetails"],
+  props: ["commentDetails", "type"],
   methods: {
     async deleteComment() {
       //删除评论
-      let boardCommentData = this.$store.state.boardCommentData;
-      for (let i = 0; i < boardCommentData.length; i++) {
-        if (boardCommentData[i]._id === this.commentDetails._id) {
-          this.$store.commit("deleteBoardComment", i);
+      try {
+        if (this.type === "messageBoard") {
+          let boardCommentData = this.$store.state.boardCommentData;
+          for (let i = 0; i < boardCommentData.length; i++) {
+            if (boardCommentData[i]._id === this.commentDetails._id) {
+              this.$store.commit("deleteBoardComment", i);
+            }
+          }
+          await deleteBoardComment(this.commentDetails._id);
+        } else if (this.type === "essay") {
+          let essayCommentData = this.$store.state.essayCommentData;
+          for (let i = 0; i < essayCommentData.length; i++) {
+            if (essayCommentData[i]._id === this.commentDetails._id) {
+              this.$store.commit("deleteEssayComment", i);
+            }
+          }
+          await deleteEssayComment(this.commentDetails._id);
         }
+      } catch (error) {
+        console.log(error);
       }
-      await deleteBoardComment(this.commentDetails._id);
     }
   },
   computed: {

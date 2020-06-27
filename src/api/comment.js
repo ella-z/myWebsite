@@ -50,7 +50,7 @@ export function getBoardComment() {
     let url = `${baseUrl}/getBoardComment`;
     return new Promise((resolve, reject) => {
         axios({ url, method: 'get' }).then(res => {
-            resolve(res.data);
+            resolve(res.data.result.data);
         }).catch(err => {
             reject(err.data);
         })
