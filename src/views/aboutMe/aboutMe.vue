@@ -61,7 +61,8 @@ export default {
       this.IntroIndex = index;
     },
     async getData(){
-      this.myInformation = await getMyInformation();
+       let information= await getMyInformation();
+       this.myInformation = information.result.data;
     }
   },
   mounted(){

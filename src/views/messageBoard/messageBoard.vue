@@ -41,7 +41,7 @@ export default {
       try {
         this.loading = true;
         let commentData = await getBoardComment();
-        this.$store.commit("changeboardCommentData", commentData);
+        this.$store.commit("changeboardCommentData", commentData.result.data);
         this.loading = false;
       } catch (error) {
         this.loading = false;

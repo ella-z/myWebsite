@@ -1,91 +1,77 @@
-import axios from 'axios';
-import { Message } from 'element-ui';
+import axios from 'axios'
+import { Message } from 'element-ui'
+//import store from '@/store'
+//import { getToken } from '@/utils/auth'
 
+// 创建axios实例
 const service = axios.create({
-    baseURL: process.env.BASE_API,
-    // 超时时间 单位是ms，这里设置了3s的超时时间
-    timeout: 3 * 1000
-  })
+  baseURL: "http://zhangzqcloud.cn/api", // api的base_url
+  timeout: 5000 // 请求超时时间
+})
 
-  // 请求拦截器
+// request拦截器
 service.interceptors.request.use(config => {
-    //发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等
-     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
-     config.data = JSON.stringify(config.data);
-     config.headers = {
-       'Content-Type':'application/x-www-form-urlencoded'
-     }
-     // if(token){
-     //   config.params = {'token':token}
-     // }
-    return config
-  }, error => {
-    Promise.reject(error)
+  // Do something before request is sent
+ /* if (store.getters.token) {
+    config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+  }*/
+  
+  if (config.method === 'post' || config.method === 'put') {
+    // post、put 提交时，将对象转换为string, 为处理后台解析问题
+    // 并且声明响应头
+    config.data = JSON.stringify(config.data)
+    config.headers = {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return config;
+}, error => {
+  // Do something with request error
+  console.log(error) // for debug
+  Promise.reject(error)
+})
+
+// respone拦截器
+service.interceptors.response.use(
+  response => response.data,
+  /**
+  * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
+  * 如通过xmlhttprequest 状态码标识 逻辑可写在下面error中
+  */
+  //  const res = response.data;
+  //     if (res.code !== 20000) {
+  //       Message({
+  //         message: res.message,
+  //         type: 'error',
+  //         duration: 5 * 1000
+  //       });
+  //       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
+  //       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+  //         MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+  //           confirmButtonText: '重新登录',
+  //           cancelButtonText: '取消',
+  //           type: 'warning'
+  //         }).then(() => {
+  //           store.dispatch('FedLogOut').then(() => {
+  //             location.reload();// 为了重新实例化vue-router对象 避免bug
+  //           });
+  //         })
+  //       }
+  //       return Promise.reject('error');
+  //     } else {
+  //       return response.data;
+  //     }
+  error => {
+    console.log('err' + error)// for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
   })
 
-// 响应拦截器
-service.interceptors.response.use(response => {
-    //接收到响应数据并成功后的一些共有的处理，关闭loading等
-    
-    return response
-  }, error => {
-     /***** 接收到异常响应的处理开始 *****/
-    if (error && error.response) {
-      //公共错误处理
-      // 根据响应码具体处理
-      switch (error.response.status) {
-        case 400:
-          error.message = '错误请求'
-          break;
-        case 401:
-          error.message = '未授权，请重新登录'
-          break;
-        case 403:
-          error.message = '拒绝访问'
-          break;
-        case 404:
-          error.message = '请求错误,未找到该资源'
-          window.location.href = "/NotFound"
-          break;
-        case 405:
-          error.message = '请求方法未允许'
-          break;
-        case 408:
-          error.message = '请求超时'
-          break;
-        case 500:
-          error.message = '服务器端出错'
-          break;
-        case 501:
-          error.message = '网络未实现'
-          break;
-        case 502:
-          error.message = '网络错误'
-          break;
-        case 503:
-          error.message = '服务不可用'
-          break;
-        case 504:
-          error.message = '网络超时'
-          break;
-        case 505:
-          error.message = 'http版本不支持该请求'
-          break;
-        default:
-          error.message = `连接错误${error.response.status}`
-      }
-    } else {
-      // 超时处理
-      if (JSON.stringify(error).includes('timeout')) {
-        Message.error('服务器响应超时，请刷新当前页')
-      }
-      error.message('连接服务器失败')
-    }
-  
-    Message.error(err.message)
-    /***** 处理结束 *****/
-    //如果不需要错误处理，以上的处理过程都可省略
-    return Promise.resolve(error.response)
-  })
-  //导入文件
-  export default service
+export default service
+
+

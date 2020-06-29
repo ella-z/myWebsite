@@ -1,28 +1,25 @@
 <template>
   <div class="userPage">
+    <upAvatar></upAvatar>
     <div class="user-data" v-if="userData">
-      <div class="user-info">
         <img :src="userData.image" />
         <span class="user-nickname">{{userData.nickname}}</span>
-        <button>更换头像</button>
+        <button @click="toChangeAvatar">更换头像</button>
         <button @click="backIndex()">返回</button>
         <button @click="signOut()">退出登录</button>
-      </div>
-      <div class="user-like-essays">
-        <span class="title">喜欢的文章</span>
-
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 //import essayCard from "../essay/components/essayCard";
+import upAvatar from "./components/upAvatar"
 
 export default {
-  /*components: {
-    essayCard
-  },*/
+  components: {
+    //essayCard
+    upAvatar
+  },
   data() {
     return {
       userData: null
@@ -39,8 +36,10 @@ export default {
     signOut() {
       this.$cookies.remove("userInfo");
       this.$store.commit("changeloginState", false);
-      this.$store.commit('changeNavIndex',0)
       this.$router.push({ name: "index" });
+    },
+    toChangeAvatar(){
+      this.$store.commit('changeShowUpAvatar',true);
     }
   },
   mounted() {
@@ -51,25 +50,20 @@ export default {
 
 <style lang="scss" scoped>
 .userPage {
-  width: 80%;
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 20px 0;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   .user-data {
-    width: 100%;
-    min-height: 100vh;
+    width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .user-info {
-      width: 250px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 50px;
       img {
         width: 150px;
         height: 150px;
@@ -95,20 +89,6 @@ export default {
         background-image: linear-gradient(90deg, #454e93, #ff7b4d);
       }
     }
-    .user-like-essays {
-      width: 90%;
-      display: grid;
-      grid-template-columns: 1fr;
-      align-items: center;
-      justify-items: center;
-      row-gap:25px;
-      .title {
-        display: block;
-        padding: 5px 5px;
-        border: 1px solid #000;
-        border-image: linear-gradient(to right, #454e93, #ff7b4d) 1;
-      }
-    }
-  }
+  
 }
 </style>

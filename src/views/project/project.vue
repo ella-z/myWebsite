@@ -56,15 +56,16 @@ export default {
         this.projectData = projectDataResult;
       } else {
         const projectDataResult = await getProjectsData(name);
-        this.projectData = projectDataResult.data;
+        this.projectData = projectDataResult.result.data;
       }
       this.loading = false;
     },
     async getData() {
       try {
         let projectNavData = await getNavData("projectNav");
-        this.projectNavData = projectNavData.types;
+        this.projectNavData = projectNavData.result.data.types;
         this.projectData = await getAllProjectData();
+        console.log()
       } catch (error) {
         console.log(error);
       }

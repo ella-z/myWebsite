@@ -7,7 +7,7 @@
       </div>
       <div class="essayCard-intro">{{essayData.introdution}}</div>
       <div class="essayCard-button">
-        <like @click.native="tolike()"></like>
+       <!-- <like @click.native="tolike()"></like>-->
         <button @click="toEssayDetail">
           more
           <span></span>
@@ -19,13 +19,13 @@
 
 <script>
 import tag from "@/components/tag";
-import like from "@/components/like";
+//import like from "@/components/like";
 
 export default {
   props: ["essayData"],
   components: {
     tag,
-    like
+    //like
   },
   methods: {
     toEssayDetail() {
@@ -100,7 +100,7 @@ export default {
       width: 90%;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       button {
         width: 70px;

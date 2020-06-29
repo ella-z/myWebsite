@@ -108,11 +108,6 @@ export default {
     },
     essayId() {
       //获取当前文章的id
-      if (!this.$store.state.essayId) {
-        let essayId = window.localStorage.getItem("essayId");
-        this.$store.commit("changeEssayId", essayId);
-        return essayId;
-      }
       return this.$store.state.essayId;
     },
     commentArray(){

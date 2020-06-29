@@ -1,23 +1,14 @@
-import axios from 'axios';
+import request from '../utils/requset';
 
 export function login(phone, pwd) {
-    return new Promise((resolve, reject) => {
-        const url = 'http://zhangzqcloud.cn/api/login';
-        const params = {
-            "phoneNumber": phone,
-            "password": pwd
-        };
-        axios({
-            url,
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data:JSON.stringify(params)
-        }).then(res => {
-            resolve(res.data.result);
-        }).catch(err => {
-            reject(err.data);
-        })
-    })
+    const data = {
+        "phoneNumber": phone,
+        "password": pwd
+    };
+    return request({
+        url: '/login',
+        method: 'post',
+        data
+    });
+
 }

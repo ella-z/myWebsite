@@ -78,7 +78,6 @@ export default {
   methods: {
     closeSign() {
       clearInterval(this.timer);
-      this.$store.commit("changeNavIndex", 0);
       this.$router.go(-1);
     },
     getVerificationCode() {

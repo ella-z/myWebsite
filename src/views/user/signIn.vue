@@ -45,8 +45,7 @@ export default {
   },
   methods: {
     closeSign() {
-      this.$store.commit("changeNavIndex", 0);
-      this.$router.go(-1);
+      this.$router.back();
     },
     toResetPaassword(){
       this.$router.push({name:'resetPassword'});
@@ -62,10 +61,10 @@ export default {
           this.errorText = "请输入正确的手机号";
         } else {
           const loginResult = await login(phone, pwd);
-          if (loginResult.code === 1) {
+          if (loginResult.result.code === 1) {
             this.iserror = false;
             this.$store.commit("changeloginState", true);
-            this.$cookies.set("userInfo", loginResult.info, 60 * 60 * 24);
+            this.$cookies.set("userInfo", loginResult.result.info, 60 * 60 * 24);
             this.closeSign();
           } else {
             this.iserror = true;

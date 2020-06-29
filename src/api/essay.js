@@ -43,8 +43,7 @@ export function getEssayDetails(id) {
                 id
             }
         }).then(res => {
-            
-            resolve(res.data.data);
+            resolve(res.data);
         }).catch(err => {
             reject(err.data);
         })
@@ -68,13 +67,12 @@ export function getEssayComments(essayId) {
 }
 
 export function addEssayComment(commentData) {
-    let params = {
+    let data = {
         userInfo: commentData.userInfo,
         time: commentData.time,
         commentContent: commentData.commentContent,
         essayId:commentData.essayId
     };
-    console.log(params);
     let url = `${baseUrl}/essay/addEssayComment`;
     return new Promise((resolve, reject) => {
         axios({
@@ -83,7 +81,7 @@ export function addEssayComment(commentData) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: JSON.stringify(params)
+            data: JSON.stringify(data)
         }).then(res => {
             resolve(res.data);
         }).catch(err => {
@@ -93,7 +91,7 @@ export function addEssayComment(commentData) {
 }
 
 export function deleteEssayComment(id) {
-    let params = {
+    let data = {
         id
     };
     let url = `${baseUrl}/essay/removeEssayComment`;
@@ -104,7 +102,7 @@ export function deleteEssayComment(id) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: JSON.stringify(params)
+            data: JSON.stringify(data)
         }).then(res => {
             resolve(res.data);
         }).catch(err => {

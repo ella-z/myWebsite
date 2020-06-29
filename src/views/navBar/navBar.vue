@@ -43,7 +43,7 @@
 </template> 
 
 <script>
-import logo from "./components/logo";
+import logo from "./components/logo"; 
 export default {
   components: {
     logo
@@ -84,15 +84,14 @@ export default {
   methods: {
     navClick(title, index) {
       //导航栏相关的操作
-      this.$store.commit("changeNavId", title);
-      this.$store.commit("changeSignState", false);
+      this.$store.commit("nav/changeNavId", title);
       let pageId = document.querySelector("#" + title);
       window.scrollTo({
         //滑动到指定位置
         top: pageId.offsetTop - 35,
         behavior: "smooth"
       });
-      this.$store.commit("changeNavIndex", index);
+      this.$store.commit("nav/changeNavIndex", index);
       this.isListShow = !this.isListShow;
       this.isNavActive = index;
     },
@@ -113,7 +112,7 @@ export default {
 
       //监控屏幕是否滑动到锚点元素
       //获取所有的锚点元素
-      const navContent = this.$store.state.navContent;
+      const navContent = this.$store.state.nav.navContent;
 
       //将所有锚点元素的offsetTop存储在数组中
       const offsetTopArr = [];
@@ -130,7 +129,7 @@ export default {
         // 如果 scrollTop 大于等于第 i 个元素的 offsetTop 则说明 i-1 的内容已经完全不可见
         // 那么此时导航索引就应该是 i 了
         if (scrollTop + 100 >= offsetTopArr[i]) {
-          this.$store.commit("changeNavIndex", i);
+          this.$store.commit("nav/changeNavIndex", i);
         }
       }
     },
@@ -157,10 +156,10 @@ export default {
         return true;
       }
     },
-    isNavActive: {
+     isNavActive: {
       //监控navIndex是否被改变
       get() {
-        return this.$store.state.navIndex;
+        return this.$store.state.nav.navIndex;
       },
       set() {}
     },

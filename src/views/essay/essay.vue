@@ -79,7 +79,7 @@ export default {
     async getData() {
       try {
         let essayNavData = await getNavData("essayNav");
-        this.essayNavData = essayNavData.types;
+        this.essayNavData = essayNavData.result.data.types;
         this.getTypeEssay("项目问题",0);
       } catch (error) {
         console.log(error);

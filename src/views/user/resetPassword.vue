@@ -56,7 +56,6 @@ export default {
     },
     close(){
        clearInterval(this.timer);
-      this.$store.commit("changeNavIndex", 0);
       this.$router.back();
     }
   }

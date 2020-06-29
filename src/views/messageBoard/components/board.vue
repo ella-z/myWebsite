@@ -39,8 +39,8 @@ export default {
             date.getFullYear().toString() +
             "-" +
             (date.getMonth() + 1 < 10
-              ? "0" + date.getMonth()
-              : date.getMonth()
+              ? "0" + (date.getMonth()+ 1)
+              : (date.getMonth()+ 1)
             ).toString() +
             "-" +
             (date.getDate() < 10

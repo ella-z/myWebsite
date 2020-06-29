@@ -61,7 +61,7 @@ export default {
   mounted() {
     //获取所有的锚点元素
     const navContent = document.querySelectorAll(".navContent");
-    this.$store.commit("changeNavContent", navContent);
+    this.$store.commit("nav/changeNavContent", navContent);
 
     //页面刷新，显示区域回到顶部
     window.onload = () => {

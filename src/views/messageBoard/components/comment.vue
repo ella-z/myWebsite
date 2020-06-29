@@ -1,6 +1,6 @@
 <template>
   <div class="comment">
-    <img :src="commentDetails.userInfo.image" alt />
+    <el-image  :src="commentDetails.userInfo.image" lazy class="avatar"></el-image>
     <div class="observer">
       <span class="observer-name">{{commentDetails.userInfo.nickname}}:</span>
       <p class="observer-content">{{commentDetails.commentContent}}</p>
@@ -70,7 +70,7 @@ export default {
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #e1e1e2;
-  img {
+  .avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;

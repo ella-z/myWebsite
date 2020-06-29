@@ -1,37 +1,21 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import nav from "./modules/nav"
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     isAddKeyframe:false, //是否给progressBar添加了Keyframe
-    navId:'Home', //导航栏的标题
-    navIndex:0, //导航栏的下标
-    navContent:'',
     isLogin:false, // 是否有登录
     errorText:'', // 提示的信息
     iserror:false, //是否显示提示
-    essayId:0, //当前预览文章的id
-    boardCommentData:[],
-    essayCommentData:[]
+    essayId:''||localStorage.getItem('essayId'), //当前预览文章的id
+    boardCommentData:[], //留言板的留言
+    essayCommentData:[], //文章的留言
+    isShowUpAvatar:false //是否展示上传头像
   },
   mutations: {
-    changeSignState(state,res){
-      state.isSignShow = res;
-    },
-    changeSignInState(state,res){
-      state.isSignInShow = res;
-    },
-    changeNavId(state,res){
-      state.navId = res;
-    },
-    changeNavIndex(state,res){
-      state.navIndex = res;
-    },
-    changeNavContent(state,res){
-      state.navContent = res;
-    },
     changeKeyframeState(state){
       state.isAddKeyframe = true;
     },
@@ -64,12 +48,15 @@ export default new Vuex.Store({
     },
     deleteBoardComment(state,index){
       state.boardCommentData.splice(index,1)
+    },
+    changeShowUpAvatar(state,res){
+      state.isShowUpAvatar = res;
     }
   },
   actions: {
     
   },
   modules: {
-
+    nav
   }
 });
