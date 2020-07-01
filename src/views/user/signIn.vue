@@ -45,10 +45,10 @@ export default {
   },
   methods: {
     closeSign() {
-      this.$router.back();
+      this.$router.go(-1);
     },
-    toResetPaassword(){
-      this.$router.push({name:'resetPassword'});
+    toResetPaassword() {
+      this.$router.push({ name: "resetPassword" });
     },
     async signIn() {
       //登录
@@ -59,12 +59,25 @@ export default {
         if (!/^1[3456789]\d{9}$/.test(phone)) {
           this.iserror = true;
           this.errorText = "请输入正确的手机号";
+        } else if (pwd.length === 0) {
+          this.iserror = true;
+          this.errorText = "请输入密码";
         } else {
           const loginResult = await login(phone, pwd);
           if (loginResult.result.code === 1) {
             this.iserror = false;
             this.$store.commit("changeloginState", true);
-            this.$cookies.set("userInfo", loginResult.result.info, 60 * 60 * 24);
+            this.$cookies.set(
+              "userInfo",
+              loginResult.result.info,
+              60 * 60 * 24
+            );
+            this.$message({
+              type: "success",
+              message: loginResult.result.message,
+              center: true,
+              offset: 80
+            });
             this.closeSign();
           } else {
             this.iserror = true;
@@ -82,5 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/signIn.scss';
+@import "./styles/signIn.scss";
 </style>

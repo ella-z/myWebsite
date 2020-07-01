@@ -5,7 +5,7 @@
       <ul>
         <li
           :key="index"
-          v-for="(item,index) in projectNavData"
+          v-for="(item,index) in navData"
           @click="changeNavLi(item.type,index)"
           :class="active==index?'liActive':''"
         >{{item.type}}</li>
@@ -26,9 +26,9 @@ import caseCard from "./components/caseCard";
 import areaHeader from "@/components/areaHeader";
 import loading from "@/components/loading";
 import { getAllProjectData, getProjectsData } from "@/api/project";
-import { getNavData } from "@/api/getData";
 
 export default {
+  props:['navData'],
   components: {
     caseCard,
     areaHeader,
@@ -40,8 +40,7 @@ export default {
       headerLogo: "&#xe691;",
       projectData: [], //project的数据
       active: 0, //当前被选中的导航下标
-      loading: false,
-      projectNavData: []
+      loading: false
     };
   },
   methods: {
@@ -53,7 +52,7 @@ export default {
       this.loading = true;
       if (name === "全部") {
         const projectDataResult = await getAllProjectData();
-        this.projectData = projectDataResult;
+        this.projectData = projectDataResult.result.data;
       } else {
         const projectDataResult = await getProjectsData(name);
         this.projectData = projectDataResult.result.data;
@@ -62,10 +61,8 @@ export default {
     },
     async getData() {
       try {
-        let projectNavData = await getNavData("projectNav");
-        this.projectNavData = projectNavData.result.data.types;
-        this.projectData = await getAllProjectData();
-        console.log()
+        let projectData = await getAllProjectData();
+        this.projectData = projectData.result.data;
       } catch (error) {
         console.log(error);
       }

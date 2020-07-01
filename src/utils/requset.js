@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
 //import store from '@/store'
 //import { getToken } from '@/utils/auth'
 
@@ -12,10 +11,10 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // Do something before request is sent
- /* if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
-  }*/
-  
+  /* if (store.getters.token) {
+     config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+   }*/
+
   if (config.method === 'post' || config.method === 'put') {
     // post、put 提交时，将对象转换为string, 为处理后台解析问题
     // 并且声明响应头
@@ -64,11 +63,6 @@ service.interceptors.response.use(
   //     }
   error => {
     console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
     return Promise.reject(error)
   })
 

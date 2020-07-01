@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import nav from "./modules/nav"
+import nav from "./modules/nav";
+import comment from "./modules/comment";
 
 Vue.use(Vuex);
 
@@ -8,8 +9,6 @@ export default new Vuex.Store({
   state: {
     isAddKeyframe:false, //是否给progressBar添加了Keyframe
     isLogin:false, // 是否有登录
-    errorText:'', // 提示的信息
-    iserror:false, //是否显示提示
     essayId:''||localStorage.getItem('essayId'), //当前预览文章的id
     boardCommentData:[], //留言板的留言
     essayCommentData:[], //文章的留言
@@ -21,12 +20,6 @@ export default new Vuex.Store({
     },
     changeloginState(state,res){
       state.isLogin = res;
-    },
-    changeerrorText(state,res){
-      state.errorText = res;
-    },
-    changeerrorState(state,res){
-      state.iserror = res;
     },
     changeEssayId(state,res){
       state.essayId = res;
@@ -57,6 +50,7 @@ export default new Vuex.Store({
     
   },
   modules: {
-    nav
+    nav,
+    comment
   }
 });

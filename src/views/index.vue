@@ -4,8 +4,8 @@
     <loading :loading="loading" class="loading"></loading>
     <Home id="Home" class="navContent"></Home>
     <aboutMe id="aboutMe" class="navContent"></aboutMe>
-    <project id="project" class="navContent" ></project>
-    <essay id="Essay" class="navContent" ></essay>
+    <project id="project" class="navContent" :navData="navData.projectNav"></project>
+    <essay id="Essay" class="navContent" :navData="navData.essayNav"></essay>
     <messageBoard id="messageBoard" class="navContent"></messageBoard>
     <backTop :visable="visable"></backTop>
     <footer>
@@ -30,6 +30,7 @@ import essay from "./essay/essay";
 import messageBoard from "./messageBoard/messageBoard";
 import loading from "@/components/loading";
 import backTop from "@/components/backTop";
+import { getNavData } from "@/api/getData";
 
 export default {
   components: {
@@ -46,6 +47,7 @@ export default {
     return {
       visable: false, //监控backTop是否可见
       loading: false,
+      navData:{}
     };
   },
   methods: {
@@ -55,6 +57,15 @@ export default {
         this.visable = true;
       } else {
         this.visable = false;
+      }
+    },
+    async getNavData() {
+      // 获取导航栏的信息
+      let projectNavData = await getNavData("projectNav");
+      let essayNavData = await getNavData("essayNav");
+      this.navData ={
+        projectNav:projectNavData.result.data.types,
+        essayNav:essayNavData.result.data.types
       }
     }
   },
@@ -78,6 +89,8 @@ export default {
     if (this.$cookies.isKey("userInfo")) {
       this.$store.commit("changeloginState", true);
     }
+
+    this.getNavData();
   }
 };
 </script>
