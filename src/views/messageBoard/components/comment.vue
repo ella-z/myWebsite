@@ -16,7 +16,6 @@
 <script>
 import { deleteBoardComment } from "@/api/comment";
 import { deleteEssayComment } from "@/api/essay";
-
 export default {
   props: ["commentDetails", "type"],
   methods: {
@@ -106,7 +105,6 @@ export default {
     }
   }
 }
-
 .comments::-webkit-scrollbar {
   display: none;
 }

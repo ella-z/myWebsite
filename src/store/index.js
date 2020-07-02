@@ -12,7 +12,7 @@ export default new Vuex.Store({
     essayId:''||localStorage.getItem('essayId'), //当前预览文章的id
     boardCommentData:[], //留言板的留言
     essayCommentData:[], //文章的留言
-    isShowUpAvatar:false //是否展示上传头像
+    isShowUpAvatar:false //是否展示上传头像页面
   },
   mutations: {
     changeKeyframeState(state){

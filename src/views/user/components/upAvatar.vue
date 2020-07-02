@@ -5,14 +5,16 @@
       <span class="upload-avatar-text">上传新头像</span>
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://zhangzqcloud.cn/api/uploadAvatar"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
         :limit="1"
+        :data="{filename:userId}"
       >
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
       </el-upload>
     </div>
   </transition>
@@ -20,6 +22,7 @@
 
 <script>
 export default {
+  props: ["userId"],
   data() {
     return {
       imageUrl: ""
@@ -29,20 +32,29 @@ export default {
     close() {
       this.$store.commit("changeShowUpAvatar", false);
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      const type = file.type === "image/jpeg" || "image/png";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      if (!type) {
+        this.$message.error("上传头像图片只能是 JPG或者PNG 格式!");
       }
       if (!isLt2M) {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
-      return isJPG && isLt2M;
+      return type && isLt2M;
+    },
+    handleAvatarSuccess(res, file) {
+      if (file.status === "success") {
+        this.$message({
+          type: "success",
+          message: "上传成功",
+          center: true,
+          offset: 80
+        }); 
+        this.close();
+      }
+     
     }
   },
   computed: {
@@ -76,9 +88,6 @@ export default {
   }
   .upload-avatar-text {
     font-size: 20px;
-    background: linear-gradient(90deg, #454e93, #ff7b4d);
-    color: transparent;
-    background-clip: text;
     margin-bottom: 20px;
   }
 }
@@ -107,17 +116,24 @@ export default {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .el-upload:hover {
     border-color: #ff7b4d;
   }
   .avatar-uploader-icon {
+    width: 100%;
     font-size: 28px;
     color: #8c939d;
     width: 130px;
     height: 130px;
     line-height: 130px;
     text-align: center;
+  }
+  .el-icon-plus {
+    width: 100%;
   }
   .avatar {
     width: 178px;

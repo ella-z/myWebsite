@@ -8,7 +8,6 @@
 <script>
 import { addBoardComment } from "@/api/comment";
 import { addEssayComment } from "@/api/essay";
-
 export default {
   props: ["type"],
   methods: {

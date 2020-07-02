@@ -47,7 +47,7 @@ export default {
     return {
       visable: false, //监控backTop是否可见
       loading: false,
-      navData:{}
+      navData: {}
     };
   },
   methods: {
@@ -61,11 +61,18 @@ export default {
     },
     async getNavData() {
       // 获取导航栏的信息
-      let projectNavData = await getNavData("projectNav");
-      let essayNavData = await getNavData("essayNav");
-      this.navData ={
-        projectNav:projectNavData.result.data.types,
-        essayNav:essayNavData.result.data.types
+      try {
+        this.loading = true;
+        let projectNavData = await getNavData("projectNav");
+        let essayNavData = await getNavData("essayNav");
+        this.navData = {
+          projectNav: projectNavData.result.data.types,
+          essayNav: essayNavData.result.data.types
+        };
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
       }
     }
   },

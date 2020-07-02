@@ -128,7 +128,7 @@ export default {
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       justify-items: center;
       row-gap: 6%;
-      padding: 2%;
+      padding: 5% 2%;
     }
     .loading {
       width: 100%;

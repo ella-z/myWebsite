@@ -77,7 +77,7 @@ export default {
     },
     async getData() {
       try {
-        this.getTypeEssay("学习笔记",0);
+        this.getTypeEssay("项目问题",0);
       } catch (error) {
         console.log(error);
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="caseCard">
-    <img src="./McDonald.jpg"  />
+    <img :src="projectData.image"  />
     <div class="caseCard-shade">
       <div class="caseCard-title">
         <span class="case-tiltle">{{projectData.name}}</span>
@@ -53,6 +53,7 @@ export default {
     justify-content: space-around;
     .caseCard-title {
       width: 100%;
+      height: 100px;
       color: #fff;
       overflow: hidden;
       display: flex;
@@ -60,13 +61,13 @@ export default {
       align-items: center;
       .case-tiltle {
         font-size: 20px;
-        margin: 10% 5%;
+        margin: 8% 5%;
         height: 25px;
       }
       .case-describe {
+        margin:0;
         font-size: 14px;
         width: 80%;
-        height: 36px;
         overflow: hidden;
         word-break: break-word;
         text-overflow: ellipsis;

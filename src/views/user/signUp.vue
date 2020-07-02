@@ -28,7 +28,7 @@
               id="userName"
               required="required"
               autocomplete="off"
-              ref="username"
+              v-model="inputText.username"
             />
             <span class="text">用户名</span>
           </div>
@@ -38,7 +38,7 @@
               id="password"
               required="required"
               autocomplete="off"
-              ref="password"
+             v-model="inputText.password"
             />
             <span class="text">请输入密码</span>
           </div>
@@ -48,7 +48,7 @@
               id="passwordAgain"
               required="required"
               autocomplete="off"
-              ref="rePassword"
+               v-model="inputText.rePassword"
             />
             <span class="text">再次输入密码</span>
           </div>
@@ -58,17 +58,17 @@
         </div>
         <div class="signForm-content">
           <div class="signForm-col1">
-            <input type="text" required="required" autocomplete="off" ref="phoneNumber" />
+            <input type="text" required="required" autocomplete="off"  v-model="inputText.phoneNumber"/>
             <span class="text">手机号</span>
           </div>
           <div class="signForm-col2 code-box">
             <div>
-              <input type="text" ref="code" required="required" autocomplete="off" />
+              <input type="text" required="required" autocomplete="off" v-model="inputText.vCode" />
               <span class="text">验证码</span>
             </div>
             <button
               @click="getVerificationCode()"
-              ref="vCode"
+              ref="codeText"
               :class="canClick?'':'button-click'"
             >获取验证码</button>
           </div>
@@ -82,13 +82,20 @@
   </div>
 </template>
 <script>
-import { register } from "@/api/user";
+import { register,getVCode } from "@/api/user";
 
 export default {
   data() {
     return {
       canClick: true, //判断是否可以获取验证码
-      timer: null //计时器
+      timer: null, //计时器
+      inputText:{
+        username:'',
+        password:'',
+        rePassword:'',
+        phoneNumber:'',
+        vCode:''
+      }
     };
   },
   computed: {
@@ -98,17 +105,16 @@ export default {
   },
   methods: {
     close() {
+      //返回上一个页面
       clearInterval(this.timer);
       this.$router.go(-1);
     },
-    getVerificationCode() {
+    
+    async getVerificationCode() {
+      //获取验证码
       if (!this.canClick) return;
-      let phoneNumber = this.$refs.phoneNumber.value.replace(
-        /(^\s*)|(\s*$)/g,
-        ""
-      );
       const phoneRE = /^1[3456789]\d{9}$/;
-      if (!phoneRE.test(phoneNumber)) {
+      if (!phoneRE.test(this.inputText.phoneNumber.replace(/\s+/g, ""))) {
         this.$message({
           type: "error",
           message: "请输入正确的手机号",
@@ -119,32 +125,35 @@ export default {
         this.canClick = false;
         let countDownTime = 60;
         this.timer = setInterval(() => {
-          this.$refs.vCode.textContent = countDownTime + "s";
+          this.$refs.codeText.textContent = countDownTime + "s";
           if (countDownTime !== 0) {
             countDownTime--;
           } else {
-            this.$refs.vCode.textContent = "获取验证码";
+            this.$refs.codeText.textContent = "获取验证码";
             countDownTime = 60;
             this.canClick = true;
             clearInterval(this.timer);
           }
         }, 1000);
+        
+        let result = await getVCode(this.inputText.phoneNumber);
+        console.log(result);
+
       }
     },
+
     toNext() {
-      let username = this.$refs.username.value.replace(/(^\s*)|(\s*$)/g, "");
-      let password = this.$refs.password.value;
-      let rePassword = this.$refs.rePassword.value;
+      // 验证用户名以及密码格式是否正确
       let passwordRE = /(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,16}$/;
-      let usernameRE = /^[a-zA-Z0-9_-]{5,15}$/;
-      if (!usernameRE.test(username)) {
+      let usernameRE = /^[a-zA-Z0-9_-]{5,10}$/;
+      if (!usernameRE.test(this.inputText.username.replace(/\s+/g, ""))) {
         this.$message({
           type: "error",
-          message: "用户名要由5~15位,由英文字母、数字、_组成",
+          message: "用户名要由5~10位,由英文字母、数字、_组成",
           center: true,
           offset: 80
         });
-      } else if (!passwordRE.test(password)) {
+      } else if (!passwordRE.test(this.inputText.password)) {
         this.$message({
           type: "error",
           message:
@@ -152,7 +161,7 @@ export default {
           center: true,
           offset: 80
         });
-      } else if (password !== rePassword) {
+      } else if (this.inputText.password !== this.inputText.rePassword) {
         this.$message({
           type: "error",
           message: "两次输入的密码不一致",
@@ -165,32 +174,37 @@ export default {
         step[0].classList.add("active");
       }
     },
+
     toPrevious() {
+      //返回上一步，清除部分样式
       const step = document.querySelectorAll(".step");
       step[0].classList.remove("active");
       step[1].classList.remove("active");
       this.$refs.signForm.style.transform = "translateX(0%)";
     },
-    async toSignUp() {
-      const step = document.querySelectorAll(".step");
-      let code = this.$refs.code.value;
-      let username = this.$refs.username.value.replace(/(^\s*)|(\s*$)/g, "");
-      let password = this.$refs.password.value;
-      let phoneNumber = this.$refs.phoneNumber.value.replace(
-        /(^\s*)|(\s*$)/g,
-        ""
-      );
 
-      if (/^\d{6}$/.test(code)) {
+    async toSignUp() {
+      // 注册
+      const step = document.querySelectorAll(".step");
+      const phoneRE = /^1[3456789]\d{9}$/;
+      if (!phoneRE.test(this.inputText.phoneNumber)) {
+        this.$message({
+          type: "error",
+          message: "请输入正确的手机号",
+          center: true,
+          offset: 80
+        });
+        return;
+      } else if (/^\d{6}$/.test(this.inputText.vCode)) {
         let userInfo = {
-          username,
-          password,
-          phoneNumber,
-          code
+          username: this.inputText.username,
+          password: this.inputText.password,
+          phoneNumber: this.inputText.phoneNumber,
+          vCode: this.inputText.vCode
         };
         let result = await register(userInfo);
         console.log(result);
-        if (result.result.code === 1) { 
+        if (result.result.code === 1) {
           step[1].classList.add("active");
           this.$message({
             type: "success",
@@ -198,7 +212,7 @@ export default {
             center: true,
             offset: 80
           });
-          this.$router.push({ name: "index" });
+          this.close();
         } else {
           this.$message({
             type: "error",

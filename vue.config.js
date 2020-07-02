@@ -7,5 +7,5 @@ module.exports = {
         css: path.join(__dirname, 'src/assets/css'),
       },
     },
-  },
+  }
 };

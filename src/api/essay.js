@@ -68,7 +68,7 @@ export function getEssayComments(essayId) {
 
 export function addEssayComment(commentData) {
     let data = {
-        userInfo: commentData.userInfo,
+        userId: commentData.userId,
         time: commentData.time,
         commentContent: commentData.commentContent,
         essayId:commentData.essayId
