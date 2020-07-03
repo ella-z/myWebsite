@@ -1,6 +1,6 @@
 <template>
   <div class="comment">
-    <el-image  :src="commentDetails.userInfo.image" lazy class="avatar"></el-image>
+    <el-image :src="commentDetails.userInfo.image" lazy class="avatar"></el-image>
     <div class="observer">
       <span class="observer-name">{{commentDetails.userInfo.nickname}}:</span>
       <p class="observer-content">{{commentDetails.commentContent}}</p>
@@ -17,24 +17,24 @@
 import { deleteBoardComment } from "@/api/comment";
 import { deleteEssayComment } from "@/api/essay";
 export default {
-  props: ["commentDetails", "type"],
+  props: ["commentDetails", "type","userId"],
   methods: {
     async deleteComment() {
       //删除评论
       try {
         if (this.type === "messageBoard") {
-          let boardCommentData = this.$store.state.boardCommentData;
+          let boardCommentData = this.$store.state.comment.boardCommentData;
           for (let i = 0; i < boardCommentData.length; i++) {
             if (boardCommentData[i]._id === this.commentDetails._id) {
-              this.$store.commit("deleteBoardComment", i);
+              this.$store.commit("comment/deleteBoardComment", i);
             }
           }
           await deleteBoardComment(this.commentDetails._id);
         } else if (this.type === "essay") {
-          let essayCommentData = this.$store.state.essayCommentData;
+          let essayCommentData = this.$store.state.essay.essayCommentData;
           for (let i = 0; i < essayCommentData.length; i++) {
             if (essayCommentData[i]._id === this.commentDetails._id) {
-              this.$store.commit("deleteEssayComment", i);
+              this.$store.commit("essay/deleteEssayComment", i);
             }
           }
           await deleteEssayComment(this.commentDetails._id);
@@ -46,12 +46,9 @@ export default {
   },
   computed: {
     canDelete() {
-      let currentID = this.commentDetails.userInfo.id;
-      if (
-        this.$cookies.isKey("userInfo") &&
-        this.$cookies.get("userInfo").id === currentID
-      ) {
-        return true;
+      let currentID = this.commentDetails.userInfo.id; //留言用户的id       
+      if (this.$cookies.isKey("token" )) {
+        return  this.userId == currentID;
       } else {
         return false;
       }

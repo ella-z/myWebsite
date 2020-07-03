@@ -43,7 +43,9 @@
 </template> 
 
 <script>
-import logo from "./components/logo"; 
+import logo from "./components/logo";
+import {userDetails} from "@/api/user";
+
 export default {
   components: {
     logo
@@ -133,9 +135,36 @@ export default {
         }
       }
     },
-    getUserData() {
+    async getUserData() {
       //获取已登录用户信息
-      this.username = this.$cookies.get("userInfo").nickname;
+      const token = this.$cookies.get("token");
+      let result = await userDetails(token);
+      this.$store.commit('user/setUserInfo',result.result);
+      this.username = result.result.nickname;
+    }
+  },
+  computed: {
+    isBurgerMenuShow() {
+      //判断屏幕的宽高，若高大于宽，则采取burger导航栏
+      if (this.clientWidth > this.clientHeight) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isNavActive: {
+      //监控navIndex是否被改变
+      get() {
+        return this.$store.state.nav.navIndex;
+      },
+      set() {}
+    },
+    islogin() {
+      // 判断是否有登录
+      if (this.$store.state.user.isLogin) {
+        this.getUserData();
+      }
+      return this.$store.state.user.isLogin;
     }
   },
   mounted() {
@@ -147,30 +176,7 @@ export default {
       this.clientWidth = document.documentElement.clientWidth;
     };
   },
-  computed: {
-    isBurgerMenuShow() {
-      //判断屏幕的宽高，若高大于宽，则采取burger导航栏
-      if (this.clientWidth > this.clientHeight) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-     isNavActive: {
-      //监控navIndex是否被改变
-      get() {
-        return this.$store.state.nav.navIndex;
-      },
-      set() {}
-    },
-    islogin() {
-      // 判断是否有登录
-      if (this.$store.state.isLogin) {
-        this.getUserData();
-      }
-      return this.$store.state.isLogin;
-    }
-  },
+
   destroy() {
     window.removeEventListener("scroll", onscroll());
   }

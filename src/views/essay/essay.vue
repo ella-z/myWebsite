@@ -74,7 +74,7 @@ export default {
         this.loading = false;
         console.log(error);
       }
-    },
+    }, 
     async getData() {
       try {
         this.getTypeEssay("项目问题",0);

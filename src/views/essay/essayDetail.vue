@@ -27,9 +27,15 @@
         <span class="title">Message Board</span>
         <div class="comments">
           <span v-show="commentArray.length === 0">暂无留言</span>
-          <comment :key="index" v-for="(item,index) in commentArray" :commentDetails="item" type="essay"></comment>
+          <comment
+            :key="index"
+            v-for="(item,index) in commentArray"
+            :commentDetails="item"
+            type="essay"
+            :userId="userId"
+          ></comment>
         </div>
-        <board type="essay"></board>
+        <board type="essay" :userInfo="userInfo"></board>
       </div>
     </div>
   </div>
@@ -39,6 +45,7 @@
 import board from "../messageBoard/components/board";
 import comment from "../messageBoard/components/comment";
 import { getEssayDetails, getEssayComments } from "@/api/essay";
+import { userDetails } from "@/api/user";
 
 export default {
   components: {
@@ -49,7 +56,9 @@ export default {
     return {
       mdContent: "",
       scrollTop: 0, //距离顶部的距离
-      username: "" //已登录用户的用户名
+      username: "", //已登录用户的用户名
+      userId: "",
+      userInfo: null
     };
   },
   methods: {
@@ -75,15 +84,20 @@ export default {
     async getEssayData(id) {
       let data = await getEssayDetails(id);
       let commentsData = await getEssayComments(id);
-      this.$store.commit('changeEssayCommentData',commentsData)
+      this.$store.commit("essay/changeEssayCommentData", commentsData);
       this.mdContent = data.content;
     },
     toUserPage() {
       this.$router.push({ name: "userPage" });
     },
-    getUserData() {
+    async getUserData() {
       //获取已登录用户信息
-      this.username = this.$cookies.get("userInfo").nickname;
+      const token = this.$cookies.get("token");
+      let result = await userDetails(token);
+      this.$store.commit("user/setUserInfo", result.result);
+      this.username = result.result.nickname;
+      this.userId = result.result.id;
+      this.userInfo = result.result;
     }
   },
   computed: {
@@ -99,7 +113,7 @@ export default {
     },
     islogin() {
       // 判断是否有登录
-      if (this.$cookies.isKey("userInfo")) {
+      if (this.$cookies.isKey("token")) {
         this.getUserData();
         return true;
       } else {
@@ -108,10 +122,10 @@ export default {
     },
     essayId() {
       //获取当前文章的id
-      return this.$store.state.essayId;
+      return this.$store.state.essay.essayId;
     },
-    commentArray(){
-      return this.$store.state.essayCommentData;
+    commentArray() {
+      return this.$store.state.essay.essayCommentData;
     }
   },
   mounted() {

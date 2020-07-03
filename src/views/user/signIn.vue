@@ -27,7 +27,6 @@
   </div>
 </template>
 <script>
-import { login } from "../../api/user";
 import loading from "../../components/loading";
 import error from "../../components/error";
 
@@ -54,37 +53,42 @@ export default {
       //登录
       this.loading = true;
       try {
-        let phone = this.$refs.phone.value.replace(/\s+/g, "");
-        let pwd = this.$refs.password.value;
-        if (!/^1[3456789]\d{9}$/.test(phone)) {
+        let phoneNumber = this.$refs.phone.value.trim();
+        let password = this.$refs.password.value;
+        if (!/^1[3456789]\d{9}$/.test(phoneNumber)) {
           this.iserror = true;
           this.errorText = "请输入正确的手机号";
-        } else if (pwd.length === 0) {
+        } else if (password.length === 0) {
           this.iserror = true;
           this.errorText = "请输入密码";
         } else {
-          const loginResult = await login(phone, pwd);
-          if (loginResult.result.code === 1) {
-            this.iserror = false;
-            this.$store.commit("changeloginState", true);
-            this.$cookies.set(
-              "userInfo",
-              loginResult.result.info,
-              60 * 60 * 24
-            );
-            this.$message({
-              type: "success",
-              message: loginResult.result.message,
-              center: true,
-              offset: 80
+          let userInfo = {
+            phoneNumber,
+            password
+          };
+          this.$store
+            .dispatch("user/login", userInfo)
+            .then(response => {
+              this.loading = false;
+              if (response.code === 1) {
+                this.iserror = false;
+                this.$store.commit("user/changeloginState", true);
+                this.$message({
+                  type: "success",
+                  message: response.message,
+                  center: true,
+                  offset: 80
+                });
+                this.closeSign();
+              } else {
+                this.iserror = true;
+                this.errorText = "手机号或者密码错误";
+              }
+            })
+            .catch(err => {
+              this.$message.error(err); //登录失败提示错误
             });
-            this.closeSign();
-          } else {
-            this.iserror = true;
-            this.errorText = "手机号或者密码错误";
-          }
         }
-        this.loading = false;
       } catch (err) {
         this.loading = false;
         console.log(err.data);

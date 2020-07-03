@@ -1,6 +1,5 @@
-import axios from 'axios'
-//import store from '@/store'
-//import { getToken } from '@/utils/auth'
+import axios from 'axios';
+import cookie from "vue-cookies";
 
 // 创建axios实例
 const service = axios.create({
@@ -11,10 +10,6 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // Do something before request is sent
-  /* if (store.getters.token) {
-     config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
-   }*/
-
   if (config.method === 'post' || config.method === 'put') {
     // post、put 提交时，将对象转换为string, 为处理后台解析问题
     // 并且声明响应头
@@ -23,6 +18,13 @@ service.interceptors.request.use(config => {
       'Content-Type': 'application/json'
     }
     config.withCredentials= true;
+  }
+
+  if(config.url==='/userDetails'){
+    config.headers={
+      'Content-Type': 'application/json',
+      'Authorization':'Bearer '+ cookie.get('token')
+    }
   }
 
   return config;

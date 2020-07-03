@@ -9,9 +9,10 @@
         v-for="(item,index) in commentArray"
         :commentDetails="item"
         type="messageBoard"
+        :userId="userId"
       ></comment>
     </div>
-    <board class="bottom-reveal" type="messageBoard"></board>
+    <board class="bottom-reveal" type="messageBoard" :userInfo="userInfo"></board>
   </div>
 </template>
 
@@ -19,8 +20,9 @@
 import areaHeader from "@/components/areaHeader";
 import comment from "./components/comment";
 import board from "./components/board";
-import loading from "@/components/loading"
+import loading from "@/components/loading";
 import { getBoardComment } from "@/api/comment";
+import { userDetails } from "@/api/user";
 
 export default {
   components: {
@@ -33,7 +35,9 @@ export default {
     return {
       messageBoard: "Message Board",
       headerLogo: "&#xe65e;",
-      loading:false
+      loading: false,
+      userId:'',
+      userInfo:null
     };
   },
   methods: {
@@ -41,7 +45,15 @@ export default {
       try {
         this.loading = true;
         let commentData = await getBoardComment();
-        this.$store.commit("changeboardCommentData", commentData.result.data);
+        this.$store.commit(
+          "comment/changeboardCommentData",
+          commentData.result.data
+        );
+        const token = this.$cookies.get("token");
+        let result = await userDetails(token);
+        this.$store.commit("user/setUserInfo", result.result);
+        this.userId = result.result.id;
+        this.userInfo= result.result;
         this.loading = false;
       } catch (error) {
         this.loading = false;
@@ -49,12 +61,12 @@ export default {
       }
     }
   },
-  computed: { 
+  computed: {
     commentArray() {
-      return this.$store.state.boardCommentData;
+      return this.$store.state.comment.boardCommentData;
     }
   },
-  mounted(){
+  mounted() {
     this.getData();
   }
 };

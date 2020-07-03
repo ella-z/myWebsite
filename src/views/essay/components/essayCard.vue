@@ -7,7 +7,6 @@
       </div>
       <div class="essayCard-intro">{{essayData.introdution}}</div>
       <div class="essayCard-button">
-       <!-- <like @click.native="tolike()"></like>-->
         <button @click="toEssayDetail">
           more
           <span></span>
@@ -19,17 +18,15 @@
 
 <script>
 import tag from "@/components/tag";
-//import like from "@/components/like";
 
 export default {
   props: ["essayData"],
   components: {
-    tag,
-    //like
+    tag
   },
   methods: {
     toEssayDetail() {
-      this.$store.commit("changeEssayId", this.essayData._id);
+      this.$store.commit("essay/changeEssayId", this.essayData._id);
       
       let localStorage = window.localStorage; //为了解决刷新后，存储在store中的数据消失问题
       if(!localStorage.getItem('essayId')){
@@ -39,17 +36,6 @@ export default {
       }
       this.$router.push("/essayDetail");
     },
-    tolike() {
-      if (this.$cookies.isKey("userInfo")) {
-        let userInfo = this.$cookies.get("userInfo");
-        userInfo.essayIDs.push(this.essayData._id);
-        this.$cookies.remove("userInfo");
-        this.$cookies.set("userInfo", userInfo);
-        console.log(this.$cookies.get("userInfo"));
-      }else{
-        console.log('请先登录');
-      }
-    }
   }
 };
 </script>

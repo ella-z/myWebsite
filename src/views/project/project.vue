@@ -28,7 +28,7 @@ import loading from "@/components/loading";
 import { getAllProjectData, getProjectsData } from "@/api/project";
 
 export default {
-  props:['navData'],
+  props: ["navData"],
   components: {
     caseCard,
     areaHeader,
@@ -50,20 +50,28 @@ export default {
     },
     async getProjectData(name) {
       this.loading = true;
-      if (name === "全部") {
-        const projectDataResult = await getAllProjectData();
-        this.projectData = projectDataResult.result.data;
-      } else {
-        const projectDataResult = await getProjectsData(name);
-        this.projectData = projectDataResult.result.data;
+      try {
+        if (name === "全部") {
+          const projectDataResult = await getAllProjectData();
+          this.projectData = projectDataResult.result.data;
+        } else {
+          const projectDataResult = await getProjectsData(name);
+          this.projectData = projectDataResult.result.data;
+        }
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
       }
-      this.loading = false;
     },
     async getData() {
       try {
+        this.loading = true;
         let projectData = await getAllProjectData();
         this.projectData = projectData.result.data;
+        this.loading = false;
       } catch (error) {
+        this.loading = false;
         console.log(error);
       }
     }

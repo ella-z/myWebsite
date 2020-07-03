@@ -14,13 +14,15 @@
       >
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2MB</div>
       </el-upload>
     </div>
   </transition>
 </template>
 
 <script>
+import { updateUserAvatar } from "@/api/user";
+
 export default {
   props: ["userId"],
   data() {
@@ -44,17 +46,26 @@ export default {
       }
       return type && isLt2M;
     },
-    handleAvatarSuccess(res, file) {
+    async handleAvatarSuccess(res, file) {
+      let result = await updateUserAvatar(this.userId, res.result.filename);
       if (file.status === "success") {
         this.$message({
           type: "success",
-          message: "上传成功",
+          message: result.result.message,
           center: true,
           offset: 80
-        }); 
+        });
+        this.$emit('update');
         this.close();
+      } else {
+        this.$message({
+          type: "error",
+          message: "上传失败,请重新上传",
+          center: true,
+          offset: 80
+        });
       }
-     
+    
     }
   },
   computed: {

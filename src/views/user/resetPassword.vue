@@ -5,57 +5,130 @@
       <h1>Reset your password</h1>
       <div class="form-content">
         <div class="signForm-col1">
-          <input type="text" required="required" autocomplete="off" />
+          <input type="text" required="required" autocomplete="off" v-model="phoneNumber" />
           <span class="text">手机号</span>
         </div>
         <div class="signForm-col2 code-box">
           <div>
-            <input type="text" required="required" autocomplete="off" />
+            <input type="text" required="required" autocomplete="off" v-model="vCode" />
             <span class="text">验证码</span>
           </div>
           <button
             @click="getVerificationCode()"
-            ref="vCode"
+            ref="codeText"
             :class="canClick?'':'button-click'"
           >获取验证码</button>
         </div>
         <div class="signForm-col3">
-          <input type="password" required="required" autocomplete="off" />
+          <input type="password" required="required" autocomplete="off" v-model="password" />
           <span class="text">请输入新密码</span>
         </div>
       </div>
-      <button>提交</button>
+      <button @click="submit">提交</button>
     </div>
   </div>
 </template>
 
 <script>
+import { getVCode, changePassword } from "@/api/user";
+
 export default {
   data() {
     return {
       canClick: true, //判断是否可以获取验证码
-      timer: null //计时器
+      timer: null, //计时器
+      phoneNumber: "",
+      password: "",
+      vCode: ""
     };
   },
   methods: {
-    getVerificationCode() {
+    async getVerificationCode() {
       if (!this.canClick) return;
-      this.canClick = false;
-      let countDownTime = 60;
-      this.timer = setInterval(() => {
-        this.$refs.vCode.textContent = countDownTime + "s";
-        if (countDownTime !== 0) {
-          countDownTime--;
+      const phoneRE = /^1[3456789]\d{9}$/;
+      if (!phoneRE.test(this.phoneNumber.trim())) {
+        this.$message({
+          type: "error",
+          message: "请输入正确的手机号",
+          center: true,
+          offset: 80
+        });
+      } else {
+        this.canClick = false;
+        let countDownTime = 60;
+        this.timer = setInterval(() => {
+          this.$refs.codeText.textContent = countDownTime + "s";
+          if (countDownTime !== 0) {
+            countDownTime--;
+          } else {
+            this.$refs.codeText.textContent = "获取验证码";
+            countDownTime = 60;
+            this.canClick = true;
+            clearInterval(this.timer);
+          }
+        }, 1000);
+        let result = await getVCode(this.phoneNumber);
+        if (result.code === 0) {
+          this.$message({
+            type: "success",
+            message: "验证码已成功发送",
+            center: true,
+            offset: 80
+          });
         } else {
-          this.$refs.vCode.textContent = "获取验证码";
-          countDownTime = 60;
-          this.canClick = true;
-          clearInterval(this.timer);
+          this.$message({
+            type: "error",
+            message: result.message,
+            center: true,
+            offset: 80
+          });
         }
-      }, 1000);
+      }
     },
-    close(){
-       clearInterval(this.timer);
+    async submit() {
+      let passwordRE = /(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,16}$/;
+      if (!passwordRE.test(this.password)) {
+        this.$message({
+          type: "error",
+          message:
+            "密码要由8~16个字符,不包含空格,必须包含数字,字母或字符至少两种",
+          center: true,
+          offset: 80
+        });
+      } else if (/^\d{6}$/.test(this.vCode)) {
+        let result = await changePassword(
+          this.phoneNumber,
+          this.password,
+          this.vCode
+        );
+        if (result.result.code === 1) {
+          this.$message({
+            type: "success",
+            message: result.result.message,
+            center: true,
+            offset: 80
+          });
+          this.close();
+        } else {
+          this.$message({
+            type: "error",
+            message: result.result.message,
+            center: true,
+            offset: 80
+          });
+          this.$router.go(0);
+        }
+      } else {
+        this.$message({
+          type: "error",
+          message: "请输入正确的验证码",
+          center: true,
+          offset: 80
+        });
+      }
+    },
+    close() {
+      clearInterval(this.timer);
       this.$router.back();
     }
   }
@@ -135,6 +208,11 @@ export default {
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 15px;
+  }
+  .button-click {
+    cursor: not-allowed;
+    background-color: #000;
+    color: #fff;
   }
   button:hover {
     background-color: #000;

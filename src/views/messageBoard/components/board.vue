@@ -9,14 +9,11 @@
 import { addBoardComment } from "@/api/comment";
 import { addEssayComment } from "@/api/essay";
 export default {
-  props: ["type"],
+  props: ["type", "userInfo"],
   methods: {
     async submit() {
-      let commentContent = this.$refs.textarea.value.replace(
-        /(^\s*)|(\s*$)/g,
-        ""
-      );
-      if (!this.$cookies.isKey("userInfo")) {
+      let commentContent = this.$refs.textarea.value.trim();
+      if (!this.$cookies.isKey("token")) {
         //判断用户是否登录了
         this.$message({
           type: "error",
@@ -38,8 +35,8 @@ export default {
             date.getFullYear().toString() +
             "-" +
             (date.getMonth() + 1 < 10
-              ? "0" + (date.getMonth()+ 1)
-              : (date.getMonth()+ 1)
+              ? "0" + (date.getMonth() + 1)
+              : date.getMonth() + 1
             ).toString() +
             "-" +
             (date.getDate() < 10
@@ -56,7 +53,8 @@ export default {
               ? "0" + date.getMinutes()
               : date.getMinutes()
             ).toString();
-          const userInfo = this.$cookies.get("userInfo");
+
+          let userInfo = this.userInfo;
           let commentData = {
             userInfo,
             commentContent,
@@ -65,7 +63,7 @@ export default {
           this.$refs.textarea.value = "";
           if (this.type === "messageBoard") {
             await addBoardComment(commentData);
-            this.$store.commit("addBoardComment", commentData);
+            this.$store.commit("comment/addBoardComment", commentData);
           } else if (this.type === "essay") {
             let essayCommentData = {
               userInfo,
@@ -73,7 +71,7 @@ export default {
               time,
               essayId: window.localStorage.essayId
             };
-            this.$store.commit("addEssayComment", essayCommentData);
+            this.$store.commit("essay/addEssayComment", essayCommentData);
             await addEssayComment(essayCommentData);
           }
         } catch (error) {

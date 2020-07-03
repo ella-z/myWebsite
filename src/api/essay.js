@@ -49,7 +49,7 @@ export function getEssayDetails(id) {
         })
     })
 }
-
+ 
 export function getEssayComments(essayId) {
     //根据文章的id获取文章的评论
     let url = `${baseUrl}/essay/getEssayComment`;
@@ -68,7 +68,7 @@ export function getEssayComments(essayId) {
 
 export function addEssayComment(commentData) {
     let data = {
-        userId: commentData.userId,
+        userInfo: commentData.userInfo,
         time: commentData.time,
         commentContent: commentData.commentContent,
         essayId:commentData.essayId

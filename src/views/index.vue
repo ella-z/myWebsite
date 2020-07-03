@@ -93,10 +93,9 @@ export default {
     window.addEventListener("scroll", this.onscroll);
 
     //判断用户是否登录
-    if (this.$cookies.isKey("userInfo")) {
-      this.$store.commit("changeloginState", true);
+    if (this.$cookies.isKey("token")) {
+      this.$store.commit("user/changeloginState", true);
     }
-
     this.getNavData();
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="userPage">
-    <upAvatar :userId="userData.id"></upAvatar>
+    <upAvatar :userId="userData.id" @update="refresh"></upAvatar>
     <div class="user-data">
       <img :src="userData.image" />
       <span class="user-nickname">{{userData.nickname}}</span>
@@ -13,6 +13,7 @@
 
 <script>
 import upAvatar from "./components/upAvatar";
+import { userDetails } from "@/api/user";
 
 export default {
   components: {
@@ -20,7 +21,7 @@ export default {
   },
   data() {
     return {
-      userData: this.$cookies.get("userInfo"),
+      userData: ""
     };
   },
   methods: {
@@ -28,13 +29,23 @@ export default {
       this.$router.back();
     },
     signOut() {
-      this.$cookies.remove("userInfo");
-      this.$store.commit("changeloginState", false);
+      this.$cookies.remove("token");
+      this.$store.commit("user/changeloginState", false);
       this.$router.push({ name: "index" });
     },
     toChangeAvatar() {
       this.$store.commit("changeShowUpAvatar", true);
+    },
+    async getUserData() {
+      let result = await userDetails("token");
+      this.userData = result.result;
+    },
+    refresh() {
+      this.$router.go(0);
     }
+  },
+  mounted() {
+    this.getUserData();
   }
 };
 </script>
