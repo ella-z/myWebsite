@@ -104,7 +104,6 @@ export default {
     filter: blur(0.2vw);                                   //way1：使用高斯模糊做阴影
     background: linear-gradient(90deg,#454E93,#FF7B4D);
     opacity: 0.8;
-
     box-shadow: 0 0 1vw #454E93;  //way2：直接使用box-shadow
 }*/
   li::after {
