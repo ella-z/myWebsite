@@ -1,0 +1,189 @@
+.sign {
+    width: 100vw;
+    height: 100vh;
+    top: 35px;
+    left: 0;
+    z-index: 11;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    .icon {
+        color: #000;
+        font-size: 12px;
+        font-weight: 700;
+        position: absolute;
+        right: 50px;
+        top: 30px;
+        cursor: pointer;
+    }
+    h1 {
+        font-size: 35px;
+        color: #ff7b4d;
+        margin: 0;
+    }
+    .signForm-outer {
+        width: 300px;
+        overflow: hidden;
+        .signForm {
+            width: 200%;
+            height: 100%;
+            color: #ff7b4d;
+            display: flex;
+            flex-direction: row;
+            transition: 0.5s ;
+            transform: translateX(0%);
+            .signForm-content {
+                width: 400px;
+                height: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                input {
+                    background-color: transparent;
+                    padding: 5px;
+                    position: relative;
+                    z-index: 12;
+                    width: 100%;
+                    font-size: 15px;
+                    border-bottom: 1px solid #ff7b4d;
+                }
+                .text {
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    left: 0;
+                    font-size: 16px;
+                    padding: 0 10px;
+                    transition: 0.5s;
+                    pointer-events: none;
+                }
+                .code-box{
+                    display: flex;
+                    flex-direction: row;
+                    button{
+                        width: 110px;
+                        padding: 5px 10px;
+                        margin-left: 10px;
+                    }
+                }
+                button {
+                    cursor: pointer;
+                    border: 1px solid #ff7b4d;
+                    background-color: #fff;
+                    color: #ff7b4d;
+                    padding: 8px 25px;
+                    border-radius: 15px;
+                    transition: 0.3s;
+                    margin-right: 20px;
+                    transition: .5s ;
+                }
+                button:last-child {
+                    margin-right: 0;
+                }
+                .button-click{
+                    cursor: not-allowed;
+                    background-color: #ff7b4d;
+                    color: #fff;
+                }
+                button:hover {
+                    background-color: #ff7b4d;
+                    color: #fff;
+                }
+            }
+
+            [class^="signForm-col"] {
+                position: relative;
+                width: 250px;
+                margin-bottom: 35px;
+            }
+
+            input:focus + .text,
+            input:valid + .text {
+                top: -20px;
+                left: -10px;
+            }
+        }
+    }
+    .progress-bar {
+        width: 200px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        .step {
+            text-align: center;
+            position: relative;
+
+            p {
+                transition: 0.3s ;
+                margin: 5px;
+            }
+            .bullet {
+                width: 25px;
+                height: 25px;
+                border: 1px solid #000;
+                border-radius: 50%;
+                display: inline-block;
+                position: relative;
+                transition: 0.3s ;
+                span {
+                    display: block;
+                    line-height: 25px;
+                }
+            }
+            .bullet::before,
+            .bullet::after {
+                content: "";
+                position: absolute;
+                width: 70px;
+                height: 2px;
+                background-color: #000;
+                bottom: 10px;
+                left: 26px;
+            }
+            .check {
+                display: none;
+                position: absolute;
+                left: 38%;
+                top: 68%;
+                font-size: 11px;
+                transition: 0.3s ;
+            }
+        }
+        .active {
+            p {
+                color: #ff7b4d;
+            }
+            .bullet {
+                background-color: #ff7b4d;
+                border-color: #ff7b4d;
+                color: #fff;
+                span {
+                    color: transparent;
+                }
+            }
+            .bullet::after {
+                background-color: #ff7b4d;
+                transform: scaleX(0);
+                transform-origin: left;
+                animation: bulletAnimate 0.3s linear forwards;
+            }
+            @keyframes bulletAnimate {
+                100% {
+                    transform: scaleX(1);
+                }
+            }
+            .check {
+                display: block;
+                color: #fff;
+            }
+        }
+        .step:last-child .bullet::before,
+        .step:last-child .bullet::after {
+            display: none;
+        }
+    }
+}

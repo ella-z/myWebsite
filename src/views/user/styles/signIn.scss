@@ -1,0 +1,95 @@
+.sign {
+    width: 100%;
+    height: 100vh;
+    top: 35px;
+    left: 0;
+    z-index: 11;
+    background-color: #fff;
+    .error {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .icon {
+        color: #000;
+        font-size: 12px;
+        font-weight: 700;
+        position: absolute;
+        right: 50px;
+        top: 30px;
+        cursor: pointer;
+    }
+    .signForm {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        color: #454e93;
+        h1 {
+            margin: 0;
+            font-size: 35px;
+        }
+        .signForm-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            input {
+                background-color: transparent;
+                padding: 5px;
+                position: absolute;
+                z-index: 12;
+                width: 100%;
+                font-size: 15px;
+                border-bottom: 1px solid #454e93;
+            }
+            .text {
+                position: absolute;
+                display: block;
+                top: 0;
+                left: 0;
+                font-size: 18px;
+                padding: 0 10px;
+                transition: 0.5s;
+                pointer-events: none;
+            }
+            [class^="signForm-col"] {
+                position: relative;
+                width: 250px;
+                margin-bottom: 80px;
+            }
+            input:focus + .text,
+            input:valid + .text {
+                top: -20px;
+                left: -10px;
+            }
+            .forget-password {
+                position: absolute;
+                right: 0;
+                bottom: 20px;
+                color: #000;
+                font-size: 12px;
+                cursor: pointer;
+            }
+        }
+        button {
+            cursor: pointer;
+            border: 1px solid #454e93;
+            background-color: #fff;
+            color: #454e93;
+            padding: 6px 25px;
+            border-radius: 15px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #454e93;
+            color: #fff;
+        }
+    }
+}
