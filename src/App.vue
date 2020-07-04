@@ -9,7 +9,7 @@
 <script>
 import scrollReveal from 'scrollreveal'
 export default {
-  name: 'App',
+  name: 'app',
   data () {
     return {
       scrollReveal: scrollReveal()
