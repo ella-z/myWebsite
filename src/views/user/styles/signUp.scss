@@ -61,14 +61,13 @@
                     pointer-events: none;
                 }
                 .code-box{
-                    display: flex;
-                    flex-direction: row;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
                     button{
-                        width: 110px;
                         padding: 5px 10px;
                         margin-left: 10px;
                     }
-                }
+                } 
                 button {
                     cursor: pointer;
                     border: 1px solid #ff7b4d;

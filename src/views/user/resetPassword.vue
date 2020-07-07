@@ -188,9 +188,8 @@ export default {
     }
     .code-box {
       display: grid;
-      grid-template-columns: 3fr 2fr;
+      grid-template-columns: 1fr 1fr;
       button {
-        width: 100%;
         padding: 5px 10px;
         margin-left: 10px;
       }

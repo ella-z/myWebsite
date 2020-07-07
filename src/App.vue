@@ -73,7 +73,7 @@ button {
   outline: none;
   border: none;
 }
-input {
+input,textarea {
   outline: none;
   border: none;
   -webkit-appearance: none; //除去safari中，input默认样式
