@@ -164,7 +164,7 @@ export default {
       // 验证用户名以及密码格式是否正确
       const passwordRE = /(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,16}$/
       const usernameRE = /^[a-zA-Z0-9_-]{5,10}$/
-      if (!usernameRE.test(this.inputText.usernametrim())) {
+      if (!usernameRE.test(this.inputText.username.trim())) {
         this.$message({
           type: 'error',
           message: '用户名要由5~10位,由英文字母、数字、_组成',

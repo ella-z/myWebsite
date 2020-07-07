@@ -23,7 +23,7 @@
     <div class="essay-content bottom-reveal">
       <loading :loading="loading" class="loading"></loading>
       <span v-show="essayData.length===0">暂无数据</span>
-      <essayCard :key="index" v-for="(item,index) in essayData" :essayData="item"></essayCard>
+      <essayCard :key="item._id" v-for="item in essayData" :essayData="item"></essayCard>
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
       loading: false,
       essayData: [] // 文章的数据
     }
-  },
+  }, 
   methods: {
     async getTypeEssay (type, index) {
       this.isactive = index
@@ -74,17 +74,10 @@ export default {
         this.loading = false
         console.log(error)
       }
-    },
-    async getData () {
-      try {
-        this.getTypeEssay('项目问题', 0)
-      } catch (error) {
-        console.log(error)
-      }
     }
   },
   mounted () {
-    this.getData()
+    this.getTypeEssay('项目问题', 0)
   }
 }
 </script>

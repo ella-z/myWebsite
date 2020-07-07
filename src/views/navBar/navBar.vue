@@ -194,7 +194,7 @@ header {
   height: 0;
   transition: 0.5s;
   display: flex;
-  height: 40px;
+  height: 55px;
   width: 100vw;
   flex-direction: row;
   align-items: center;
@@ -204,7 +204,6 @@ header {
   .logo {
     cursor: pointer;
     transition: 0.6s;
-    font-size: 20px;
   }
   nav {
     .navList {
@@ -215,7 +214,7 @@ header {
         margin-left: 40px;
         cursor: pointer;
         transition: 0.6s;
-        font-size: 12px;
+        font-size: 18px;
       }
       .nav-title:hover {
         color: #ff7b4d;
@@ -249,7 +248,7 @@ header {
 .menuList {
   position: absolute;
   left: 0;
-  top: 35px;
+  top: 48px;
   width: 100%;
   height: 100vh;
   z-index: 999999;
@@ -296,8 +295,8 @@ header {
 }
 .sticky {
   //window滑动后显示的样式。
-  padding: 10px 18px;
-  height: 35px;
+  padding: 10px 45px;
+  height: 45px;
   background-color: #000;
   color: #fff;
 }

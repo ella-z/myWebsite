@@ -14,77 +14,75 @@
 </template>
 
 <script>
-import { deleteBoardComment } from "@/api/comment";
-import { deleteEssayComment } from "@/api/essay";
 export default {
-  props: ["commentDetails", "type", "userId"],
+  props: ['commentDetails', 'type', 'userId'],
   methods: {
-    async deleteComment() {
+    async deleteComment () {
       // 删除评论
       try {
-        if (this.type === "messageBoard") {
+        if (this.type === 'messageBoard') {
           this.$store
-            .dispatch("comment/deleteComment", this.commentDetails._id)
+            .dispatch('comment/deleteComment', this.commentDetails._id)
             .then(response => {
               if (response.code === 1) {
                 this.$message({
-                  type: "success",
+                  type: 'success',
                   message: response.message,
                   center: true,
                   offset: 80
-                });
+                })
               } else {
                 this.$message({
-                  type: "error",
+                  type: 'error',
                   message: response.message,
                   center: true,
                   offset: 80
-                });
+                })
               }
             })
             .catch(error => {
-              console.log(error);
-            });
-        } else if (this.type === "essay") {
+              console.log(error)
+            })
+        } else if (this.type === 'essay') {
           this.$store
-            .dispatch("essay/deleteComment", this.commentDetails._id)
+            .dispatch('essay/deleteComment', this.commentDetails._id)
             .then(response => {
               if (response.code === 1) {
                 this.$message({
-                  type: "success",
+                  type: 'success',
                   message: response.message,
                   center: true,
                   offset: 80
-                });
+                })
               } else {
                 this.$message({
-                  type: "error",
+                  type: 'error',
                   message: response.message,
                   center: true,
                   offset: 80
-                });
+                })
               }
             })
             .catch(error => {
-              console.log(error);
-            });
+              console.log(error)
+            })
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     }
   },
   computed: {
-    canDelete() {
-      const currentID = this.commentDetails.userInfo.id; // 留言用户的id
-      if (this.$cookies.isKey("token")) {
-        return this.userId === currentID;
+    canDelete () {
+      const currentID = this.commentDetails.userInfo.id // 留言用户的id
+      if (this.$cookies.isKey('token')) {
+        return this.userId === currentID
       } else {
-        return false;
+        return false
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

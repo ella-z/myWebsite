@@ -28,8 +28,8 @@
         <div class="comments">
           <span v-show="commentArray.length === 0">暂无留言</span>
           <comment
-            :key="index"
-            v-for="(item,index) in commentArray"
+            :key="item._id"
+            v-for="item in commentArray"
             :commentDetails="item"
             type="essay"
             :userId="userId"

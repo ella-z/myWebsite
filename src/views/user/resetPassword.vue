@@ -17,7 +17,7 @@
             @click="getVerificationCode()"
             ref="codeText"
             :class="canClick?'':'button-click'"
-          >获取验证码</button>
+          >获取验证码</button> 
         </div>
         <div class="signForm-col3">
           <input type="password" required="required" autocomplete="off" v-model="password" />
@@ -187,10 +187,10 @@ export default {
       margin-bottom: 0;
     }
     .code-box {
-      display: flex;
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
       button {
-        width: 110px;
+        width: 100%;
         padding: 5px 10px;
         margin-left: 10px;
       }

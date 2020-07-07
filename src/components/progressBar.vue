@@ -74,10 +74,10 @@ export default {
       list-style: none;
       position: relative;
       z-index: 1;
-      font-size: 15px;
-      margin-bottom: 18%;
+      font-size: 18px;
+      margin-bottom: 50px;
       span {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 700;
         background: linear-gradient(135deg, #454e93, #ff7b4d);
         background-clip: text;
@@ -91,11 +91,11 @@ export default {
     display: block;
     position: absolute;
     width: 100%;
-    height: 15px;
-    border-radius: 10px;
+    height: 20px;
+    border-radius: 15px;
     background: linear-gradient(90deg, #454e93, #ff7b4d);
     opacity: 0.5;
-    bottom: -20px;
+    bottom: -25px;
   }
   /* li::before{
     height: 1.7vw;

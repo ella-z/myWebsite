@@ -21,22 +21,22 @@ export default {
         align-items: center;
         margin-bottom: 3%;
         .me-logo{
-            width: 35px;
-            height: 35px;
-            border: 1.5px  solid #000;
+            width: 50px;
+            height: 50px;
+            border: 2px  solid #000;
             border-radius: 50%;
             margin-bottom: 1%;
             text-align: center;
-            line-height: 30px;
+            line-height: 50px;
             .icon{
-                font-size: 25px;
+                font-size: 35px;
                 background-image: linear-gradient(to bottom,#454E93,#FF7B4D);
                 background-clip: text;
                 color: transparent;
             }
         }
         .me-title{
-            font-size: 20px;
+            font-size: 25px;
         }
         }
 </style>

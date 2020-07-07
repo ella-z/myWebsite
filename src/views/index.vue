@@ -32,6 +32,7 @@ import loading from '@/components/loading'
 import backTop from '@/components/backTop'
 import { getNavData } from '@/api/getData'
 
+
 export default {
   components: {
     navBar,
@@ -97,7 +98,11 @@ export default {
       this.$store.commit('user/changeloginState', true)
     }
     this.getNavData()
+
+
   }
+
+  
 }
 </script>
 
@@ -125,7 +130,7 @@ export default {
       align-self: center;
       span {
         display: inline-block;
-        font-size: 5vw;
+        font-size: 4vw;
         transition: 0.5s;
       }
     }

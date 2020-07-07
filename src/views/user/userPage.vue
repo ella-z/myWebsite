@@ -26,12 +26,12 @@ export default {
   },
   methods: {
     backIndex () {
-      this.$router.back()
+      this.$router.back();
     },
     signOut () {
       this.$cookies.remove('token')
       this.$store.commit('user/changeloginState', false)
-      this.$router.push({ name: 'index' })
+      this.$router.back();
     },
     toChangeAvatar () {
       this.$store.commit('changeShowUpAvatar', true)

@@ -6,122 +6,120 @@
 </template>
 
 <script>
-import { addBoardComment } from "@/api/comment";
-import { addEssayComment } from "@/api/essay";
 export default {
-  props: ["type", "userInfo"],
+  props: ['type', 'userInfo'],
   methods: {
-    async submit() {
-      const commentContent = this.$refs.textarea.value.trim();
-      if (!this.$cookies.isKey("token")) {
+    async submit () {
+      const commentContent = this.$refs.textarea.value.trim()
+      if (!this.$cookies.isKey('token')) {
         // 判断用户是否登录了
         this.$message({
-          type: "error",
-          message: "请先登录",
+          type: 'error',
+          message: '请先登录',
           center: true,
           offset: 80
-        });
+        })
       } else if (commentContent.length === 0) {
         this.$message({
-          type: "error",
-          message: "请输入内容",
+          type: 'error',
+          message: '请输入内容',
           center: true,
           offset: 80
-        });
+        })
       } else {
         try {
-          const date = new Date();
+          const date = new Date()
           const time =
             date.getFullYear().toString() +
-            "-" +
+            '-' +
             (date.getMonth() + 1 < 10
-              ? "0" + (date.getMonth() + 1)
+              ? '0' + (date.getMonth() + 1)
               : date.getMonth() + 1
             ).toString() +
-            "-" +
+            '-' +
             (date.getDate() < 10
-              ? "0" + date.getDate()
+              ? '0' + date.getDate()
               : date.getDate()
             ).toString() +
-            "   " +
+            '   ' +
             (date.getHours() < 10
-              ? "0" + date.getHours()
+              ? '0' + date.getHours()
               : date.getHours()
             ).toString() +
-            ":" +
+            ':' +
             (date.getMinutes() < 10
-              ? "0" + date.getMinutes()
+              ? '0' + date.getMinutes()
               : date.getMinutes()
-            ).toString();
+            ).toString()
 
-          const userInfo = this.userInfo;
-          this.$refs.textarea.value = "";
-          let thiss = this;
-          if (this.type === "messageBoard") {
+          const userInfo = this.userInfo
+          this.$refs.textarea.value = ''
+          const thiss = this
+          if (this.type === 'messageBoard') {
             const commentData = {
               userInfo,
               commentContent,
               time
-            };
+            }
             this.$store
-              .dispatch("comment/addComment", commentData)
+              .dispatch('comment/addComment', commentData)
               .then(response => {
                 if (response.code === 1) {
                   thiss.$message({
-                    type: "success",
+                    type: 'success',
                     message: response.message,
                     center: true,
                     offset: 80
-                  });
+                  })
                 } else {
                   thiss.$message({
-                    type: "error",
+                    type: 'error',
                     message: response.message,
                     center: true,
                     offset: 80
-                  });
+                  })
                 }
               })
               .catch(error => {
-                console.log(error);
-              });
-          } else if (this.type === "essay") {
+                console.log(error)
+              })
+          } else if (this.type === 'essay') {
             const essayCommentData = {
               userInfo,
               commentContent,
               time,
               essayId: window.localStorage.essayId
-            };
+            }
             this.$store
-              .dispatch("essay/addComment", essayCommentData)
+              .dispatch('essay/addComment', essayCommentData)
               .then(response => {
                 if (response.code === 1) {
                   thiss.$message({
-                    type: "success",
+                    type: 'success',
                     message: response.message,
                     center: true,
                     offset: 80
-                  });
+                  })
                 } else {
                   thiss.$message({
-                    type: "error",
+                    type: 'error',
                     message: response.message,
                     center: true,
                     offset: 80
-                  });
+                  })
                 }
               })
               .catch(error => {
-                console.log(error);
-              });
+                console.log(error)
+              })
           }
         } catch (error) {
-          console.log(error);
+          console.log(error)
         }
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -143,7 +141,7 @@ export default {
     height: 150px;
     outline: none;
     resize: none; //禁止拉伸
-    font-size: 12px;
+    font-size: 16px;
     border: 1px solid #000;
     padding: 10px;
   }
@@ -153,11 +151,9 @@ export default {
     width: 100px;
     height: 30px;
     font-size: 18px;
-    color: transparent;
-    background: linear-gradient(90deg, #454e93, #ff7b4d);
-    background-clip: text;
-    border-radius: 15px;
+    color: #000;
     background-color: transparent;
+    border-radius: 15px;
     overflow: hidden;
     transition-delay: 0.1s;
     border: 1px solid #000;

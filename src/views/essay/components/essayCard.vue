@@ -43,7 +43,7 @@ export default {
 <style lang="scss" scoped>
 .essayCard {
   width: 80%;
-  height: 150px;
+  height: 170px;
   position: relative;
   overflow: hidden;
   transition: 0.5s ;

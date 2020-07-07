@@ -4,7 +4,7 @@
     <div class="me-content">
       <div class="self-intro bottom-reveal">
         <ul>
-          <li v-for="(item,index) in myInformation.introduction" :key="index">
+          <li :key="item.name" v-for="(item,index) in myInformation.introduction" >
             <span
               :class="IntroIndex===index?'span-show':''"
               @click="selfIntroClick(index)"

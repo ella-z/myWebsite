@@ -1,4 +1,4 @@
-import {addEssayComment,deleteEssayComment} from '@/api/essay';
+import { addEssayComment, deleteEssayComment } from '@/api/essay'
 
 const state = {
   essayCommentData: [], // 文章的留言
@@ -10,7 +10,7 @@ const mutations = {
     state.essayCommentData = res.reverse()
   },
   addEssayComment (state, res) {
-    state.essayCommentData.unshift(res);
+    state.essayCommentData.unshift(res)
   },
   deleteEssayComment (state, index) {
     state.essayCommentData.splice(index, 1)
@@ -20,29 +20,29 @@ const mutations = {
   }
 }
 
-const actions={
-  addComment({commit},commentData){
-    return new Promise((resolve,reject)=>{
-      addEssayComment(commentData).then(responese=>{
-        commit("addEssayComment",responese.data);
-        resolve(responese);
-      }).catch(error =>{
-        reject(error);
+const actions = {
+  addComment ({ commit }, commentData) {
+    return new Promise((resolve, reject) => {
+      addEssayComment(commentData).then(responese => {
+        commit('addEssayComment', responese.data)
+        resolve(responese)
+      }).catch(error => {
+        reject(error)
       })
     })
   },
-    deleteComment({commit,state},commentId){
-    const essayCommentData = state.essayCommentData;
+  deleteComment ({ commit, state }, commentId) {
+    const essayCommentData = state.essayCommentData
     for (let i = 0; i < essayCommentData.length; i++) {
       if (essayCommentData[i]._id === commentId) {
-        commit("deleteEssayComment", i);
+        commit('deleteEssayComment', i)
       }
     }
-    return new Promise((resolve,reject)=>{
-      deleteEssayComment(commentId).then(responese=>{
-        resolve(responese);
-      }).catch(error =>{
-        reject(error);
+    return new Promise((resolve, reject) => {
+      deleteEssayComment(commentId).then(responese => {
+        resolve(responese)
+      }).catch(error => {
+        reject(error)
       })
     })
   }

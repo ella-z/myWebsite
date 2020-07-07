@@ -15,7 +15,7 @@
       <loading :loading="loading" class="loading"></loading>
       <div class="project-content-card">
         <span v-show="projectData.length===0">暂无数据</span>
-        <caseCard :key="index" v-for="(item,index) in projectData" :projectData="item"></caseCard>
+        <caseCard :key="item._id" v-for="item in projectData" :projectData="item"></caseCard>
       </div>
     </div>
   </div>
@@ -63,21 +63,10 @@ export default {
         this.loading = false
         console.log(error)
       }
-    },
-    async getData () {
-      try {
-        this.loading = true
-        const projectData = await getAllProjectData()
-        this.projectData = projectData.result.data
-        this.loading = false
-      } catch (error) {
-        this.loading = false
-        console.log(error)
-      }
     }
   },
   mounted () {
-    this.getData()
+    this.getProjectData('全部')
   }
 }
 </script>
@@ -103,10 +92,11 @@ export default {
       justify-content: center;
       flex-wrap: wrap;
       li {
-        width: 95px;
-        height: 25px;
+        width: 120px;
+        height: 30px;
         padding: 0 5px;
-        line-height: 25px;
+        line-height: 30px;
+        font-size: 18px;
         list-style: none;
         text-align: center;
         color: #fff;
@@ -127,16 +117,16 @@ export default {
   }
   .project-content {
     width: 80%;
-    height: 400px;
+    height: 600px;
     overflow: scroll;
     scrollbar-width: none;
     position: relative;
     .project-content-card {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       justify-items: center;
       row-gap: 6%;
-      padding: 5% 2%;
+      padding: 3% 0;
     }
     .loading {
       width: 100%;
