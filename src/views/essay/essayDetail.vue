@@ -86,6 +86,7 @@ export default {
       const commentsData = await getEssayComments(id)
       this.$store.commit('essay/changeEssayCommentData', commentsData)
       this.mdContent = data.content
+      console.log(data);
     },
     toUserPage () {
       this.$router.push({ name: 'userPage' })

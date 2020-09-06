@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" v-if="commentDetails.userInfo">
     <el-image :src="commentDetails.userInfo.image" lazy class="avatar"></el-image>
     <div class="observer">
       <span class="observer-name">{{commentDetails.userInfo.nickname}}:</span>

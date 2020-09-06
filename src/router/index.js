@@ -1,11 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import index from '@/views/index'
-import signIn from '@/views/user/signIn'
-import signUp from '@/views/user/signUp'
-import essayDetail from '@/views/essay/essayDetail'
-import userPage from '@/views/user/userPage'
-import resetPassword from '@/views/user/resetPassword'
 
 Vue.use(VueRouter)
 
@@ -13,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    component: index,
+    component: ()=>import('@/views/index'),
     meta: {
       keepAlive: true // 缓存位置
     }
@@ -21,27 +15,27 @@ const routes = [
   {
     path: '/signIn',
     name: 'signIn',
-    component: signIn
+    component: ()=>import('@/views/user/signIn')
   },
   {
     path: '/signUp',
     name: 'signUp',
-    component: signUp
+    component: ()=>import('@/views/user/signUp')
   },
   {
     path: '/essayDetail',
     name: 'essayDetail',
-    component: essayDetail
+    component: ()=>import('@/views/essay/essayDetail')
   },
   {
     path: '/userPage',
     name: 'userPage',
-    component: userPage
+    component: ()=>import('@/views/user/userPage')
   },
   {
     path: '/resetPassword',
     name: 'resetPassword',
-    component: resetPassword
+    component: ()=>import('@/views/user/resetPassword')
   }
 ]
 

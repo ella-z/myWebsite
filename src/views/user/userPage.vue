@@ -1,5 +1,6 @@
 <template>
   <div class="userPage">
+    <loading :loading="loading"></loading>
     <upAvatar :userId="userData.id" @update="refresh"></upAvatar>
     <div class="user-data">
       <img :src="userData.image" />
@@ -12,42 +13,52 @@
 </template>
 
 <script>
-import upAvatar from './components/upAvatar'
-import { userDetails } from '@/api/user'
+import upAvatar from "./components/upAvatar";
+import { userDetails } from "@/api/user";
+import loading from "@/components/loading";
 
 export default {
   components: {
-    upAvatar
+    upAvatar,
+    loading
   },
-  data () {
+  data() {
     return {
-      userData: ''
-    }
+      userData: "", //用户数据
+      loading:false
+    };
   },
   methods: {
-    backIndex () {
+    backIndex() {
       this.$router.back();
     },
-    signOut () {
-      this.$cookies.remove('token')
-      this.$store.commit('user/changeloginState', false)
+    signOut() {
+      this.$cookies.remove("token");
+      this.$store.commit("user/changeloginState", false);
       this.$router.back();
     },
-    toChangeAvatar () {
-      this.$store.commit('changeShowUpAvatar', true)
+    toChangeAvatar() {
+      this.$store.commit("changeShowUpAvatar", true);
     },
-    async getUserData () {
-      const result = await userDetails('token')
-      this.userData = result.result
+    async getUserData() {
+      try {
+        this.loading = true;
+        const result = await userDetails("token");
+        this.userData = result.result;
+        this.loading = false;
+      } catch (error) {
+         this.loading = false;
+        console.log(error);
+      }
     },
-    refresh () {
-      this.$router.go(0)
+    refresh() {
+      this.$router.go(0);
     }
   },
-  mounted () {
-    this.getUserData()
+  mounted() {
+    this.getUserData();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
